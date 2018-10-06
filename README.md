@@ -1,2 +1,2 @@
-# ip-task1-noise-removal
-Application for image processing and analysis, elementary operations, geometric operations and noise removal
+# Image proccesing - Task 1 - Noise removal
+Application for image processing and analysis, elementary operations, geometric operations and noise removal.
