@@ -2,8 +2,11 @@
 #include <string>
 #include <cstdlib>
 #include <cstring>
+#include <cmath>
+#include "libs/CImg.h"
 
 using namespace std;
+using namespace cimg_library;
 
 void displayHelp();
 void changeBrightness(char*, char*);
@@ -44,6 +47,13 @@ void exitWithError(int e){
 
 
 int main(int argc, char* argv[]) {
+    CImg<unsigned char> image("../img/color-24bit/lenac.bmp");
+    CImgDisplay main_disp(image,"Click a point");
+    image.blur(2.5);
+    CImgDisplay main2_disp(image,"Click a point");
+    image.save("file.bmp");
+
+
 
     if (argc < 2) {
         cout << "no args" << endl;

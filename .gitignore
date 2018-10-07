@@ -68,6 +68,9 @@ fabric.properties
 # Full .idea folder
 .idea
 
+# executable files
+out
+
 #CMake ??? 
 #CMakeCache.txt
 #CMakeFiles
