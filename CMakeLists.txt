@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.12)
+cmake_minimum_required(VERSION 3.10)
 project(image_manipulator)
 
 set(CMAKE_CXX_STANDARD 11)
@@ -42,7 +42,7 @@ include_directories( src/libs )
 SET(PROJECT_FILES src/main)
 
 add_executable(image_manipulator ${PROJECT_FILES}.cpp)
-target_link_libraries(image_manipulator ${SYSTEM_LIBS} )
+target_link_libraries(image_manipulator ${SYSTEM_LIBS})
 
 
 
