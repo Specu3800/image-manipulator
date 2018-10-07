@@ -1,4 +1,4 @@
-# Image proccesing Tasks
+# Image Proccesing Tasks
 Contains:
 Task 1 - Application for image processing and analysis, elementary operations, geometric operations and noise removal.
 
