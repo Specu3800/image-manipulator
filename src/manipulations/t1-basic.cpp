@@ -1,17 +1,13 @@
-//
-// Created by mike on 11/10/18.
-//
-
 #include <iostream>
-#include "manipulations.h"
-#include "CImg.templ"
+#include "../../lib/CImg.templ"
+#include "t1-basic.h"
 
 using namespace std;
 using namespace cimg_library;
 
-CImg<int> changeBrightness(CImg<int> img, char* val, char* path) {
+CImg<int> changeBrightness(CImg<int> img, char* val) {
     int value = atoi(val);
-    cout << "Changing brightness by " << val << " of image: " << path << endl;
+    cout << "Changing brightness by " << val << endl;
     for (int x = 0; x < img.width(); x++) {
         for (int y = 0; y < img.height(); y++) {
             for (int j = 0; j < 3; j++) {
@@ -21,14 +17,13 @@ CImg<int> changeBrightness(CImg<int> img, char* val, char* path) {
             }
         }
     }
-    img.save(path);
     return img;
 }
 
-CImg<int> changeContrast(CImg<int> img, char* val, char* path) {
+CImg<int> changeContrast(CImg<int> img, char* val) {
     float value = atof(val);
     if (value < 0) {cout << "Wrong value of the contrast. \nType --help to view information about available commands."; exit(0);}
-    cout << "Changing contrast by " << value << " of image: " << path << endl;
+    cout << "Changing contrast by " << value << endl;
     float beta = 128 - 128 * value;
     for (int x = 0; x < img.width(); x++) {
         for (int y = 0; y < img.height(); y++) {
@@ -39,12 +34,11 @@ CImg<int> changeContrast(CImg<int> img, char* val, char* path) {
             }
         }
     }
-    img.save(path);
     return img;
 }
 
-CImg<int> changeToNegative(CImg<int> img, char* path) {
-    cout << "Changing image " << path << " to negative" << endl;
+CImg<int> changeToNegative(CImg<int> img) {
+    cout << "Changing image to negative" << endl;
     for (int x = 0; x < img.width(); x++) {
         for (int y = 0; y < img.height(); y++) {
             for (int j = 0; j < 3; j++) {
@@ -52,6 +46,5 @@ CImg<int> changeToNegative(CImg<int> img, char* path) {
             }
         }
     }
-    img.save(path);
     return img;
 }
