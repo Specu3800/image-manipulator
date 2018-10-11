@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.10)
-project(image_manipulator)
+project(image-manipulator)
 
-set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD 14)
 
 
 # To use PKG_CHECK_MODULES to find some optional packages
@@ -37,12 +37,10 @@ endif()
 
 
 include_directories( src )
-include_directories( src/libs )
+include_directories(src/lib)
 
-SET(PROJECT_FILES src/main)
-
-add_executable(image_manipulator ${PROJECT_FILES}.cpp)
-target_link_libraries(image_manipulator ${SYSTEM_LIBS})
+add_executable(image-manipulator src/main.cpp src/lib/manipulations.cpp src/lib/manipulations.h)
+target_link_libraries(image-manipulator ${SYSTEM_LIBS})
 
 
 

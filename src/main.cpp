@@ -3,24 +3,22 @@
 #include <cstdlib>
 #include <cstring>
 #include <cmath>
-#include "libs/CImg.h"
+#include <lib/manipulations.h>
+#include "lib/CImg.templ"
 
 using namespace std;
 using namespace cimg_library;
 
 void displayHelp();
-void changeBrightness(CImg<unsigned char>, char*, char*);
-void changeContrast(CImg<unsigned char>, char*, char*);
-void changeToNegative(CImg<unsigned char>, char*);
 
 int main(int argc, char* argv[]) {
-    CImg<unsigned char> image("../img/color-24bit/lenac.bmp");
+    CImg<int> image("../img/color-24bit/lenac.bmp");
     image.save("../out/original.bmp");
 
     if (argc < 2 || argc > 5) {cout << "Wrong number of parameters.\nType --help to view the list of the available commands." << endl; exit(0);
     } else {
         if (argv[1] == string("--help")) displayHelp();
-        else if (argv[1] == string("--brightness")) changeBrightness(image, argv[2], argv[4]);
+        else if (argv[1] == string("--brightness")) changeBrightness(image, argv[2], argv[4]).display("edited.bmp");
         else if (argv[1] == string("--contrast")) changeContrast(image, argv[2], argv[4]);
         else if (argv[1] == string("--negative")) changeToNegative(image, argv[3]);
         else {cout << "No maching command. \nType --help to view the list of the available commands."; exit(0);}
@@ -50,7 +48,7 @@ void displayHelp() {
     "       value and saves image in dest\n"
     "\n"
     "   --contrast mod src dest\n"
-    "       modifies contrast of image in src by a modificator(0 < mod <= 2)\n"
+    "       modifies contrast of image in src by a modificator(0 < mod <= infinity)\n"
     "       value and saves image in dest\n"
     "\n"
     "   --negative src dest\n"
@@ -69,7 +67,7 @@ void displayHelp() {
     "      outputs image in src shrinked by a factor of 2 to dest\n"
     "\n"
     "   --enlarge src dest\n"
-    "      outputs image in src enlarged by a factor of 2 to dest\n"
+    "      outputs image in src enlarged by a factor of 2 to dest\n"  //add bipolar interpolation
     "\n"
     "   --adaptive src dest\n"
     "      outputs image in src with adaptive filter applied to dest\n"
@@ -97,52 +95,7 @@ void displayHelp() {
     exit(0);
 }
 
-void changeBrightness(CImg<unsigned char> img, char* val, char* path) {
-    int value = atoi(val);
-    cout << "Changing brightness by " << val << " of image: " << path << endl;
-    for (int x = 0; x < img.width(); x++) {
-        for (int y = 0; y < img.height(); y++) {
-            for (int j = 0; j < 3; j++) {
-                if (img(x, y, 0, j) + value > 255) img(x, y, 0, j) = 255;
-                else if (img(x, y, 0, j) + value < 0) img(x, y, 0, j) = 0;
-                else img(x, y, 0, j) = img(x, y, 0, j) + value;
-            }
-        }
-    }
-    img.save(path);
-    exit(0);
-}
 
-void changeContrast(CImg<unsigned char> img, char* val, char* path) {
-    float value = atof(val);
-    if (value < 0) {cout << "Wrong value of the contrast. \nType --help to view information about available commands."; exit(0);}
-    cout << "Changing contrast by " << value << " of image: " << path << endl;
-    float beta = 128 - 128 * value;
-    for (int x = 0; x < img.width(); x++) {
-        for (int y = 0; y < img.height(); y++) {
-            for (int j = 0; j < 3; j++) {
-                if (value * img(x, y, 0, j) + beta > 255) img(x, y, 0, j) = 255;
-                else if (value * img(x, y, 0, j) + beta < 0) img(x, y, 0, j) = 0;
-                else img(x, y, 0, j) = value * img(x, y, 0, j) + beta;
-            }
-        }
-    }
-    img.save(path);
-    exit(0);
-}
-
-void changeToNegative(CImg<unsigned char> img, char* path) {
-    cout << "Changing image " << path << " to negative" << endl;
-    for (int x = 0; x < img.width(); x++) {
-        for (int y = 0; y < img.height(); y++) {
-            for (int j = 0; j < 3; j++) {
-                img(x, y, 0, j) = 255 - img(x, y, 0, j);
-            }
-        }
-    }
-    img.save(path);
-    exit(0);
-}
 
 
 
