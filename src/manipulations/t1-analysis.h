@@ -12,6 +12,6 @@ float getSignalToNoiseRatio(CImg<int>, CImg<int>);
 float getPeakSignalToNoiseRatio(CImg<int>, CImg<int>);
 float getMaximumDifference(CImg<int>, CImg<int>);
 
-#endif //ANALYSIS
+#endif //ANALYSIS_MANIPULATIONS
 
 

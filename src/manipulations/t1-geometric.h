@@ -12,7 +12,8 @@ CImg<int> doVerticalFlip(CImg<int>);
 CImg<int> doDiagonalFlip(CImg<int>);
 CImg<int> shrinkBy(CImg<int>, char*);
 CImg<int> enlargeBy(CImg<int>, char*);
+CImg<int> simpleEnlargeBy(CImg<int>, char*);
 
-#endif //IMAGE_MANIPULATOR_MANIPULATIONS_H
+#endif //GEOMETRIC_MANIPULATIONS
 
 

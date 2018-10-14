@@ -49,7 +49,7 @@ add_executable(image-manipulator
         src/manipulations/t1-noise-removal.h
         src/manipulations/t1-noise-removal.cpp
         src/manipulations/t1-analysis.h
-        src/manipulations/t1-analysis.cpp)
+        src/manipulations/t1-analysis.cpp src/manipulations/t0-other.cpp src/manipulations/t0-other.h)
 target_link_libraries(image-manipulator ${SYSTEM_LIBS})
 
 

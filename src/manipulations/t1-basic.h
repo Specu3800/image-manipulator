@@ -9,6 +9,6 @@ CImg<int> changeBrightness(CImg<int>, char*);
 CImg<int> changeContrast(CImg<int>, char*);
 CImg<int> changeToNegative(CImg<int>);
 
-#endif //IMAGE_MANIPULATOR_MANIPULATIONS_H
+#endif //BASIC_MANIPULATIONS
 
 

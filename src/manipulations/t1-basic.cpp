@@ -20,17 +20,17 @@ CImg<int> changeBrightness(CImg<int> img, char* val) {
     return img;
 }
 
-CImg<int> changeContrast(CImg<int> img, char* val) {
-    float value = atof(val);
-    if (value < 0) {cout << "Wrong value of the contrast. \nType --help to view information about available commands."; exit(0);}
-    cout << "Changing contrast by " << value << endl;
-    float beta = 128 - 128 * value;
+CImg<int> changeContrast(CImg<int> img, char* fac) {
+    float factor = atof(fac);
+    if (factor < 0) {cout << "Wrong value of the contrast. \nType --help to view information about available commands."; exit(0);}
+    cout << "Changing contrast by " << factor << endl;
+    float beta = 127 - 127 * factor;
     for (int x = 0; x < img.width(); x++) {
         for (int y = 0; y < img.height(); y++) {
             for (int j = 0; j < 3; j++) {
-                if (value * img(x, y, 0, j) + beta > 255) img(x, y, 0, j) = 255;
-                else if (value * img(x, y, 0, j) + beta < 0) img(x, y, 0, j) = 0;
-                else img(x, y, 0, j) = value * img(x, y, 0, j) + beta;
+                if (factor * img(x, y, 0, j) + beta > 255) img(x, y, 0, j) = 255;
+                else if (factor * img(x, y, 0, j) + beta < 0) img(x, y, 0, j) = 0;
+                else img(x, y, 0, j) = factor * img(x, y, 0, j) + beta;
             }
         }
     }

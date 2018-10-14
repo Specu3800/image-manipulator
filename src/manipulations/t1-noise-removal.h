@@ -10,6 +10,6 @@ CImg<int> applyAdaptiveMedianFilter(CImg<int>);
 CImg<int> applyMinimumFilter(CImg<int>);
 CImg<int> applyMaximumFilter(CImg<int>);
 
-#endif //IMAGE_MANIPULATOR_MANIPULATIONS_H
+#endif //NOISE_REMOVAL_MANIPULATIONS
 
 

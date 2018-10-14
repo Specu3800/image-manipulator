@@ -17,7 +17,7 @@ using namespace cimg_library;
 void displayHelp();
 
 int main(int argc, char* argv[]) {
-    CImg<int> originalImage("../img/color-24bit/lenac.bmp"), editedImage(1,1,0,0);
+    CImg<int> originalImage("../img/color-24bit/lenac.bmp"), editedImage(1,1,1,3,0); //x, y, z, rgb channels, rgb vals
     float analysisResult = -1;
     originalImage.save("../out/original.bmp");
 
@@ -49,7 +49,7 @@ int main(int argc, char* argv[]) {
         else cout << "No maching command. \nType --help to view the list of the available commands.";
     }
 
-    if(editedImage != CImg<int>(1,1,0,0)) {
+    if(editedImage != CImg<int>(1,1,1,3,0)) {
         //editedImage.save(argv[argc-1]);
         editedImage.save("edited.bmp");
         originalImage.append(editedImage, 'x').display("edited.bmp");}
