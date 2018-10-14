@@ -37,11 +37,11 @@ CImg<int> applyAdaptiveMedianFilter(CImg<int> img, int maxLevel){
                     }
                 }
                 sort(pixels.begin(), pixels.end());
-                if (pixels.size() % 2 != 0) {
+                //if (pixels.size() % 2 != 0) {
                     img(x, y, 0, j) = pixels[(pixels.size()-1) / 2];
-                } else {
-                    img(x, y, 0, 0) = (pixels[pixels.size()/2] + pixels[pixels.size()/2 + 1]) / 2;
-                }
+                //} else {
+                  //  img(x, y, 0, 0) = (pixels[pixels.size()/2] + pixels[pixels.size()/2 + 1]) / 2;
+                //}
                 pixels.clear();
             }
         }
