@@ -17,8 +17,11 @@ using namespace cimg_library;
 void displayHelp();
 
 int main(int argc, char* argv[]) {
-    CImg<int> originalImage("../img/noise-color-24bit/impulse-noise/lenac_impulse3.bmp"), editedImage(1,1,1,3,0); //x, y, z, rgb channels, rgb vals
+
+    CImg<int> originalImage("../img/color-24bit/lenac.bmp"), editedImage(1,1,1,3,0); //x, y, z, rgb channels, rgb vals
+    //CImg<int> originalImage("../img/noise-color-24bit/impulse-noise/lenac_impulse1.bmp"), editedImage(1,1,1,3,0); //x, y, z, rgb channels, rgb vals
     CImg<int> comparedImage("../img/color-24bit/lenac.bmp");
+
     float analysisResult = -1;
     originalImage.save("../out/original.bmp");
 
@@ -39,7 +42,7 @@ int main(int argc, char* argv[]) {
 
         else if (argv[1] == string("--adaptive")) editedImage = CImg<int>(applyAdaptiveMedianFilter(originalImage, argv[2]));
         else if (argv[1] == string("--min")) editedImage = CImg<int>(applyMinimumFilter(originalImage, argv[2]));
-        else if (argv[1] == string("--max")) editedImage = CImg<int>(applyMaximumFilter(originalImage));
+        else if (argv[1] == string("--max")) editedImage = CImg<int>(applyMaximumFilter(originalImage, argv[2]));
 
         else if (argv[1] == string("--mse")) analysisResult = getMeanSquareError(comparedImage, originalImage);       //paraemters to change
         else if (argv[1] == string("--pmse")) analysisResult = getPeakMeanSquareError(originalImage, originalImage);

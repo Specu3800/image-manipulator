@@ -8,7 +8,7 @@ using namespace cimg_library;
 
 CImg<int> applyAdaptiveMedianFilter(CImg<int>, char*);
 CImg<int> applyMinimumFilter(CImg<int>, char*);
-CImg<int> applyMaximumFilter(CImg<int>);
+CImg<int> applyMaximumFilter(CImg<int>, char*);
 
 #endif //NOISE_REMOVAL_MANIPULATIONS
 

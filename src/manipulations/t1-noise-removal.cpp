@@ -15,17 +15,13 @@ CImg<int> applyAdaptiveMedianFilter(CImg<int> img, char* maxD){
     for (int x = 0; x < img.width(); x++) {
         for (int y = 0; y < img.height(); y++) {
             for (int j = 0; j < 3; j++) {
-
-                currDepth = 3;
+                currDepth = 1;
                 while(true) {
-
                     if(currDepth > maxDepth) break;
-
-                    int shift = (currDepth-1)/2;
-                    for (int x2 = 0; x2 < currDepth; x2++) {
-                        for (int y2 = 0; y2 < currDepth; y2++) {
-                            if (x - shift + x2 >= 0 && x - shift + x2 < img.width() && y - shift + y2 >= 0 && y - shift + y2 < img.height()) {
-                                pixels.push_back(img(x - shift + x2, y - shift + y2, 0, j));
+                    for (int xx = 0; xx < currDepth*2 + 1; xx++) {
+                        for (int yy = 0; yy < currDepth*2 + 1; yy++) {
+                            if (x - currDepth + xx >= 0 && x - currDepth + xx < img.width() && y - currDepth + yy >= 0 && y - currDepth + yy < img.height()) {
+                                pixels.push_back(img(x - currDepth + xx, y - currDepth + yy, 0, j));
                             }
                         }
                     }
@@ -45,30 +41,52 @@ CImg<int> applyAdaptiveMedianFilter(CImg<int> img, char* maxD){
     return img;
 }
 
-CImg<int> applyMinimumFilter(CImg<int> img, char* d){
-    CImg<int> copyImg = img;
-    int depth = atoi(d);
-    depth = 1;
-    vector<int> pixelTable;
-    for (int x = 0; x < img.width(); x++)
-        for (int y = 0 ; y < img.height(); y++) {
-            cout << "x: " << x << " y: " << y << endl;
+CImg<int> applyMinimumFilter(CImg<int> img, char* maxD){
+    CImg<int> newImg(img.width(), img.height(), 1, 3, 0);
+    int maxDepth = atoi(maxD);
+    vector<int> pixels;
+    for (int x = 0; x < img.width(); x++) {
+        for (int y = 0; y < img.height(); y++) {
             for (int j = 0; j < 3; j++) {
-                for (int xx = 0; xx < depth * 2 + 1; xx++)
-                    for (int yy = 0; yy < depth * 2 + 1; yy++) {
-                        if (x - depth + xx > 0 && y - depth + yy > 0 & x - depth + xx < img.width() &&
-                            y - depth + yy < img.height()) {
-                            pixelTable.push_back(img(x - depth + xx, y - depth + yy, 0, j));
+
+                for (int xx = 0; xx < maxDepth*2 + 1; xx++) {
+                    for (int yy = 0; yy < maxDepth*2 + 1; yy++) {
+                        if (x - maxDepth + xx >= 0 && x - maxDepth + xx < img.width() && y - maxDepth + yy >= 0 && y - maxDepth + yy < img.height()) {
+                            pixels.push_back(img(x - maxDepth + xx, y - maxDepth + yy, 0, j));
                         }
                     }
-                copyImg(x, y, 0, j) = distance(begin(pixelTable), min_element(begin(pixelTable), end(pixelTable)));
-                    pixelTable.clear();
+                }
+                newImg(x, y, 0, j) = distance(begin(pixels), min_element(begin(pixels), end(pixels)));
+                sort(pixels.begin(), pixels.end());
+                newImg(x, y, 0, j) = pixels[0];
+                pixels.clear();
             }
         }
-
-    return copyImg;
+    }
+    return newImg;
 }
 
-CImg<int> applyMaximumFilter(CImg<int> img){
-    return img;
+CImg<int> applyMaximumFilter(CImg<int> img, char* maxD){
+    CImg<int> newImg(img.width(), img.height(), 1, 3, 0);
+    int maxDepth = atoi(maxD);
+    vector<int> pixels;
+    for (int x = 0; x < img.width(); x++) {
+        for (int y = 0; y < img.height(); y++) {
+            for (int j = 0; j < 3; j++) {
+
+                for (int xx = 0; xx < maxDepth*2 + 1; xx++) {
+                    for (int yy = 0; yy < maxDepth*2 + 1; yy++) {
+                        if (x - maxDepth + xx >= 0 && x - maxDepth + xx < img.width() && y - maxDepth + yy >= 0 && y - maxDepth + yy < img.height()) {
+                            pixels.push_back(img(x - maxDepth + xx, y - maxDepth + yy, 0, j));
+                        }
+                    }
+                }
+                newImg(x, y, 0, j) = distance(begin(pixels), max_element(begin(pixels), end(pixels)));
+                sort(pixels.begin(), pixels.end());
+                newImg(x, y, 0, j) = pixels[0];
+                pixels.clear();
+            }
+        }
+    }
+    return newImg;
 }
