@@ -34,7 +34,7 @@ float getMeanSquareError(CImg<int> img1, CImg<int> img2){
     MSE = (R + G + B)/3;
 
     MSE = MSE/(img1.width() * img1.height());
-    cout << "Mean Square Error for given images equals: " << MSE << ". " << endl;
+    //cout << "Mean Square Error for given images equals: " << MSE << ". " << endl;
 
     return MSE;
 }
@@ -98,46 +98,30 @@ float getMaximumDifference(CImg<int> img1, CImg<int> img2){
         return MD;
 }
 
-
-//Similarity measures are compared in the following way: firstly, 
-// we compute their values between the
-//
-// original image and the image with noise;
-//
-// next, between the
-//
-// original image and the image subjected to noise removal
-//
-//
-// (we compare the two obtained values). These measures
-// are computed according to the following formulas (M, N - the dimensions 
-// of the images, f - the first image, f with a hat - the second image, 
-// and the maximum value is computed w.r.t. the whole image): 
-
-float doAnalysis(CImg<int> clean, CImg<int> dirty, CImg<int> edited, char* type){
+float doAnalysis(CImg<int> clean, CImg<int> noisy, CImg<int> denoised, char* type){
 
     float g1, g2;
     string name;
 
     if (type == string("--mse")) {
-        g1 = getMeanSquareError(clean, dirty);
-        g2 = getMeanSquareError(clean, edited);
+        g1 = getMeanSquareError(clean, noisy);
+        g2 = getMeanSquareError(clean, denoised);
         name = "Mean Square Error";
     } else if (type == string("--pmse")) {
-        g1 = getPeakMeanSquareError(clean, dirty);
-        g2 = getPeakMeanSquareError(clean, edited);
+        g1 = getPeakMeanSquareError(clean, noisy);
+        g2 = getPeakMeanSquareError(clean, denoised);
         name = "Peak Mean Square Error";
     } else if (type == string("--snr")) {
-        g1 = getSignalToNoiseRatio(clean, dirty);
-        g2 = getSignalToNoiseRatio(clean, edited);
+        g1 = getSignalToNoiseRatio(clean, noisy);
+        g2 = getSignalToNoiseRatio(clean, denoised);
         name = "Signal To Noise Ratio";
     } else if (type == string("--psnr")) {
-        g1 = getPeakSignalToNoiseRatio(clean, dirty);
-        g2 = getPeakSignalToNoiseRatio(clean, edited);
+        g1 = getPeakSignalToNoiseRatio(clean, noisy);
+        g2 = getPeakSignalToNoiseRatio(clean, denoised);
         name = "Peak Signal To Noise Ratio";
     } else if (type == string("--md")) {
-        g1 = getMaximumDifference(clean, dirty);
-        g2 = getMaximumDifference(clean, edited);
+        g1 = getMaximumDifference(clean, noisy);
+        g2 = getMaximumDifference(clean, denoised);
         name = "MaximumDifference";
     }
 

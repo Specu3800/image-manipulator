@@ -19,7 +19,6 @@ void displayHelp();
 int main(int argc, char* argv[]) {
 
     CImg<int> editedImage(1,1,1,3,0); //x, y, z, rgb channels, rgb vals
-    float analysisResult = -1;
 
     if (argc < 2 || argc > 5) {cout << "Wrong number of parameters.\nType --help to view the list of the available commands." << endl; exit(0);
     } else {
@@ -40,18 +39,16 @@ int main(int argc, char* argv[]) {
         else if (argv[1] == string("--max")) editedImage = CImg<int>(applyMaximumFilter(CImg<int>(argv[3]), argv[2]));
 
         else if (argv[1] == string("--mse") || argv[1] == string("--pmse") || argv[1] == string("--snr") || argv[1] == string("--psnr") || argv[1] == string("--md"))
-            analysisResult = doAnalysis(CImg<int>(argv[2]), CImg<int>(argv[3]), CImg<int>(argv[4]), argv[1]);
+            doAnalysis(CImg<int>(argv[2]), CImg<int>(argv[3]), CImg<int>(argv[4]), argv[1]);
 
         else cout << "No maching command. \nType --help to view the list of the available commands.";
     }
 
     if(editedImage != CImg<int>(1,1,1,3,0)) {
-        CImg<int>(argv[3]).save("../out/original.bmp");
+        //CImg<int>(argv[3]).save("../out/original.bmp");
         editedImage.save(argv[argc-1]);
-        CImg<int>(argv[3]).append(editedImage, 'x').display("edited.bmp");}
-
-    if(analysisResult != -1) {
-        cout << "Analysis result is: " << analysisResult << endl;}
+        CImg<int>(argv[3]).append(editedImage, 'x').display("COMPARATION");
+        }
 
     return 0;
 }
@@ -94,35 +91,43 @@ void displayHelp() {
     "   --dflip src dest\n"
     "      outputs diagonally fliped image in src to dest\n"
     "\n"
-    "   --shrik src dest\n"
-    "      outputs image in src shrinked by a factor of 2 to dest\n"
+    "   --shrik fac src dest\n"
+    "      outputs image in src shrinked by a factor of fac to dest\n"
     "\n"
-    "   --enlarge src dest\n"
-    "      outputs image in src enlarged by a factor of 2 to dest\n"  //add bipolar interpolation
+    "   --enlarge fac src dest\n"
+    "      outputs image in src enlarged by a factor of fac to dest\n"  //add bipolar interpolation
     "\n"
-    "   --adaptive src dest\n"
-    "      outputs image in src with adaptive filter applied to dest\n"
+    "   --adaptive dep src dest\n"
+    "      outputs image in src with adaptive filter with depth of dep \n"
+    "      applied to dest\n"
     "\n"
-    "   --min src dest\n"
-    "      outputs image in src with minimum filter applied to dest\n"
+    "   --min dep src dest\n"
+    "      outputs image in src with minimum filter with depth of dep \n"
+    "      applied to dest\n"
     "\n"
-    "   --max src dest\n"
-    "      outputs image in src with maximum filter applied to dest\n"
+    "   --max dep src dest\n"
+    "      outputs image in src with maximum filter with depth of dep \n"
+    "      applied to dest\n"
     "\n"
-    "   --mse src1 src2\n"
-    "      displays mean square error between images in src1 and src2\n"
+    "   --mse clean noisy denoised\n"
+    "      displays mean square error analysis between clean, \n"
+    "      noisy and denoised images\n"
     "\n"
-    "   --pmse src1 src2\n"
-    "      displays peak mean square error between images in src1 and src2\n"
+    "   --pmse clean noisy denoised\n"
+    "      displays peak mean square error analysis between clean, \n"
+    "      noisy and denoised images\n"
     "\n"
-    "   --snr src1 src2\n"
-    "      displays signal to noise ratio between images in src1 and src2\n"
+    "   --snr clean noisy denoised\n"
+    "      displays signal to noise ratio analysis between clean, \n"
+    "      noisy and denoised images\n"
     "\n"
-    "   --psnr src1 src2\n"
-    "      displays peak signal to noise ratio between images in src1 and src2\n"
+    "   --psnr clean noisy denoised\n"
+    "      displays peak signal to noise ratio analysis between clean, \n"
+    "      noisy and denoised images\n"
     "\n"
-    "   --md src1 src2\n"
-    "      displays maximum difference between images in src1 and src2\n";
+    "   --md clean noisy denoised\n"
+    "      displays maximum difference analysis between clean, \n"
+    "      noisy and denoised images\n";
 }
 
 

@@ -1,0 +1,542 @@
+
+FOR COLORED IMAGES:
+
+Applying Adaptive Filter with strengh 2 on lena-impulse1.bmp
+
+Performing Mean Square Error Analysis
+Mean Square Error of original image compered to image with noise equals: 155.579
+Mean Square Error of original image and the image subjected to noise removal equals: 25.077
+The ratio between those two equals: 155.579/25.077 = 6.20406
+
+Performing Peak Mean Square Error Analysis
+Peak Mean Square Error of original image compered to image with noise equals: 0.00276984
+Peak Mean Square Error of original image and the image subjected to noise removal equals: 0.000446456
+The ratio between those two equals: 0.00276984/0.000446456 = 6.20406
+
+Performing Signal To Noise Ratio Analysis
+Signal To Noise Ratio of original image compered to image with noise equals: 20.6828
+Signal To Noise Ratio of original image and the image subjected to noise removal equals: 28.6095
+The ratio between those two equals: 20.6828/28.6095 = 0.722933
+
+Performing Peak Signal To Noise Ratio Analysis
+Peak Signal To Noise Ratio of original image compered to image with noise equals: 25.5827
+Peak Signal To Noise Ratio of original image and the image subjected to noise removal equals: 33.5095
+The ratio between those two equals: 25.5827/33.5095 = 0.763447
+
+Performing Maximum Difference Analysis
+MaximumDifference of original image compered to image with noise equals: 0
+MaximumDifference of original image and the image subjected to noise removal equals: 0
+The ratio between those two equals: 0/0 = -nan
+
+
+
+Applying Adaptive Filter with strengh 2 on lena-impulse2.bmp
+
+Performing Mean Square Error Analysis
+Mean Square Error of original image compered to image with noise equals: 577.625
+Mean Square Error of original image and the image subjected to noise removal equals: 25.4203
+The ratio between those two equals: 577.625/25.4203 = 22.7229
+
+Performing Peak Mean Square Error Analysis
+Peak Mean Square Error of original image compered to image with noise equals: 0.0102837
+Peak Mean Square Error of original image and the image subjected to noise removal equals: 0.000452569
+The ratio between those two equals: 0.0102837/0.000452569 = 22.7229
+
+Performing Signal To Noise Ratio Analysis
+Signal To Noise Ratio of original image compered to image with noise equals: 14.9858
+Signal To Noise Ratio of original image and the image subjected to noise removal equals: 28.5505
+The ratio between those two equals: 14.9858/28.5505 = 0.524889
+
+Performing Peak Signal To Noise Ratio Analysis
+Peak Signal To Noise Ratio of original image compered to image with noise equals: 19.8858
+Peak Signal To Noise Ratio of original image and the image subjected to noise removal equals: 33.4504
+The ratio between those two equals: 19.8858/33.4504 = 0.594485
+
+Performing Maximum Difference Analysis
+MaximumDifference of original image compered to image with noise equals: 0
+MaximumDifference of original image and the image subjected to noise removal equals: 0
+The ratio between those two equals: 0/0 = -nan
+
+
+
+Applying Adaptive Filter with strengh 2 on lena-impulse3.bmp
+
+Performing Mean Square Error Analysis
+Mean Square Error of original image compered to image with noise equals: 866.818
+Mean Square Error of original image and the image subjected to noise removal equals: 27.3829
+The ratio between those two equals: 866.818/27.3829 = 31.6554
+
+Performing Peak Mean Square Error Analysis
+Peak Mean Square Error of original image compered to image with noise equals: 0.0154323
+Peak Mean Square Error of original image and the image subjected to noise removal equals: 0.000487509
+The ratio between those two equals: 0.0154323/0.000487509 = 31.6554
+
+Performing Signal To Noise Ratio Analysis
+Signal To Noise Ratio of original image compered to image with noise equals: 13.223
+Signal To Noise Ratio of original image and the image subjected to noise removal equals: 28.2275
+The ratio between those two equals: 13.223/28.2275 = 0.468444
+
+Performing Peak Signal To Noise Ratio Analysis
+Peak Signal To Noise Ratio of original image compered to image with noise equals: 18.1229
+Peak Signal To Noise Ratio of original image and the image subjected to noise removal equals: 33.1274
+The ratio between those two equals: 18.1229/33.1274 = 0.547068
+
+Performing Maximum Difference Analysis
+MaximumDifference of original image compered to image with noise equals: 0
+MaximumDifference of original image and the image subjected to noise removal equals: 0
+The ratio between those two equals: 0/0 = -nan
+
+
+
+Applying Adaptive Filter with strengh 2 on lena-normal-distribution1.bmp
+
+Performing Mean Square Error Analysis
+Mean Square Error of original image compered to image with noise equals: 152.253
+Mean Square Error of original image and the image subjected to noise removal equals: 27.7647
+The ratio between those two equals: 152.253/27.7647 = 5.48368
+
+Performing Peak Mean Square Error Analysis
+Peak Mean Square Error of original image compered to image with noise equals: 0.00271062
+Peak Mean Square Error of original image and the image subjected to noise removal equals: 0.000494306
+The ratio between those two equals: 0.00271062/0.000494306 = 5.48368
+
+Performing Signal To Noise Ratio Analysis
+Signal To Noise Ratio of original image compered to image with noise equals: 20.7766
+Signal To Noise Ratio of original image and the image subjected to noise removal equals: 28.1673
+The ratio between those two equals: 20.7766/28.1673 = 0.737614
+
+Performing Peak Signal To Noise Ratio Analysis
+Peak Signal To Noise Ratio of original image compered to image with noise equals: 25.6766
+Peak Signal To Noise Ratio of original image and the image subjected to noise removal equals: 33.0673
+The ratio between those two equals: 25.6766/33.0673 = 0.776495
+
+Performing Maximum Difference Analysis
+MaximumDifference of original image compered to image with noise equals: 0
+MaximumDifference of original image and the image subjected to noise removal equals: 0
+The ratio between those two equals: 0/0 = -nan
+
+
+
+Applying Adaptive Filter with strengh 2 on lena-normal-distribution2.bmp
+
+Performing Mean Square Error Analysis
+Mean Square Error of original image compered to image with noise equals: 481.407
+Mean Square Error of original image and the image subjected to noise removal equals: 50.2815
+The ratio between those two equals: 481.407/50.2815 = 9.57424
+
+Performing Peak Mean Square Error Analysis
+Peak Mean Square Error of original image compered to image with noise equals: 0.00857068
+Peak Mean Square Error of original image and the image subjected to noise removal equals: 0.000895182
+The ratio between those two equals: 0.00857068/0.000895182 = 9.57424
+
+Performing Signal To Noise Ratio Analysis
+Signal To Noise Ratio of original image compered to image with noise equals: 15.7772
+Signal To Noise Ratio of original image and the image subjected to noise removal equals: 25.5882
+The ratio between those two equals: 15.7772/25.5882 = 0.616579
+
+Performing Peak Signal To Noise Ratio Analysis
+Peak Signal To Noise Ratio of original image compered to image with noise equals: 20.6771
+Peak Signal To Noise Ratio of original image and the image subjected to noise removal equals: 30.4881
+The ratio between those two equals: 20.6771/30.4881 = 0.678201
+
+Performing Maximum Difference Analysis
+MaximumDifference of original image compered to image with noise equals: 0
+MaximumDifference of original image and the image subjected to noise removal equals: 0
+The ratio between those two equals: 0/0 = -nan
+
+
+
+Applying Adaptive Filter with strengh 2 on lena-normal-distribution3.bmp
+
+Performing Mean Square Error Analysis
+Mean Square Error of original image compered to image with noise equals: 1090.83
+Mean Square Error of original image and the image subjected to noise removal equals: 59.667
+The ratio between those two equals: 1090.83/59.667 = 18.282
+
+Performing Peak Mean Square Error Analysis
+Peak Mean Square Error of original image compered to image with noise equals: 0.0194205
+Peak Mean Square Error of original image and the image subjected to noise removal equals: 0.00106228
+The ratio between those two equals: 0.0194205/0.00106228 = 18.282
+
+Performing Signal To Noise Ratio Analysis
+Signal To Noise Ratio of original image compered to image with noise equals: 12.2247
+Signal To Noise Ratio of original image and the image subjected to noise removal equals: 24.8449
+The ratio between those two equals: 12.2247/24.8449 = 0.49204
+
+Performing Peak Signal To Noise Ratio Analysis
+Peak Signal To Noise Ratio of original image compered to image with noise equals: 17.1247
+Peak Signal To Noise Ratio of original image and the image subjected to noise removal equals: 29.7449
+The ratio between those two equals: 17.1247/29.7449 = 0.575718
+
+Performing Maximum Difference Analysis
+MaximumDifference of original image compered to image with noise equals: 0
+MaximumDifference of original image and the image subjected to noise removal equals: 0
+The ratio between those two equals: 0/0 = -nan
+
+
+
+Applying Adaptive Filter with strengh 2 on lena-uniform1.bmp
+
+Performing Mean Square Error Analysis
+Mean Square Error of original image compered to image with noise equals: 235.871
+Mean Square Error of original image and the image subjected to noise removal equals: 37.3199
+The ratio between those two equals: 235.871/37.3199 = 6.32025
+
+Performing Peak Mean Square Error Analysis
+Peak Mean Square Error of original image compered to image with noise equals: 0.00419931
+Peak Mean Square Error of original image and the image subjected to noise removal equals: 0.000664422
+The ratio between those two equals: 0.00419931/0.000664422 = 6.32025
+
+Performing Signal To Noise Ratio Analysis
+Signal To Noise Ratio of original image compered to image with noise equals: 18.8755
+Signal To Noise Ratio of original image and the image subjected to noise removal equals: 26.8829
+The ratio between those two equals: 18.8755/26.8829 = 0.702139
+
+Performing Peak Signal To Noise Ratio Analysis
+Peak Signal To Noise Ratio of original image compered to image with noise equals: 23.7755
+Peak Signal To Noise Ratio of original image and the image subjected to noise removal equals: 31.7828
+The ratio between those two equals: 23.7755/31.7828 = 0.748061
+
+Performing Maximum Difference Analysis
+MaximumDifference of original image compered to image with noise equals: 0
+MaximumDifference of original image and the image subjected to noise removal equals: 0
+The ratio between those two equals: 0/0 = -nan
+
+
+
+Applying Adaptive Filter with strengh 2 on lena-uniform2.bmp
+
+Performing Mean Square Error Analysis
+Mean Square Error of original image compered to image with noise equals: 163.044
+Mean Square Error of original image and the image subjected to noise removal equals: 26.6214
+The ratio between those two equals: 163.044/26.6214 = 6.12455
+
+Performing Peak Mean Square Error Analysis
+Peak Mean Square Error of original image compered to image with noise equals: 0.00290274
+Peak Mean Square Error of original image and the image subjected to noise removal equals: 0.000473952
+The ratio between those two equals: 0.00290274/0.000473952 = 6.12455
+
+Performing Signal To Noise Ratio Analysis
+Signal To Noise Ratio of original image compered to image with noise equals: 20.4792
+Signal To Noise Ratio of original image and the image subjected to noise removal equals: 28.35
+The ratio between those two equals: 20.4792/28.35 = 0.722372
+
+Performing Peak Signal To Noise Ratio Analysis
+Peak Signal To Noise Ratio of original image compered to image with noise equals: 25.3792
+Peak Signal To Noise Ratio of original image and the image subjected to noise removal equals: 33.2499
+The ratio between those two equals: 25.3792/33.2499 = 0.763285
+
+Performing Maximum Difference Analysis
+MaximumDifference of original image compered to image with noise equals: 0
+MaximumDifference of original image and the image subjected to noise removal equals: 0
+The ratio between those two equals: 0/0 = -nan
+
+
+
+Applying Adaptive Filter with strengh 2 on lena-uniform3.bmp
+
+Performing Mean Square Error Analysis
+Mean Square Error of original image compered to image with noise equals: 1738.55
+Mean Square Error of original image and the image subjected to noise removal equals: 54.127
+The ratio between those two equals: 1738.55/54.127 = 32.1199
+
+Performing Peak Mean Square Error Analysis
+Peak Mean Square Error of original image compered to image with noise equals: 0.0309522
+Peak Mean Square Error of original image and the image subjected to noise removal equals: 0.000963646
+The ratio between those two equals: 0.0309522/0.000963646 = 32.1199
+
+Performing Signal To Noise Ratio Analysis
+Signal To Noise Ratio of original image compered to image with noise equals: 10.2004
+Signal To Noise Ratio of original image and the image subjected to noise removal equals: 25.2681
+The ratio between those two equals: 10.2004/25.2681 = 0.403686
+
+Performing Peak Signal To Noise Ratio Analysis
+Peak Signal To Noise Ratio of original image compered to image with noise equals: 15.1003
+Peak Signal To Noise Ratio of original image and the image subjected to noise removal equals: 30.1681
+The ratio between those two equals: 15.1003/30.1681 = 0.50054
+
+Performing Maximum Difference Analysis
+MaximumDifference of original image compered to image with noise equals: 18
+MaximumDifference of original image and the image subjected to noise removal equals: 1
+The ratio between those two equals: 18/1 = 18
+
+
+
+
+
+
+
+
+
+FOR GREY IMAGES:
+
+Applying Adaptive Filter with strengh 2 on lena-impulse1.bmp
+
+Performing Mean Square Error Analysis
+Mean Square Error of original image compered to image with noise equals: 156.662
+Mean Square Error of original image and the image subjected to noise removal equals: 21.9021
+The ratio between those two equals: 156.662/21.9021 = 7.15281
+
+Performing Peak Mean Square Error Analysis
+Peak Mean Square Error of original image compered to image with noise equals: 0.00267505
+Peak Mean Square Error of original image and the image subjected to noise removal equals: 0.000373986
+The ratio between those two equals: 0.00267505/0.000373986 = 7.15281
+
+Performing Signal To Noise Ratio Analysis
+Signal To Noise Ratio of original image compered to image with noise equals: 20.5019
+Signal To Noise Ratio of original image and the image subjected to noise removal equals: 29.0467
+The ratio between those two equals: 20.5019/29.0467 = 0.705826
+
+Performing Peak Signal To Noise Ratio Analysis
+Peak Signal To Noise Ratio of original image compered to image with noise equals: 25.7171
+Peak Signal To Noise Ratio of original image and the image subjected to noise removal equals: 34.2619
+The ratio between those two equals: 25.7171/34.2619 = 0.750604
+
+Performing Maximum Difference Analysis
+MaximumDifference of original image compered to image with noise equals: 0
+MaximumDifference of original image and the image subjected to noise removal equals: 0
+The ratio between those two equals: 0/0 = -nan
+
+
+
+
+Applying Adaptive Filter with strengh 2 on lena-impulse2.bmp
+
+Performing Mean Square Error Analysis
+Mean Square Error of original image compered to image with noise equals: 785.914
+Mean Square Error of original image and the image subjected to noise removal equals: 24.1898
+The ratio between those two equals: 785.914/24.1898 = 32.4895
+
+Performing Peak Mean Square Error Analysis
+Peak Mean Square Error of original image compered to image with noise equals: 0.0134197
+Peak Mean Square Error of original image and the image subjected to noise removal equals: 0.000413049
+The ratio between those two equals: 0.0134197/0.000413049 = 32.4895
+
+Performing Signal To Noise Ratio Analysis
+Signal To Noise Ratio of original image compered to image with noise equals: 13.4978
+Signal To Noise Ratio of original image and the image subjected to noise removal equals: 28.6152
+The ratio between those two equals: 13.4978/28.6152 = 0.4717
+
+Performing Peak Signal To Noise Ratio Analysis
+Peak Signal To Noise Ratio of original image compered to image with noise equals: 18.713
+Peak Signal To Noise Ratio of original image and the image subjected to noise removal equals: 33.8304
+The ratio between those two equals: 18.713/33.8304 = 0.553141
+
+Performing Maximum Difference Analysis
+MaximumDifference of original image compered to image with noise equals: 0
+MaximumDifference of original image and the image subjected to noise removal equals: 0
+The ratio between those two equals: 0/0 = -nan
+
+
+
+
+Applying Adaptive Filter with strengh 2 on lena-impulse3.bmp
+
+Performing Mean Square Error Analysis
+Mean Square Error of original image compered to image with noise equals: 1606.73
+Mean Square Error of original image and the image subjected to noise removal equals: 30.6515
+The ratio between those two equals: 1606.73/30.6515 = 52.4193
+
+Performing Peak Mean Square Error Analysis
+Peak Mean Square Error of original image compered to image with noise equals: 0.0274355
+Peak Mean Square Error of original image and the image subjected to noise removal equals: 0.000523384
+The ratio between those two equals: 0.0274355/0.000523384 = 52.4193
+
+Performing Signal To Noise Ratio Analysis
+Signal To Noise Ratio of original image compered to image with noise equals: 10.3921
+Signal To Noise Ratio of original image and the image subjected to noise removal equals: 27.587
+The ratio between those two equals: 10.3921/27.587 = 0.376703
+
+Performing Peak Signal To Noise Ratio Analysis
+Peak Signal To Noise Ratio of original image compered to image with noise equals: 15.6073
+Peak Signal To Noise Ratio of original image and the image subjected to noise removal equals: 32.8022
+The ratio between those two equals: 15.6073/32.8022 = 0.4758
+
+Performing Maximum Difference Analysis
+MaximumDifference of original image compered to image with noise equals: 0
+MaximumDifference of original image and the image subjected to noise removal equals: 0
+The ratio between those two equals: 0/0 = -nan
+
+
+
+
+Applying Adaptive Filter with strengh 2 on lena-normal-distribution1.bmp
+
+Performing Mean Square Error Analysis
+Mean Square Error of original image compered to image with noise equals: 332.24
+Mean Square Error of original image and the image subjected to noise removal equals: 36.7876
+The ratio between those two equals: 332.24/36.7876 = 9.0313
+
+Performing Peak Mean Square Error Analysis
+Peak Mean Square Error of original image compered to image with noise equals: 0.00567311
+Peak Mean Square Error of original image and the image subjected to noise removal equals: 0.000628161
+The ratio between those two equals: 0.00567311/0.000628161 = 9.0313
+
+Performing Signal To Noise Ratio Analysis
+Signal To Noise Ratio of original image compered to image with noise equals: 17.237
+Signal To Noise Ratio of original image and the image subjected to noise removal equals: 26.7945
+The ratio between those two equals: 17.237/26.7945 = 0.643304
+
+Performing Peak Signal To Noise Ratio Analysis
+Peak Signal To Noise Ratio of original image compered to image with noise equals: 22.4522
+Peak Signal To Noise Ratio of original image and the image subjected to noise removal equals: 32.0097
+The ratio between those two equals: 22.4522/32.0097 = 0.701419
+
+Performing Maximum Difference Analysis
+MaximumDifference of original image compered to image with noise equals: 0
+MaximumDifference of original image and the image subjected to noise removal equals: 0
+The ratio between those two equals: 0/0 = -nan
+
+
+
+
+Applying Adaptive Filter with strengh 2 on lena-normal-distribution2.bmp
+
+Performing Mean Square Error Analysis
+Mean Square Error of original image compered to image with noise equals: 659.643
+Mean Square Error of original image and the image subjected to noise removal equals: 67.0688
+The ratio between those two equals: 659.643/67.0688 = 9.83533
+
+Performing Peak Mean Square Error Analysis
+Peak Mean Square Error of original image compered to image with noise equals: 0.0112636
+Peak Mean Square Error of original image and the image subjected to noise removal equals: 0.00114522
+The ratio between those two equals: 0.0112636/0.00114522 = 9.83533
+
+Performing Signal To Noise Ratio Analysis
+Signal To Noise Ratio of original image compered to image with noise equals: 14.2584
+Signal To Noise Ratio of original image and the image subjected to noise removal equals: 24.1863
+The ratio between those two equals: 14.2584/24.1863 = 0.589525
+
+Performing Peak Signal To Noise Ratio Analysis
+Peak Signal To Noise Ratio of original image compered to image with noise equals: 19.4736
+Peak Signal To Noise Ratio of original image and the image subjected to noise removal equals: 29.4015
+The ratio between those two equals: 19.4736/29.4015 = 0.662334
+
+Performing Maximum Difference Analysis
+MaximumDifference of original image compered to image with noise equals: 35
+MaximumDifference of original image and the image subjected to noise removal equals: 35
+The ratio between those two equals: 35/35 = 1
+
+
+
+
+Applying Adaptive Filter with strengh 2 on lena-normal-distribution3.bmp
+
+Performing Mean Square Error Analysis
+Mean Square Error of original image compered to image with noise equals: 1191.13
+Mean Square Error of original image and the image subjected to noise removal equals: 45.3033
+The ratio between those two equals: 1191.13/45.3033 = 26.2923
+
+Performing Peak Mean Square Error Analysis
+Peak Mean Square Error of original image compered to image with noise equals: 0.0203389
+Peak Mean Square Error of original image and the image subjected to noise removal equals: 0.000773568
+The ratio between those two equals: 0.0203389/0.000773568 = 26.2923
+
+Performing Signal To Noise Ratio Analysis
+Signal To Noise Ratio of original image compered to image with noise equals: 11.6919
+Signal To Noise Ratio of original image and the image subjected to noise removal equals: 25.8902
+The ratio between those two equals: 11.6919/25.8902 = 0.451597
+
+Performing Peak Signal To Noise Ratio Analysis
+Peak Signal To Noise Ratio of original image compered to image with noise equals: 16.9072
+Peak Signal To Noise Ratio of original image and the image subjected to noise removal equals: 31.1054
+The ratio between those two equals: 16.9072/31.1054 = 0.543543
+
+Performing Maximum Difference Analysis
+MaximumDifference of original image compered to image with noise equals: 49
+MaximumDifference of original image and the image subjected to noise removal equals: 1
+The ratio between those two equals: 49/1 = 49
+
+
+
+
+Applying Adaptive Filter with strengh 2 on lena-uniform1.bmp
+
+Performing Mean Square Error Analysis
+Mean Square Error of original image compered to image with noise equals: 167.402
+Mean Square Error of original image and the image subjected to noise removal equals: 30.584
+The ratio between those two equals: 167.402/30.584 = 5.47352
+
+Performing Peak Mean Square Error Analysis
+Peak Mean Square Error of original image compered to image with noise equals: 0.00285845
+Peak Mean Square Error of original image and the image subjected to noise removal equals: 0.000522232
+The ratio between those two equals: 0.00285845/0.000522232 = 5.47352
+
+Performing Signal To Noise Ratio Analysis
+Signal To Noise Ratio of original image compered to image with noise equals: 20.2139
+Signal To Noise Ratio of original image and the image subjected to noise removal equals: 27.5966
+The ratio between those two equals: 20.2139/27.5966 = 0.732479
+
+Performing Peak Signal To Noise Ratio Analysis
+Peak Signal To Noise Ratio of original image compered to image with noise equals: 25.4291
+Peak Signal To Noise Ratio of original image and the image subjected to noise removal equals: 32.8118
+The ratio between those two equals: 25.4291/32.8118 = 0.775
+
+Performing Maximum Difference Analysis
+MaximumDifference of original image compered to image with noise equals: 0
+MaximumDifference of original image and the image subjected to noise removal equals: 0
+The ratio between those two equals: 0/0 = -nan
+
+
+
+
+Applying Adaptive Filter with strengh 2 on lena-uniform2.bmp
+
+Performing Mean Square Error Analysis
+Mean Square Error of original image compered to image with noise equals: 615.806
+Mean Square Error of original image and the image subjected to noise removal equals: 35.9159
+The ratio between those two equals: 615.806/35.9159 = 17.1458
+
+Performing Peak Mean Square Error Analysis
+Peak Mean Square Error of original image compered to image with noise equals: 0.0105151
+Peak Mean Square Error of original image and the image subjected to noise removal equals: 0.000613277
+The ratio between those two equals: 0.0105151/0.000613277 = 17.1458
+
+Performing Signal To Noise Ratio Analysis
+Signal To Noise Ratio of original image compered to image with noise equals: 14.5571
+Signal To Noise Ratio of original image and the image subjected to noise removal equals: 26.8987
+The ratio between those two equals: 14.5571/26.8987 = 0.541183
+
+Performing Peak Signal To Noise Ratio Analysis
+Peak Signal To Noise Ratio of original image compered to image with noise equals: 19.7723
+Peak Signal To Noise Ratio of original image and the image subjected to noise removal equals: 32.1139
+The ratio between those two equals: 19.7723/32.1139 = 0.615694
+
+Performing Maximum Difference Analysis
+MaximumDifference of original image compered to image with noise equals: 0
+MaximumDifference of original image and the image subjected to noise removal equals: 0
+The ratio between those two equals: 0/0 = -nan
+
+
+
+
+Applying Adaptive Filter with strengh 2 on lena-uniform3.bmp
+
+Performing Mean Square Error Analysis
+Mean Square Error of original image compered to image with noise equals: 1243.68
+Mean Square Error of original image and the image subjected to noise removal equals: 63.4567
+The ratio between those two equals: 1243.68/63.4567 = 19.5989
+
+Performing Peak Mean Square Error Analysis
+Peak Mean Square Error of original image compered to image with noise equals: 0.0212363
+Peak Mean Square Error of original image and the image subjected to noise removal equals: 0.00108355
+The ratio between those two equals: 0.0212363/0.00108355 = 19.5989
+
+Performing Signal To Noise Ratio Analysis
+Signal To Noise Ratio of original image compered to image with noise equals: 11.5044
+Signal To Noise Ratio of original image and the image subjected to noise removal equals: 24.4268
+The ratio between those two equals: 11.5044/24.4268 = 0.470977
+
+Performing Peak Signal To Noise Ratio Analysis
+Peak Signal To Noise Ratio of original image compered to image with noise equals: 16.7196
+Peak Signal To Noise Ratio of original image and the image subjected to noise removal equals: 29.642
+The ratio between those two equals: 16.7196/29.642 = 0.564053
+
+Performing Maximum Difference Analysis
+MaximumDifference of original image compered to image with noise equals: 0
+MaximumDifference of original image and the image subjected to noise removal equals: 0
+The ratio between those two equals: 0/0 = -nan
+
+
+
+
