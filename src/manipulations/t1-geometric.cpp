@@ -53,6 +53,7 @@ CImg<int> enlargeBy(CImg<int> img, char* fac){ //dodaj interpolacje
             for (int j = 0; j < 3; j++) {
                 for (int x2 = 0; x2 < repeat; x2++) {
                     for (int y2 = 0; y2 < repeat; y2++) {
+                        //check if its not out of newImg
                         newImg(x*factor + x2, y*factor + y2, 0, j) = img(x, y, 0, j);
                     }
                 }
