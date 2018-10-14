@@ -49,8 +49,26 @@ CImg<int> applyAdaptiveMedianFilter(CImg<int> img, int maxLevel){
     return img;
 }
 
-CImg<int> applyMinimumFilter(CImg<int> img){
-    return img;
+CImg<int> applyMinimumFilter(CImg<int> img, int depth){
+    CImg<int> copyImg = img;
+    vector<int> pixelTable;
+    for (int x = 0; x < img.width(); x++)
+        for (int y = 0 ; y < img.height(); y++) {
+            cout << "x: " << x << " y: " << y << endl;
+            for (int j = 0; j < 3; j++) {
+                for (int xx = 0; xx < depth * 2 + 1; xx++)
+                    for (int yy = 0; yy < depth * 2 + 1; yy++) {
+                        if (x - depth + xx > 0 && y - depth + yy > 0 & x - depth + xx < img.width() &&
+                            y - depth + yy < img.height()) {
+                            pixelTable.push_back(img(x - depth + xx, y - depth + yy, 0, j));
+                        }
+                    }
+                copyImg(x, y, 0, j) = distance(begin(pixelTable), min_element(begin(pixelTable), end(pixelTable)));
+                    pixelTable.clear();
+            }
+        }
+
+    return copyImg;
 }
 
 CImg<int> applyMaximumFilter(CImg<int> img){
