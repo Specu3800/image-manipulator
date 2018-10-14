@@ -32,6 +32,8 @@ CImg<int> doVerticalFlip(CImg<int> img){
 }
 
 CImg<int> doDiagonalFlip(CImg<int> img){ //rotate and vflip
+    img = doVerticalFlip(img);
+    img = doHorizontalFlip(img);
     return img;
 }
 
