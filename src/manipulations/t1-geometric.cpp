@@ -33,31 +33,27 @@ CImg<int> shrinkBy(CImg<int> img, char* fac){ //dodaj interpolacje
 
 CImg<int> enlargeBy(CImg<int> img, char* fac){ //dodaj interpolacje
     float factor = atof(fac);
+
     float repeat = factor;
     if (factor == floor(factor)) repeat--;
     else repeat = floor(repeat);
-    cout << "repeat: " << repeat << endl;
 
     cout << "Enlarging by: " << factor << endl;
-    int newX = img.width()*factor, newY = img.height()*factor;
-    CImg<int> newImg(newX, newY,1,3,0);
-    cout << newX << newY << endl;
+    CImg<int> newImg(img.width()*factor, img.height()*factor, 1, 3, 0);
     for (int x = 0; x < img.width(); x++) {
         for (int y = 0; y < img.height(); y++) {
             for (int j = 0; j < 3; j++) {
-                for (int k = 0; k < repeat; k++) {
-                    if(x-k < 0 || x + k >= newImg.width() || y-k < 0 || y + k >= newImg.height()) continue; //not for borders
-                    newImg(x * factor + k, y * factor, 0, j) = img(x, y, 0, j);
-                    newImg(x * factor, y * factor - k, 0, j) = img(x, y, 0, j);
-                    newImg(x * factor + k, y * factor + k, 0, j) = img(x, y, 0, j);
-
+                for (int x2 = 0; x2 < repeat; x2++) {
+                    for (int y2 = 0; y2 < repeat; y2++) {
+                        newImg(x*factor + x2, y*factor + y2, 0, j) = img(x, y, 0, j);
+                    }
                 }
             }
         }
     }
-    return newImg;
     return applyBilinearInterpolation(newImg);
 }
+
 CImg<int> simpleEnlargeBy(CImg<int> img, char* fac){ //dodaj interpolacje
     float factor = atof(fac);
     cout << "Enlarging by: " << factor << endl;
