@@ -69,9 +69,31 @@ float getSignalToNoiseRatio(CImg<int> img1, CImg<int> img2){
 }
 
 float getPeakSignalToNoiseRatio(CImg<int> img1, CImg<int> img2){
-    return 0;
+
+    float max = (img1(0, 0, 0, 0) + img1(0, 0, 0, 1) + img1(0, 0, 0, 2))/3;
+    for (int x = 0; x < img1.width(); x++)
+        for (int y = 0; y < img1.height(); y++)
+            if ((img1(x, y, 0, 0) + img1(x, y, 0, 1) + img1(x, y, 0, 2))/3 > max ) max = (img1(x, y, 0, 0) + img1(x, y, 0, 1) + img1(x, y, 0, 2))/3;
+    max *= max;
+    float sum = 0;
+    for (int x = 0; x < img1.width(); x++)
+        for (int y = 0; y < img1.height(); y++)
+            sum += max;
+
+    float divider = getMeanSquareError(img1, img2) * img1.width() * img1.height();
+
+    sum /= divider;
+
+    return 10 * log10(sum);
 }
 
 float getMaximumDifference(CImg<int> img1, CImg<int> img2){
-    return 0;
+    float MD = 0;
+    for (int x = 0; x < img1.width(); x++)
+        for (int y = 0; y < img1.height(); y++)
+        {
+            if (abs((img1(0, 0, 0, 0) + img1(0, 0, 0, 1) + img1(0, 0, 0, 2))/3 - (img2(0, 0, 0, 0) + img2(0, 0, 0, 1) + img2(0, 0, 0, 2))/3) > MD) MD = abs((img1(0, 0, 0, 0) + img1(0, 0, 0, 1) + img1(0, 0, 0, 2))/3 - (img2(0, 0, 0, 0) + img2(0, 0, 0, 1) + img2(0, 0, 0, 2))/3);
+        }
+
+        return MD;
 }
