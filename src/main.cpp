@@ -36,7 +36,7 @@ int main(int argc, char* argv[]) {
         else if (argv[1] == string("--shrink")) editedImage = CImg<int>(shrinkBy(originalImage, argv[2]));
         else if (argv[1] == string("--enlarge")) editedImage = CImg<int>(enlargeBy(originalImage, argv[2]));
 
-        else if (argv[1] == string("--adaptive")) editedImage = CImg<int>(applyAdaptiveMedianFilter(originalImage, 3));
+        else if (argv[1] == string("--adaptive")) editedImage = CImg<int>(applyAdaptiveMedianFilter(originalImage, argv[2]));
         else if (argv[1] == string("--min")) editedImage = CImg<int>(applyMinimumFilter(originalImage));
         else if (argv[1] == string("--max")) editedImage = CImg<int>(applyMaximumFilter(originalImage));
 

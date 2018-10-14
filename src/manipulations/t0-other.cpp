@@ -26,3 +26,19 @@ CImg<int> applyBilinearInterpolation(CImg<int> img){
     }
     return img;
 }
+
+
+int getR(int color){
+    return (color - (color % (256*256))) / (256*256);
+}
+int getG(int color){
+    return ((color % (256*256)) - (color%256))/256;
+}
+int getB(int color){
+    return color % 256;
+}
+
+int getColor(int r, int g, int b){
+    return r*256*256 + g*256 + b;
+}
+

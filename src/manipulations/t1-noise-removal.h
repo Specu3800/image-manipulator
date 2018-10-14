@@ -6,7 +6,7 @@
 using namespace std;
 using namespace cimg_library;
 
-CImg<int> applyAdaptiveMedianFilter(CImg<int>, int);
+CImg<int> applyAdaptiveMedianFilter(CImg<int>, char*);
 CImg<int> applyMinimumFilter(CImg<int>);
 CImg<int> applyMaximumFilter(CImg<int>);
 
