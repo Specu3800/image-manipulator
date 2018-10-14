@@ -11,6 +11,7 @@ float getPeakMeanSquareError(CImg<int>, CImg<int>);
 float getSignalToNoiseRatio(CImg<int>, CImg<int>);
 float getPeakSignalToNoiseRatio(CImg<int>, CImg<int>);
 float getMaximumDifference(CImg<int>, CImg<int>);
+float doAnalysis(CImg<int>, CImg<int>, CImg<int>, char*);
 
 #endif //ANALYSIS_MANIPULATIONS
 

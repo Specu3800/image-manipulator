@@ -18,45 +18,37 @@ void displayHelp();
 
 int main(int argc, char* argv[]) {
 
-    CImg<int> originalImage("../img/color-24bit/lenac.bmp"), editedImage(1,1,1,3,0); //x, y, z, rgb channels, rgb vals
-    //CImg<int> originalImage("../img/noise-color-24bit/impulse-noise/lenac_impulse1.bmp"), editedImage(1,1,1,3,0); //x, y, z, rgb channels, rgb vals
-    CImg<int> comparedImage("../img/color-24bit/lenac.bmp");
-
+    CImg<int> editedImage(1,1,1,3,0); //x, y, z, rgb channels, rgb vals
     float analysisResult = -1;
-    originalImage.save("../out/original.bmp");
-
 
     if (argc < 2 || argc > 5) {cout << "Wrong number of parameters.\nType --help to view the list of the available commands." << endl; exit(0);
     } else {
         if (argv[1] == string("--help")) displayHelp();
 
-        else if (argv[1] == string("--brightness")) editedImage = CImg<int>(changeBrightness(originalImage, argv[2]));
-        else if (argv[1] == string("--contrast")) editedImage = CImg<int>(changeContrast(originalImage, argv[2]));
-        else if (argv[1] == string("--negative")) editedImage = CImg<int>(changeToNegative(originalImage));
+        else if (argv[1] == string("--brightness")) editedImage = CImg<int>(changeBrightness(CImg<int>(argv[3]), argv[2]));
+        else if (argv[1] == string("--contrast")) editedImage = CImg<int>(changeContrast(CImg<int>(argv[3]), argv[2]));
+        else if (argv[1] == string("--negative")) editedImage = CImg<int>(changeToNegative(CImg<int>(argv[3])));
 
-        else if (argv[1] == string("--hflip")) editedImage = CImg<int>(doHorizontalFlip(originalImage));
-        else if (argv[1] == string("--vflip")) editedImage = CImg<int>(doVerticalFlip(originalImage));
-        else if (argv[1] == string("--dflip")) editedImage = CImg<int>(doDiagonalFlip(originalImage));
-        else if (argv[1] == string("--shrink")) editedImage = CImg<int>(shrinkBy(originalImage, argv[2]));
-        else if (argv[1] == string("--enlarge")) editedImage = CImg<int>(enlargeBy(originalImage, argv[2]));
+        else if (argv[1] == string("--hflip")) editedImage = CImg<int>(doHorizontalFlip(CImg<int>(argv[3])));
+        else if (argv[1] == string("--vflip")) editedImage = CImg<int>(doVerticalFlip(CImg<int>(argv[3])));
+        else if (argv[1] == string("--dflip")) editedImage = CImg<int>(doDiagonalFlip(CImg<int>(argv[3])));
+        else if (argv[1] == string("--shrink")) editedImage = CImg<int>(shrinkBy(CImg<int>(argv[3]), argv[2]));
+        else if (argv[1] == string("--enlarge")) editedImage = CImg<int>(enlargeBy(CImg<int>(argv[3]), argv[2]));
 
-        else if (argv[1] == string("--adaptive")) editedImage = CImg<int>(applyAdaptiveMedianFilter(originalImage, argv[2]));
-        else if (argv[1] == string("--min")) editedImage = CImg<int>(applyMinimumFilter(originalImage, argv[2]));
-        else if (argv[1] == string("--max")) editedImage = CImg<int>(applyMaximumFilter(originalImage, argv[2]));
+        else if (argv[1] == string("--adaptive")) editedImage = CImg<int>(applyAdaptiveMedianFilter(CImg<int>(argv[3]), argv[2]));
+        else if (argv[1] == string("--min")) editedImage = CImg<int>(applyMinimumFilter(CImg<int>(argv[3]), argv[2]));
+        else if (argv[1] == string("--max")) editedImage = CImg<int>(applyMaximumFilter(CImg<int>(argv[3]), argv[2]));
 
-        else if (argv[1] == string("--mse")) analysisResult = getMeanSquareError(comparedImage, originalImage);       //paraemters to change
-        else if (argv[1] == string("--pmse")) analysisResult = getPeakMeanSquareError(originalImage, originalImage);
-        else if (argv[1] == string("--snr")) analysisResult = getSignalToNoiseRatio(originalImage, originalImage);
-        else if (argv[1] == string("--psnr")) analysisResult = getPeakSignalToNoiseRatio(originalImage, originalImage);
-        else if (argv[1] == string("--md")) analysisResult = getMaximumDifference(originalImage, originalImage);
+        else if (argv[1] == string("--mse") || argv[1] == string("--pmse") || argv[1] == string("--snr") || argv[1] == string("--psnr") || argv[1] == string("--md"))
+            analysisResult = doAnalysis(CImg<int>(argv[2]), CImg<int>(argv[3]), CImg<int>(argv[4]), argv[1]);
 
         else cout << "No maching command. \nType --help to view the list of the available commands.";
     }
 
     if(editedImage != CImg<int>(1,1,1,3,0)) {
-        //editedImage.save(argv[argc-1]);
-        editedImage.save("edited.bmp");
-        originalImage.append(editedImage, 'x').display("edited.bmp");}
+        CImg<int>(argv[3]).save("../out/original.bmp");
+        editedImage.save(argv[argc-1]);
+        CImg<int>(argv[3]).append(editedImage, 'x').display("edited.bmp");}
 
     if(analysisResult != -1) {
         cout << "Analysis result is: " << analysisResult << endl;}

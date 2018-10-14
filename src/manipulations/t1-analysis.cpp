@@ -75,3 +75,53 @@ float getPeakSignalToNoiseRatio(CImg<int> img1, CImg<int> img2){
 float getMaximumDifference(CImg<int> img1, CImg<int> img2){
     return 0;
 }
+
+
+//Similarity measures are compared in the following way: firstly, 
+// we compute their values between the
+//
+// original image and the image with noise;
+//
+// next, between the
+//
+// original image and the image subjected to noise removal
+//
+//
+// (we compare the two obtained values). These measures
+// are computed according to the following formulas (M, N - the dimensions 
+// of the images, f - the first image, f with a hat - the second image, 
+// and the maximum value is computed w.r.t. the whole image): 
+
+float doAnalysis(CImg<int> clean, CImg<int> dirty, CImg<int> edited, char* type){
+
+    float g1, g2;
+    string name;
+
+    if (type == string("--mse")) {
+        g1 = getMeanSquareError(clean, dirty);
+        g2 = getMeanSquareError(clean, edited);
+        name = "Mean Square Error";
+    } else if (type == string("--pmse")) {
+        g1 = getPeakMeanSquareError(clean, dirty);
+        g2 = getPeakMeanSquareError(clean, edited);
+        name = "Peak Mean Square Error";
+    } else if (type == string("--snr")) {
+        g1 = getSignalToNoiseRatio(clean, dirty);
+        g2 = getSignalToNoiseRatio(clean, edited);
+        name = "Signal To Noise Ratio";
+    } else if (type == string("--psnr")) {
+        g1 = getPeakSignalToNoiseRatio(clean, dirty);
+        g2 = getPeakSignalToNoiseRatio(clean, edited);
+        name = "Peak Signal To Noise Ratio";
+    } else if (type == string("--md")) {
+        g1 = getMaximumDifference(clean, dirty);
+        g2 = getMaximumDifference(clean, edited);
+        name = "MaximumDifference";
+    }
+
+    cout << name << " of original image compered to image with noise equals: " << g1 << endl;
+    cout << name << " of original image and the image subjected to noise removal equals: " << g2 << endl;
+    cout << "The ratio between those two equals: " << g1 << "/" << g2 << " = " << g1/g2 << endl;
+
+    return 0;
+}
