@@ -22,10 +22,10 @@ CImg<int> applyAdaptiveMedianFilter(CImg<int> img, char* maxD){
                     if(currDepth > maxDepth) break;
 
                     int shift = (currDepth-1)/2;
-                    for (int x2 = 0; x2 < currDepth; x2++) {
-                        for (int y2 = 0; y2 < currDepth; y2++) {
-                            if (x - shift + x2 >= 0 && x - shift + x2 < img.width() && y - shift + y2 >= 0 && y - shift + y2 < img.height()) {
-                                pixels.push_back(img(x - shift + x2, y - shift + y2, 0, j));
+                    for (int xx = 0; xx < currDepth; xx++) {
+                        for (int yy = 0; yy < currDepth; yy++) {
+                            if (x - shift + xx >= 0 && x - shift + xx < img.width() && y - shift + yy >= 0 && y - shift + yy < img.height()) {
+                                pixels.push_back(img(x - shift + xx, y - shift + yy, 0, j));
                             }
                         }
                     }
