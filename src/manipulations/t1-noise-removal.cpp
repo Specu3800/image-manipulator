@@ -45,8 +45,10 @@ CImg<int> applyAdaptiveMedianFilter(CImg<int> img, char* maxD){
     return img;
 }
 
-CImg<int> applyMinimumFilter(CImg<int> img, int depth){
+CImg<int> applyMinimumFilter(CImg<int> img, char* d){
     CImg<int> copyImg = img;
+    int depth = atoi(d);
+    depth = 1;
     vector<int> pixelTable;
     for (int x = 0; x < img.width(); x++)
         for (int y = 0 ; y < img.height(); y++) {
