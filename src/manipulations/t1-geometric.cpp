@@ -20,6 +20,14 @@ CImg<int> doHorizontalFlip(CImg<int> img){
 }
 
 CImg<int> doVerticalFlip(CImg<int> img){
+    cout << "Flipping horizontally " << endl;
+    for (int x = 0; x < img.width()/2; x++) {
+        for (int y = 0; y < img.height(); y++) {
+            for (int j = 0; j < 3; j++) {
+                swap(img(x, y, 0, j), img(img.width() - x - 1, y, 0, j));
+            }
+        }
+    }
     return img;
 }
 
