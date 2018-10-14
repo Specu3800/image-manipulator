@@ -50,10 +50,11 @@ int main(int argc, char* argv[]) {
     }
 
     if(editedImage != CImg<int>(1,1,0,0)) {
-        editedImage.save(argv[argc-1]);
-        originalImage.append(editedImage).display("edited.bmp");}
+        //editedImage.save(argv[argc-1]);
+        editedImage.save("edited.bmp");
+        originalImage.append(editedImage, 'x').display("edited.bmp");}
 
-        if(analysisResult != -1) {
+    if(analysisResult != -1) {
         cout << "Analysis result is: " << analysisResult << endl;}
 
     return 0;
