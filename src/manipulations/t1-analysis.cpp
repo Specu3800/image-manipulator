@@ -40,11 +40,32 @@ float getMeanSquareError(CImg<int> img1, CImg<int> img2){
 }
 
 float getPeakMeanSquareError(CImg<int> img1, CImg<int> img2){
-    return 0;
+    float PMSE = getMeanSquareError(img1, img2);
+
+    float max = (img1(0, 0, 0, 0) + img1(0, 0, 0, 1) + img1(0, 0, 0, 2))/3;
+    for (int x = 0; x < img1.width(); x++)
+        for (int y = 0; y < img1.height(); y++)
+        {
+            if ((img1(x, y, 0, 0) + img1(x, y, 0, 1) + img1(x, y, 0, 2))/3 > max ) max = (img1(x, y, 0, 0) + img1(x, y, 0, 1) + img1(x, y, 0, 2))/3;
+        }
+    max *= max;
+        PMSE /= max;
+    return PMSE;
 }
 
 float getSignalToNoiseRatio(CImg<int> img1, CImg<int> img2){
-    return 0;
+    float divider = getMeanSquareError(img1, img2) * img1.width() * img1.height();
+    float numerator = 0;
+    for (int x = 0; x < img1.width(); x++)
+        for (int y = 0; y < img1.height(); y++)
+        {
+            float mean = (img1(x, y, 0, 0) + img1(x, y, 0, 1) + img1(x, y, 0, 2))/3;
+            mean *= mean;
+            numerator += mean;
+        }
+        numerator /= divider;
+
+    return 10 * log10(numerator);
 }
 
 float getPeakSignalToNoiseRatio(CImg<int> img1, CImg<int> img2){
