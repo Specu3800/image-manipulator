@@ -6,12 +6,11 @@
 using namespace std;
 using namespace cimg_library;
 
-float getMeanSquareError(CImg<int>, CImg<int>);
-float getPeakMeanSquareError(CImg<int>, CImg<int>);
-float getSignalToNoiseRatio(CImg<int>, CImg<int>);
-float getPeakSignalToNoiseRatio(CImg<int>, CImg<int>);
-float getMaximumDifference(CImg<int>, CImg<int>);
-float doAnalysis(CImg<int>, CImg<int>, CImg<int>, char*);
+float getMeanSquareError(CImg<int> &image1, CImg<int> &image2);
+float getPeakMeanSquareError(CImg<int> &image1, CImg<int> &image2);
+float getSignalToNoiseRatio(CImg<int> &image1, CImg<int> &image2);
+float getPeakSignalToNoiseRatio(CImg<int> &image1, CImg<int> &image2);
+float getMaximumDifference(CImg<int> &image1, CImg<int> &image2);
 
 #endif //ANALYSIS_MANIPULATIONS
 

@@ -6,12 +6,7 @@
 using namespace std;
 using namespace cimg_library;
 
-CImg<int> applyBilinearInterpolation(CImg<int>);
-
-int getR(int);
-int getG(int);
-int getB(int);
-int getColor(int, int, int);
+void applyBilinearInterpolation(CImg<int> &edited);
 
 #endif //OTHER_MANIPULATIONS
 

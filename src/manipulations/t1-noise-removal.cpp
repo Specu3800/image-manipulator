@@ -7,86 +7,95 @@
 using namespace std;
 using namespace cimg_library;
 
-
-CImg<int> applyAdaptiveMedianFilter(CImg<int> img, char* maxD){
+void applyAdaptiveMedianFilter(CImg<int> &original, CImg<int> &edited, char* maxD){
     int maxDepth = atoi(maxD);
     vector<int> pixels;
     int currDepth;
-    for (int x = 0; x < img.width(); x++) {
-        for (int y = 0; y < img.height(); y++) {
-            for (int j = 0; j < 3; j++) {
+    for (int x = 0; x < original.width(); x++) {
+        for (int y = 0; y < original.height(); y++) {
+            for (int c = 0; c < 3; c++) {
                 currDepth = 1;
                 while(true) {
-                    if(currDepth > maxDepth) break;
-                    for (int xx = 0; xx < currDepth*2 + 1; xx++) {
-                        for (int yy = 0; yy < currDepth*2 + 1; yy++) {
-                            if (x - currDepth + xx >= 0 && x - currDepth + xx < img.width() && y - currDepth + yy >= 0 && y - currDepth + yy < img.height()) {
-                                pixels.push_back(img(x - currDepth + xx, y - currDepth + yy, 0, j));
+
+                    for (int xx = 0; xx < currDepth * 2 + 1; xx++) {
+                        for (int yy = 0; yy < currDepth * 2 + 1; yy++) {
+                            if (x - currDepth + xx >= 0 && x - currDepth + xx < original.width() && y - currDepth + yy >= 0 && y - currDepth + yy < original.height()) {
+                                pixels.push_back(original(x - currDepth + xx, y - currDepth + yy, 0, c));
                             }
                         }
                     }
                     sort(pixels.begin(), pixels.end());
-                    if (img(x, y, 0, j) == pixels[(pixels.size()-1) / 2]){
-                        pixels.clear();
-                        currDepth += 2;
-                        continue;
+                    int zmed;
+                    if (pixels.size() % 2 == 0) zmed = (pixels[pixels.size() / 2 - 1] + pixels[pixels.size() / 2]) / 2;
+                    else zmed = pixels[pixels.size() / 2];
+                    int zmin = pixels[0];
+                    int zmax = pixels[pixels.size() - 1];
+
+                    int A1 = zmed - zmin;
+                    int A2 = zmed - zmax;
+
+                    if (A1 > 0 && A2 < 0) {
+                        int B1 = original(x, y, 0, c) - zmin;
+                        int B2 = original(x, y, 0, c) - zmax;
+
+                        if (B1 > 0 && B2 < 0) edited(x, y, 0, c) = original(x, y, 0, c);
+                        else edited(x, y, 0, c) = zmed;
+
+                        break;
                     } else {
-                        img(x, y, 0, j) = pixels[(pixels.size()-1) / 2];
-                        pixels.clear();
-                        break;}
-                }
-            }
-        }
-    }
-    return img;
-}
-
-CImg<int> applyMinimumFilter(CImg<int> img, char* maxD){
-    CImg<int> newImg(img.width(), img.height(), 1, 3, 0);
-    int maxDepth = atoi(maxD);
-    vector<int> pixels;
-    for (int x = 0; x < img.width(); x++) {
-        for (int y = 0; y < img.height(); y++) {
-            for (int j = 0; j < 3; j++) {
-
-                for (int xx = 0; xx < maxDepth*2 + 1; xx++) {
-                    for (int yy = 0; yy < maxDepth*2 + 1; yy++) {
-                        if (x - maxDepth + xx >= 0 && x - maxDepth + xx < img.width() && y - maxDepth + yy >= 0 && y - maxDepth + yy < img.height()) {
-                            pixels.push_back(img(x - maxDepth + xx, y - maxDepth + yy, 0, j));
+                        currDepth++;
+                        if(currDepth > maxDepth) {
+                            edited(x, y, 0, c) = original(x, y, 0, c);
+                            break;
                         }
                     }
                 }
-                newImg(x, y, 0, j) = distance(begin(pixels), min_element(begin(pixels), end(pixels)));
-                sort(pixels.begin(), pixels.end());
-                newImg(x, y, 0, j) = pixels[0];
                 pixels.clear();
             }
         }
     }
-    return newImg;
 }
 
-CImg<int> applyMaximumFilter(CImg<int> img, char* maxD){
-    CImg<int> newImg(img.width(), img.height(), 1, 3, 0);
+void applyMinimumFilter(CImg<int> &original, CImg<int> &edited, char* maxD){
     int maxDepth = atoi(maxD);
     vector<int> pixels;
-    for (int x = 0; x < img.width(); x++) {
-        for (int y = 0; y < img.height(); y++) {
-            for (int j = 0; j < 3; j++) {
+    for (int x = 0; x < original.width(); x++) {
+        for (int y = 0; y < original.height(); y++) {
+            for (int c = 0; c < 3; c++) {
 
                 for (int xx = 0; xx < maxDepth*2 + 1; xx++) {
                     for (int yy = 0; yy < maxDepth*2 + 1; yy++) {
-                        if (x - maxDepth + xx >= 0 && x - maxDepth + xx < img.width() && y - maxDepth + yy >= 0 && y - maxDepth + yy < img.height()) {
-                            pixels.push_back(img(x - maxDepth + xx, y - maxDepth + yy, 0, j));
+                        if (x - maxDepth + xx >= 0 && x - maxDepth + xx < original.width() && y - maxDepth + yy >= 0 && y - maxDepth + yy < original.height()) {
+                            pixels.push_back(original(x - maxDepth + xx, y - maxDepth + yy, 0, c));
                         }
                     }
                 }
-                newImg(x, y, 0, j) = distance(begin(pixels), max_element(begin(pixels), end(pixels)));
                 sort(pixels.begin(), pixels.end());
-                newImg(x, y, 0, j) = pixels[0];
+                edited(x, y, 0, c) = pixels[0];
                 pixels.clear();
             }
         }
     }
-    return newImg;
+}
+
+void applyMaximumFilter(CImg<int> &original, CImg<int> &edited, char* maxD){
+    int maxDepth = atoi(maxD);
+    vector<int> pixels;
+    for (int x = 0; x < original.width(); x++) {
+        for (int y = 0; y < original.height(); y++) {
+            for (int c = 0; c < 3; c++) {
+
+                for (int xx = 0; xx < maxDepth*2 + 1; xx++) {
+                    for (int yy = 0; yy < maxDepth*2 + 1; yy++) {
+                        if (x - maxDepth + xx >= 0 && x - maxDepth + xx < original.width() && y - maxDepth + yy >= 0 && y - maxDepth + yy < original.height()) {
+                            pixels.push_back(original(x - maxDepth + xx, y - maxDepth + yy, 0, c));
+                        }
+                    }
+                }
+                sort(pixels.begin(), pixels.end());
+                edited(x, y, 0, c) = pixels[pixels.size()-1];
+                pixels.clear();
+            }
+        }
+    }
 }

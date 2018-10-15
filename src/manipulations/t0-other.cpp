@@ -5,45 +5,30 @@
 using namespace std;
 using namespace cimg_library;
 
-CImg<int> applyBilinearInterpolation(CImg<int> img){
-    for (int x = 0; x < img.width(); x++) {
-        for (int y = 0; y < img.height(); y++) {
+void applyBilinearInterpolation(CImg<int> &edited){
+    for (int x = 0; x < edited.width(); x++) {
+        for (int y = 0; y < edited.height(); y++) {
 
-            if(x-1 < 0 || x + 1 >= img.width() || y-1 < 0 || y + 1 >= img.height()) continue; //not for borders
-            if(img(x, y, 0, 0) != 0 || img(x, y, 0, 1) != 0 || img(x, y, 0, 2) != 0) continue; //apply only on black pixels
+            if(x-1 < 0 || x + 1 >= edited.width() || y-1 < 0 || y + 1 >= edited.height()) continue; //not for borders
+            if(edited(x, y, 0, 0) != 0 || edited(x, y, 0, 1) != 0 || edited(x, y, 0, 2) != 0) continue; //apply only on black pixels
 
-            for (int j = 0; j < 3; j++) {
-                if  (img(x-1, y-1, 0, 0) != 0 && img(x-1, y-1, 0, 1) != 0 && img(x-1, y-1, 0, 2) != 0) {
-                    if (img(x + 1, y - 1, 0, 0) != 0 && img(x + 1, y - 1, 0, 1) != 0 && img(x + 1, y - 1, 0, 2) != 0)
-                        img(x, y - 1, 0, j) = 0.5 * img(x - 1, y - 1, 0, j) + 0.5 * img(x + 1, y - 1, 0, j);
-                    if (img(x - 1, y + 1, 0, 0) != 0 && img(x - 1, y + 1, 0, 1) != 0 && img(x - 1, y + 1, 0, 2) != 0)
-                        img(x - 1, y, 0, j) = 0.5 * img(x - 1, y + 1, 0, j) + 0.5 * img(x - 1, y - 1, 0, j);
+            for (int c = 0; c < 3; c++) {
+                if  (edited(x-1, y-1, 0, 0) != 0 && edited(x-1, y-1, 0, 1) != 0 && edited(x-1, y-1, 0, 2) != 0) {
+                    if (edited(x + 1, y - 1, 0, 0) != 0 && edited(x + 1, y - 1, 0, 1) != 0 && edited(x + 1, y - 1, 0, 2) != 0)
+                        edited(x, y - 1, 0, c) = 0.5 * edited(x - 1, y - 1, 0, c) + 0.5 * edited(x + 1, y - 1, 0, c);
+                    if (edited(x - 1, y + 1, 0, 0) != 0 && edited(x - 1, y + 1, 0, 1) != 0 && edited(x - 1, y + 1, 0, 2) != 0)
+                        edited(x - 1, y, 0, c) = 0.5 * edited(x - 1, y + 1, 0, c) + 0.5 * edited(x - 1, y - 1, 0, c);
                 }
-                if  (img(x+1, y+1, 0, 0) != 0 && img(x+1, y+1, 0, 1) != 0 && img(x+1, y+1, 0, 2) != 0) {
-                    if (img(x + 1, y - 1, 0, 0) != 0 && img(x + 1, y - 1, 0, 1) != 0 && img(x + 1, y - 1, 0, 2) != 0)
-                        img(x+1, y, 0, j) = 0.5*img(x+1, y-1, 0, j) + 0.5*img(x+1, y+1, 0, j);
-                    if (img(x - 1, y + 1, 0, 0) != 0 && img(x - 1, y + 1, 0, 1) != 0 && img(x - 1, y + 1, 0, 2) != 0)
-                        img(x, y+1, 0, j) = 0.5*img(x-1, y+1, 0, j) + 0.5*img(x+1, y+1, 0, j);
+                if  (edited(x+1, y+1, 0, 0) != 0 && edited(x+1, y+1, 0, 1) != 0 && edited(x+1, y+1, 0, 2) != 0) {
+                    if (edited(x + 1, y - 1, 0, 0) != 0 && edited(x + 1, y - 1, 0, 1) != 0 && edited(x + 1, y - 1, 0, 2) != 0)
+                        edited(x+1, y, 0, c) = 0.5*edited(x+1, y-1, 0, c) + 0.5*edited(x+1, y+1, 0, c);
+                    if (edited(x - 1, y + 1, 0, 0) != 0 && edited(x - 1, y + 1, 0, 1) != 0 && edited(x - 1, y + 1, 0, 2) != 0)
+                        edited(x, y+1, 0, c) = 0.5*edited(x-1, y+1, 0, c) + 0.5*edited(x+1, y+1, 0, c);
                 }
-                img(x, y, 0, j) = 0.5*img(x, y-1, 0, j) + 0.5*img(x, y+1, 0, j);
+                edited(x, y, 0, c) = 0.5*edited(x, y-1, 0, c) + 0.5*edited(x, y+1, 0, c);
             }
         }
     }
-    return img;
 }
 
-
-int getR(int color){
-    return (color - (color % (256*256))) / (256*256);
-}
-int getG(int color){
-    return ((color % (256*256)) - (color%256))/256;
-}
-int getB(int color){
-    return color % 256;
-}
-
-int getColor(int r, int g, int b){
-    return r*256*256 + g*256 + b;
-}
 

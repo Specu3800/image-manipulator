@@ -6,9 +6,9 @@
 using namespace std;
 using namespace cimg_library;
 
-CImg<int> applyAdaptiveMedianFilter(CImg<int>, char*);
-CImg<int> applyMinimumFilter(CImg<int>, char*);
-CImg<int> applyMaximumFilter(CImg<int>, char*);
+void applyAdaptiveMedianFilter(CImg<int> &original, CImg<int> &edited, char*);
+void applyMinimumFilter(CImg<int> &original, CImg<int> &edited, char*);
+void applyMaximumFilter(CImg<int> &original, CImg<int> &edited, char*);
 
 #endif //NOISE_REMOVAL_MANIPULATIONS
 

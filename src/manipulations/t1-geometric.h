@@ -7,12 +7,11 @@ using namespace std;
 using namespace cimg_library;
 
 
-CImg<int> doHorizontalFlip(CImg<int>);
-CImg<int> doVerticalFlip(CImg<int>);
-CImg<int> doDiagonalFlip(CImg<int>);
-CImg<int> shrinkBy(CImg<int>, char*);
-CImg<int> enlargeBy(CImg<int>, char*);
-CImg<int> simpleEnlargeBy(CImg<int>, char*);
+void doHorizontalFlip(CImg<int> &original, CImg<int> &edited);
+void doVerticalFlip(CImg<int> &original, CImg<int> &edited);
+void doDiagonalFlip(CImg<int> &original, CImg<int> &edited);
+void shrinkBy(CImg<int> &original, CImg<int> &edited, char*);
+void enlargeBy(CImg<int> &original, CImg<int> &edited, char*);
 
 #endif //GEOMETRIC_MANIPULATIONS
 

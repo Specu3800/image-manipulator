@@ -5,46 +5,44 @@
 using namespace std;
 using namespace cimg_library;
 
-CImg<int> changeBrightness(CImg<int> img, char* val) {
+void changeBrightness(CImg<int> &original, CImg<int> &edited, char* val) {
     int value = atoi(val);
     cout << "Changing brightness by " << val << endl;
-    for (int x = 0; x < img.width(); x++) {
-        for (int y = 0; y < img.height(); y++) {
-            for (int j = 0; j < 3; j++) {
-                if (img(x, y, 0, j) + value > 255) img(x, y, 0, j) = 255;
-                else if (img(x, y, 0, j) + value < 0) img(x, y, 0, j) = 0;
-                else img(x, y, 0, j) = img(x, y, 0, j) + value;
+    for (int x = 0; x < original.width(); x++) {
+        for (int y = 0; y < original.height(); y++) {
+            cout << x << "  " << y << endl;
+            for (int c = 0; c < 3; c++) {
+                if (original(x, y, 0, c) + value > 255) edited(x, y, 0, c) = 255;
+                else if (original(x, y, 0, c) + value < 0) edited(x, y, 0, c) = 0;
+                else edited(x, y, 0, c) = original(x, y, 0, c) + value;
             }
         }
     }
-    return img;
 }
 
-CImg<int> changeContrast(CImg<int> img, char* fac) {
+void changeContrast(CImg<int> &original, CImg<int> &edited, char* fac) {
     float factor = atof(fac);
     if (factor < 0) {cout << "Wrong value of the contrast. \nType --help to view information about available commands."; exit(0);}
     cout << "Changing contrast by " << factor << endl;
     float beta = 127 - 127 * factor;
-    for (int x = 0; x < img.width(); x++) {
-        for (int y = 0; y < img.height(); y++) {
-            for (int j = 0; j < 3; j++) {
-                if (factor * img(x, y, 0, j) + beta > 255) img(x, y, 0, j) = 255;
-                else if (factor * img(x, y, 0, j) + beta < 0) img(x, y, 0, j) = 0;
-                else img(x, y, 0, j) = factor * img(x, y, 0, j) + beta;
+    for (int x = 0; x < original.width(); x++) {
+        for (int y = 0; y < original.height(); y++) {
+            for (int c = 0; c < 3; c++) {
+                if (factor * original(x, y, 0, c) + beta > 255) edited(x, y, 0, c) = 255;
+                else if (factor * original(x, y, 0, c) + beta < 0) edited(x, y, 0, c) = 0;
+                else edited(x, y, 0, c) = factor * original(x, y, 0, c) + beta;
             }
         }
     }
-    return img;
 }
 
-CImg<int> changeToNegative(CImg<int> img) {
+void changeToNegative(CImg<int> &original, CImg<int> &edited) {
     cout << "Changing image to negative" << endl;
-    for (int x = 0; x < img.width(); x++) {
-        for (int y = 0; y < img.height(); y++) {
-            for (int j = 0; j < 3; j++) {
-                img(x, y, 0, j) = 255 - img(x, y, 0, j);
+    for (int x = 0; x < original.width(); x++) {
+        for (int y = 0; y < original.height(); y++) {
+            for (int c = 0; c < 3; c++) {
+                edited(x, y, 0, c) = 255 - original(x, y, 0, c);
             }
         }
     }
-    return img;
 }

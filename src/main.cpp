@@ -17,37 +17,40 @@ using namespace cimg_library;
 void displayHelp();
 
 int main(int argc, char* argv[]) {
+    CImg<int> image1;
+    CImg<int> image2;
+    if (argc < 2 || argc > 5) {cout << "Wrong number of parameters.\nType --help to view the list of the available commands." << endl; exit(0); }
+    else if (argv[1] == string("--help")) displayHelp();
+    else {
+        image1 = CImg<int>(argv[argc-2]);
+        image2 = CImg<int>(image1.width(), image1.height(), 1, 3, 0);
 
-    CImg<int> editedImage(1,1,1,3,0); //x, y, z, rgb channels, rgb vals
+        if (argv[1] == string("--brightness")) changeBrightness(image1, image2, argv[2]);
+        else if (argv[1] == string("--contrast")) changeContrast(image1, image2, argv[2]);
+        else if (argv[1] == string("--negative")) changeToNegative(image1, image2);
 
-    if (argc < 2 || argc > 5) {cout << "Wrong number of parameters.\nType --help to view the list of the available commands." << endl; exit(0);
-    } else {
-        if (argv[1] == string("--help")) displayHelp();
+        else if (argv[1] == string("--hflip")) doHorizontalFlip(image1, image2);
+        else if (argv[1] == string("--vflip")) doVerticalFlip(image1, image2);
+        else if (argv[1] == string("--dflip")) doDiagonalFlip(image1, image2);
+        else if (argv[1] == string("--shrink")) shrinkBy(image1, image2, argv[2]);
+        else if (argv[1] == string("--enlarge")) enlargeBy(image1, image2, argv[2]);
 
-        else if (argv[1] == string("--brightness")) editedImage = CImg<int>(changeBrightness(CImg<int>(argv[3]), argv[2]));
-        else if (argv[1] == string("--contrast")) editedImage = CImg<int>(changeContrast(CImg<int>(argv[3]), argv[2]));
-        else if (argv[1] == string("--negative")) editedImage = CImg<int>(changeToNegative(CImg<int>(argv[3])));
+        else if (argv[1] == string("--adaptive")) {applyAdaptiveMedianFilter(image1, image2, argv[2]);}
+        else if (argv[1] == string("--min")) applyMinimumFilter(image1, image2, argv[2]);
+        else if (argv[1] == string("--max")) applyMaximumFilter(image1, image2, argv[2]);
 
-        else if (argv[1] == string("--hflip")) editedImage = CImg<int>(doHorizontalFlip(CImg<int>(argv[3])));
-        else if (argv[1] == string("--vflip")) editedImage = CImg<int>(doVerticalFlip(CImg<int>(argv[3])));
-        else if (argv[1] == string("--dflip")) editedImage = CImg<int>(doDiagonalFlip(CImg<int>(argv[3])));
-        else if (argv[1] == string("--shrink")) editedImage = CImg<int>(shrinkBy(CImg<int>(argv[3]), argv[2]));
-        else if (argv[1] == string("--enlarge")) editedImage = CImg<int>(enlargeBy(CImg<int>(argv[3]), argv[2]));
-
-        else if (argv[1] == string("--adaptive")) editedImage = CImg<int>(applyAdaptiveMedianFilter(CImg<int>(argv[3]), argv[2]));
-        else if (argv[1] == string("--min")) editedImage = CImg<int>(applyMinimumFilter(CImg<int>(argv[3]), argv[2]));
-        else if (argv[1] == string("--max")) editedImage = CImg<int>(applyMaximumFilter(CImg<int>(argv[3]), argv[2]));
-
-        else if (argv[1] == string("--mse") || argv[1] == string("--pmse") || argv[1] == string("--snr") || argv[1] == string("--psnr") || argv[1] == string("--md"))
-            doAnalysis(CImg<int>(argv[2]), CImg<int>(argv[3]), CImg<int>(argv[4]), argv[1]);
+        else if (argv[1] == string("--mse")) getMeanSquareError(image1, image2);
+        else if (argv[1] == string("--pmse")) getPeakMeanSquareError(image1, image2);
+        else if (argv[1] == string("--snr")) getSignalToNoiseRatio(image1, image2);
+        else if (argv[1] == string("--psnr")) getPeakSignalToNoiseRatio(image1, image2);
+        else if (argv[1] == string("--md")) getMaximumDifference(image1, image2);
 
         else cout << "No maching command. \nType --help to view the list of the available commands.";
-    }
 
-    if(editedImage != CImg<int>(1,1,1,3,0)) {
-        //CImg<int>(argv[3]).save("../out/original.bmp");
-        editedImage.save(argv[argc-1]);
-        CImg<int>(argv[3]).append(editedImage, 'x').display("COMPARATION");
+        image2.save(argv[argc-1]); //save edited img in destination
+        image1.save("../out/original.bmp");
+        image2.save("../out/edited.bmp");
+        image1.append(image2, 'x').display("COMPARATION"); //display
         }
 
     return 0;

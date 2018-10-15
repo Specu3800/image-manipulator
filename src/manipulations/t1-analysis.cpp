@@ -5,17 +5,15 @@
 using namespace std;
 using namespace cimg_library;
 
-float getMeanSquareError(CImg<int> img1, CImg<int> img2){
+float getMeanSquareError(CImg<int> &img1, CImg<int> &img2){
 
     float MSE = 0;
     float R = 0;
     float G = 0;
     float B = 0;
 
-    for (int x = 0; x < img1.width(); x++)
-    {
-        for(int y = 0; y < img1.height(); y++)
-        {
+    for (int x = 0; x < img1.width(); x++) {
+        for(int y = 0; y < img1.height(); y++) {
             float square = img1(x, y, 0, 0) - img2(x, y, 0, 0);
             square *= square;
             R += square;
@@ -27,33 +25,33 @@ float getMeanSquareError(CImg<int> img1, CImg<int> img2){
             square = img1(x, y, 0, 2) - img2(x, y, 0, 2);
             square *= square;
             B += square;
-
-
         }
     }
     MSE = (R + G + B)/3;
-
     MSE = MSE/(img1.width() * img1.height());
-    //cout << "Mean Square Error for given images equals: " << MSE << ". " << endl;
 
-    return MSE;
+    cout << "Mean Square Error for those two images equils: " << MSE << endl;
+    exit(0);
 }
 
-float getPeakMeanSquareError(CImg<int> img1, CImg<int> img2){
+float getPeakMeanSquareError(CImg<int> &img1, CImg<int> &img2) {
     float PMSE = getMeanSquareError(img1, img2);
 
-    float max = (img1(0, 0, 0, 0) + img1(0, 0, 0, 1) + img1(0, 0, 0, 2))/3;
-    for (int x = 0; x < img1.width(); x++)
-        for (int y = 0; y < img1.height(); y++)
-        {
-            if ((img1(x, y, 0, 0) + img1(x, y, 0, 1) + img1(x, y, 0, 2))/3 > max ) max = (img1(x, y, 0, 0) + img1(x, y, 0, 1) + img1(x, y, 0, 2))/3;
+    float max = (img1(0, 0, 0, 0) + img1(0, 0, 0, 1) + img1(0, 0, 0, 2)) / 3;
+    for (int x = 0; x < img1.width(); x++){
+        for (int y = 0; y < img1.height(); y++) {
+            if ((img1(x, y, 0, 0) + img1(x, y, 0, 1) + img1(x, y, 0, 2)) / 3 > max)
+                max = (img1(x, y, 0, 0) + img1(x, y, 0, 1) + img1(x, y, 0, 2)) / 3;
         }
+    }
     max *= max;
-        PMSE /= max;
-    return PMSE;
+    PMSE /= max;
+
+    cout << "Peak Mean Square Error for those two images equils: " << PMSE << endl;
+    exit(0);
 }
 
-float getSignalToNoiseRatio(CImg<int> img1, CImg<int> img2){
+float getSignalToNoiseRatio(CImg<int> &img1, CImg<int> &img2){
     float divider = getMeanSquareError(img1, img2) * img1.width() * img1.height();
     float numerator = 0;
     for (int x = 0; x < img1.width(); x++)
@@ -65,10 +63,11 @@ float getSignalToNoiseRatio(CImg<int> img1, CImg<int> img2){
         }
         numerator /= divider;
 
-    return 10 * log10(numerator);
+    cout << "Signal To Noise Ratio for those two images equils: " << 10 * log10(numerator) << endl;
+    exit(0);
 }
 
-float getPeakSignalToNoiseRatio(CImg<int> img1, CImg<int> img2){
+float getPeakSignalToNoiseRatio(CImg<int> &img1, CImg<int> &img2){
 
     float max = (img1(0, 0, 0, 0) + img1(0, 0, 0, 1) + img1(0, 0, 0, 2))/3;
     for (int x = 0; x < img1.width(); x++)
@@ -84,50 +83,19 @@ float getPeakSignalToNoiseRatio(CImg<int> img1, CImg<int> img2){
 
     sum /= divider;
 
-    return 10 * log10(sum);
+    cout << "Peak Signal To Noise Ratio for those two images equils: " << 10 * log10(sum) << endl;
+    exit(0);
 }
 
-float getMaximumDifference(CImg<int> img1, CImg<int> img2){
+float getMaximumDifference(CImg<int> &img1, CImg<int> &img2){
     float MD = 0;
-    for (int x = 0; x < img1.width(); x++)
-        for (int y = 0; y < img1.height(); y++)
-        {
-            if (abs((img1(0, 0, 0, 0) + img1(0, 0, 0, 1) + img1(0, 0, 0, 2))/3 - (img2(0, 0, 0, 0) + img2(0, 0, 0, 1) + img2(0, 0, 0, 2))/3) > MD) MD = abs((img1(0, 0, 0, 0) + img1(0, 0, 0, 1) + img1(0, 0, 0, 2))/3 - (img2(0, 0, 0, 0) + img2(0, 0, 0, 1) + img2(0, 0, 0, 2))/3);
+    for (int x = 0; x < img1.width(); x++){
+        for (int y = 0; y < img1.height(); y++) {
+            if (abs((img1(0, 0, 0, 0) + img1(0, 0, 0, 1) + img1(0, 0, 0, 2))/3 - (img2(0, 0, 0, 0) + img2(0, 0, 0, 1) + img2(0, 0, 0, 2))/3) > MD)
+                MD = abs((img1(0, 0, 0, 0) + img1(0, 0, 0, 1) + img1(0, 0, 0, 2))/3 - (img2(0, 0, 0, 0) + img2(0, 0, 0, 1) + img2(0, 0, 0, 2))/3);
         }
-
-        return MD;
-}
-
-float doAnalysis(CImg<int> clean, CImg<int> noisy, CImg<int> denoised, char* type){
-
-    float g1, g2;
-    string name;
-
-    if (type == string("--mse")) {
-        g1 = getMeanSquareError(clean, noisy);
-        g2 = getMeanSquareError(clean, denoised);
-        name = "Mean Square Error";
-    } else if (type == string("--pmse")) {
-        g1 = getPeakMeanSquareError(clean, noisy);
-        g2 = getPeakMeanSquareError(clean, denoised);
-        name = "Peak Mean Square Error";
-    } else if (type == string("--snr")) {
-        g1 = getSignalToNoiseRatio(clean, noisy);
-        g2 = getSignalToNoiseRatio(clean, denoised);
-        name = "Signal To Noise Ratio";
-    } else if (type == string("--psnr")) {
-        g1 = getPeakSignalToNoiseRatio(clean, noisy);
-        g2 = getPeakSignalToNoiseRatio(clean, denoised);
-        name = "Peak Signal To Noise Ratio";
-    } else if (type == string("--md")) {
-        g1 = getMaximumDifference(clean, noisy);
-        g2 = getMaximumDifference(clean, denoised);
-        name = "MaximumDifference";
     }
 
-    cout << name << " of original image compered to image with noise equals: " << g1 << endl;
-    cout << name << " of original image and the image subjected to noise removal equals: " << g2 << endl;
-    cout << "The ratio between those two equals: " << g1 << "/" << g2 << " = " << g1/g2 << endl;
-
-    return 0;
+    cout << "MaximumDifference for those two images equils: " << MD << endl;
+    exit(0);
 }

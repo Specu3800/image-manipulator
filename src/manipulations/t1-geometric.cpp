@@ -7,60 +7,59 @@
 using namespace std;
 using namespace cimg_library;
 
-CImg<int> doHorizontalFlip(CImg<int> img){
+void doHorizontalFlip(CImg<int> &original, CImg<int> &edited){
     cout << "Flipping vertically " << endl;
-    for (int x = 0; x < img.width(); x++) {
-        for (int y = 0; y < img.height()/2; y++) {
-            for (int j = 0; j < 3; j++) {
-                swap(img(x, y, 0, j), img(x, img.height() - y -1, 0, j));
+    edited = original;
+    for (int x = 0; x < original.width(); x++) {
+        for (int y = 0; y < original.height()/2; y++) {
+            for (int c = 0; c < 3; c++) {
+                swap(edited(x, y, 0, c), edited(x, edited.height() - y -1, 0, c));
             }
         }
     }
-    return img;
 }
 
-CImg<int> doVerticalFlip(CImg<int> img){
+void doVerticalFlip(CImg<int> &original, CImg<int> &edited){
     cout << "Flipping horizontally " << endl;
-    for (int x = 0; x < img.width()/2; x++) {
-        for (int y = 0; y < img.height(); y++) {
-            for (int j = 0; j < 3; j++) {
-                swap(img(x, y, 0, j), img(img.width() - x - 1, y, 0, j));
+    edited = original;
+    for (int x = 0; x < original.width()/2; x++) {
+        for (int y = 0; y < original.height(); y++) {
+            for (int c = 0; c < 3; c++) {
+                swap(edited(x, y, 0, c), edited(edited.width() - x - 1, y, 0, c));
             }
         }
     }
-    return img;
 }
 
-CImg<int> doDiagonalFlip(CImg<int> img){ //rotate and vflip
+void doDiagonalFlip(CImg<int> &original, CImg<int> &edited){ //rotate and vflip
     cout << "Flipping diagonally " << endl;
-    for (int x = 0; x < img.width(); x++) {
-        for (int y = 0; y < img.height()/2; y++) {
-            for (int j = 0; j < 3; j++) {
-                swap(img(x, y, 0, j), img(img.width() - x - 1, img.height() - y -1, 0, j));
+    edited = original;
+    for (int x = 0; x < original.width(); x++) {
+        for (int y = 0; y < original.height()/2; y++) {
+            for (int c = 0; c < 3; c++) {
+                swap(edited(x, y, 0, c), edited(edited.width() - x - 1, edited.height() - y -1, 0, c));
             }
         }
     }
-    return img;
 }
 
-CImg<int> shrinkBy(CImg<int> img, char* fac){ //dodaj interpolacje
+void shrinkBy(CImg<int> &original, CImg<int> &edited, char* fac){ //dodac interpolacce
     float factor = atof(fac);
 
     cout << "Shrinking by: " << factor << endl;
-    CImg<int> newImg(img.width()/factor, img.height()/factor, 1, 3, 0);
-    for (int x = 0; x < img.width(); x++) {
-        for (int y = 0; y < img.height(); y++) {
+    edited = CImg<int>(original.width()/factor, original.height()/factor, 1, 3, 0);
+    for (int x = 0; x < original.width(); x++) {
+        for (int y = 0; y < original.height(); y++) {
             cout << x << " " << y << endl;
-            for (int j = 0; j < 3; j++) {
-                if (x/factor >= 0 && x/factor < newImg.width() && y/factor >= 0 && y/factor < newImg.height())
-                        newImg(x/factor, y/factor, 0, j) = img(x, y, 0, j);
+            for (int c = 0; c < 3; c++) {
+                if (x/factor >= 0 && x/factor < edited.width() && y/factor >= 0 && y/factor < edited.height())
+                    edited(x/factor, y/factor, 0, c) = original(x, y, 0, c);
             }
         }
     }
-    return applyBilinearInterpolation(newImg);
 }
 
-CImg<int> enlargeBy(CImg<int> img, char* fac){ //dodaj interpolacje
+void enlargeBy(CImg<int> &original, CImg<int> &edited, char* fac){ //dodac interpolacce
     float factor = atof(fac);
 
     float repeat = factor;
@@ -68,17 +67,17 @@ CImg<int> enlargeBy(CImg<int> img, char* fac){ //dodaj interpolacje
     else repeat = floor(repeat);
 
     cout << "Enlarging by: " << factor << endl;
-    CImg<int> newImg(img.width()*factor, img.height()*factor, 1, 3, 0);
-    for (int x = 0; x < img.width(); x++) {
-        for (int y = 0; y < img.height(); y++) {
-            for (int j = 0; j < 3; j++) {
+    edited = CImg<int>(original.width()*factor, original.height()*factor, 1, 3, 0);
+    for (int x = 0; x < original.width(); x++) {
+        for (int y = 0; y < original.height(); y++) {
+            for (int c = 0; c < 3; c++) {
                 for (int xx = 0; xx < repeat; xx++) {
                     for (int yy = 0; yy < repeat; yy++) {
-                        newImg(x*factor + xx, y*factor + yy, 0, j) = img(x, y, 0, j);
+                        edited(x*factor + xx, y*factor + yy, 0, c) = original(x, y, 0, c);
                     }
                 }
             }
         }
     }
-    return applyBilinearInterpolation(newImg);
+    applyBilinearInterpolation(edited);
 }

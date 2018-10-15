@@ -5,9 +5,10 @@
 
 using namespace std;
 using namespace cimg_library;
-CImg<int> changeBrightness(CImg<int>, char*);
-CImg<int> changeContrast(CImg<int>, char*);
-CImg<int> changeToNegative(CImg<int>);
+
+void changeBrightness(CImg<int> &original, CImg<int> &edited, char *value);
+void changeContrast(CImg<int> &original, CImg<int> &edited, char *value);
+void changeToNegative(CImg<int> &original, CImg<int> &edited);
 
 #endif //BASIC_MANIPULATIONS
 
