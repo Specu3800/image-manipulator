@@ -80,4 +80,5 @@ void enlargeBy(CImg<int> &original, CImg<int> &edited, char* fac){ //dodac inter
         }
     }
     applyBilinearInterpolation(edited);
+    applyBilinearInterpolation(edited);
 }
