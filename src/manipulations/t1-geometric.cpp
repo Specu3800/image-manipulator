@@ -50,13 +50,13 @@ void shrinkBy(CImg<int> &original, CImg<int> &edited, char* fac){ //dodac interp
     edited = CImg<int>(original.width()/factor, original.height()/factor, 1, 3, 0);
     for (int x = 0; x < original.width(); x++) {
         for (int y = 0; y < original.height(); y++) {
-            cout << x << " " << y << endl;
             for (int c = 0; c < 3; c++) {
                 if (x/factor >= 0 && x/factor < edited.width() && y/factor >= 0 && y/factor < edited.height())
                     edited(x/factor, y/factor, 0, c) = original(x, y, 0, c);
             }
         }
     }
+    //applyBilinearInterpolation(edited);
 }
 
 void enlargeBy(CImg<int> &original, CImg<int> &edited, char* fac){ //dodac interpolacce
@@ -79,6 +79,5 @@ void enlargeBy(CImg<int> &original, CImg<int> &edited, char* fac){ //dodac inter
             }
         }
     }
-    applyBilinearInterpolation(edited);
     applyBilinearInterpolation(edited);
 }
