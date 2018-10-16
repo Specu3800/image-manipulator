@@ -11,6 +11,7 @@ void doHorizontalFlip(CImg<int> &original, CImg<int> &edited){
     cout << "Flipping vertically " << endl;
     edited = original;
     for (int x = 0; x < original.width(); x++) {
+        displayProgress(x, original.width()-1);
         for (int y = 0; y < original.height()/2; y++) {
             for (int c = 0; c < 3; c++) {
                 swap(edited(x, y, 0, c), edited(x, edited.height() - y -1, 0, c));
@@ -23,6 +24,7 @@ void doVerticalFlip(CImg<int> &original, CImg<int> &edited){
     cout << "Flipping horizontally " << endl;
     edited = original;
     for (int x = 0; x < original.width()/2; x++) {
+        displayProgress(x, original.width()-1);
         for (int y = 0; y < original.height(); y++) {
             for (int c = 0; c < 3; c++) {
                 swap(edited(x, y, 0, c), edited(edited.width() - x - 1, y, 0, c));
@@ -35,6 +37,7 @@ void doDiagonalFlip(CImg<int> &original, CImg<int> &edited){ //rotate and vflip
     cout << "Flipping diagonally " << endl;
     edited = original;
     for (int x = 0; x < original.width(); x++) {
+        displayProgress(x, original.width()-1);
         for (int y = 0; y < original.height()/2; y++) {
             for (int c = 0; c < 3; c++) {
                 swap(edited(x, y, 0, c), edited(edited.width() - x - 1, edited.height() - y -1, 0, c));
@@ -49,6 +52,7 @@ void shrinkBy(CImg<int> &original, CImg<int> &edited, char* fac){ //dodac interp
     cout << "Shrinking by: " << factor << endl;
     edited = CImg<int>(original.width()/factor, original.height()/factor, 1, 3, 0);
     for (int x = 0; x < original.width(); x++) {
+        displayProgress(x, original.width()-1);
         for (int y = 0; y < original.height(); y++) {
             for (int c = 0; c < 3; c++) {
                 if (x/factor >= 0 && x/factor < edited.width() && y/factor >= 0 && y/factor < edited.height())
@@ -56,7 +60,7 @@ void shrinkBy(CImg<int> &original, CImg<int> &edited, char* fac){ //dodac interp
             }
         }
     }
-    //applyBilinearInterpolation(edited);
+    //applyBilinearInterpolation(edited); //will blur the image, depends on shrinking factor
 }
 
 void enlargeBy(CImg<int> &original, CImg<int> &edited, char* fac){ //dodac interpolacce
@@ -69,6 +73,7 @@ void enlargeBy(CImg<int> &original, CImg<int> &edited, char* fac){ //dodac inter
     cout << "Enlarging by: " << factor << endl;
     edited = CImg<int>(original.width()*factor, original.height()*factor, 1, 3, 0);
     for (int x = 0; x < original.width(); x++) {
+        displayProgress(x, original.width()-1);
         for (int y = 0; y < original.height(); y++) {
             for (int c = 0; c < 3; c++) {
                 for (int xx = 0; xx < repeat; xx++) {
