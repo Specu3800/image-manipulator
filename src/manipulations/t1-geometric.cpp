@@ -3,18 +3,18 @@
 #include "../../lib/CImg.templ"
 #include "t1-geometric.h"
 #include "t0-other.h"
+#include "t1-noise-removal.h"
 
 using namespace std;
 using namespace cimg_library;
 
 void doHorizontalFlip(CImg<int> &original, CImg<int> &edited){
     cout << "Flipping vertically " << endl;
-    edited = original;
     for (int x = 0; x < original.width(); x++) {
         displayProgress(x, original.width()-1);
-        for (int y = 0; y < original.height()/2; y++) {
+        for (int y = 0; y < original.height(); y++) {
             for (int c = 0; c < 3; c++) {
-                swap(edited(x, y, 0, c), edited(x, edited.height() - y -1, 0, c));
+                edited(x, y, 0, c) = original(x, edited.height() - y -1, 0, c);
             }
         }
     }
@@ -22,12 +22,11 @@ void doHorizontalFlip(CImg<int> &original, CImg<int> &edited){
 
 void doVerticalFlip(CImg<int> &original, CImg<int> &edited){
     cout << "Flipping horizontally " << endl;
-    edited = original;
-    for (int x = 0; x < original.width()/2; x++) {
+    for (int x = 0; x < original.width(); x++) {
         displayProgress(x, original.width()-1);
         for (int y = 0; y < original.height(); y++) {
             for (int c = 0; c < 3; c++) {
-                swap(edited(x, y, 0, c), edited(edited.width() - x - 1, y, 0, c));
+                edited(x, y, 0, c) = original(edited.width() - x - 1, y, 0, c);
             }
         }
     }
@@ -35,12 +34,11 @@ void doVerticalFlip(CImg<int> &original, CImg<int> &edited){
 
 void doDiagonalFlip(CImg<int> &original, CImg<int> &edited){ //rotate and vflip
     cout << "Flipping diagonally " << endl;
-    edited = original;
     for (int x = 0; x < original.width(); x++) {
         displayProgress(x, original.width()-1);
-        for (int y = 0; y < original.height()/2; y++) {
+        for (int y = 0; y < original.height(); y++) {
             for (int c = 0; c < 3; c++) {
-                swap(edited(x, y, 0, c), edited(edited.width() - x - 1, edited.height() - y -1, 0, c));
+                edited(x, y, 0, c) = original(edited.width() - x - 1, edited.height() - y -1, 0, c);
             }
         }
     }

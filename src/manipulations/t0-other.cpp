@@ -35,7 +35,9 @@ void applyBilinearInterpolation(CImg<int> &edited){
             if (x - 1 >= 0) U4 = (edited(x - 1, y, 0, 0) != 0 || edited(x - 1, y, 0, 1) != 0 || edited(x - 1, y, 0, 2) != 0); else U4 = false;
 
             for (int c = 0; c < 3; c++) {
-                if (K1 && K2 && K3 && K4)
+                if (U1 && U2 && U3 && U4)
+                    edited(x, y, 0, c) = 0.25*(edited(x, y - 1, 0, c) + edited(x, y + 1, 0, c) + edited(x - 1, y, 0, c) + edited(x + 1, y, 0, c));
+                else if (K1 && K2 && K3 && K4)
                     edited(x, y, 0, c) = 0.25*(edited(x - 1, y - 1, 0, c) + edited(x + 1, y - 1, 0, c) + edited(x - 1, y + 1, 0, c) + edited(x + 1, y + 1, 0, c));
                 else if (U1 && U3)
                     edited(x, y, 0, c) = 0.5*(edited(x, y - 1, 0, c) + edited(x, y + 1, 0, c));

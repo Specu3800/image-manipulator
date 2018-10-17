@@ -18,8 +18,12 @@ using namespace cimg_library;
 
 int main(int argc, char* argv[]) {
 
+    bool justAnalysis = false;
+
     CImg<int> image1;
     CImg<int> image2;
+    float analysis;
+
     if (argc < 2 || argc > 5) {cout << "Wrong number of parameters.\nType --help to view the list of the available commands." << endl; exit(0); }
     else if (argv[1] == string("--help")) displayHelp();
     else {
@@ -42,8 +46,8 @@ int main(int argc, char* argv[]) {
         else if (argv[1] == string("--shrink")) shrinkBy(image1, image2, argv[2]);
         else if (argv[1] == string("--enlarge")) enlargeBy(image1, image2, argv[2]);
 
-        else if (argv[1] == string("--adaptive")) {applyAdaptiveMedianFilter(image1, image2, argv[2]);}
-        else if (argv[1] == string("--median")) {applyMedianFilter(image1, image2, argv[2]);}
+        else if (argv[1] == string("--adaptive")) applyAdaptiveMedianFilter(image1, image2, argv[2]);
+        else if (argv[1] == string("--median")) applyMedianFilter(image1, image2, argv[2]);
         else if (argv[1] == string("--min")) applyMinimumFilter(image1, image2, argv[2]);
         else if (argv[1] == string("--max")) applyMaximumFilter(image1, image2, argv[2]);
         else {
@@ -52,19 +56,24 @@ int main(int argc, char* argv[]) {
                 cout << argv[argc-1] << " does not exist, try again." << endl; exit(0);
             }
             image2 = CImg<int>(argv[argc-1]);
-            if      (argv[1] == string("--mse")) getMeanSquareError(image1, image2);
-            else if (argv[1] == string("--pmse")) getPeakMeanSquareError(image1, image2);
-            else if (argv[1] == string("--snr")) getSignalToNoiseRatio(image1, image2);
-            else if (argv[1] == string("--psnr")) getPeakSignalToNoiseRatio(image1, image2);
-            else if (argv[1] == string("--md")) getMaximumDifference(image1, image2);
+            justAnalysis = true;
+            if      (argv[1] == string("--mse")) getMeanSquareError(image1, image2, analysis);
+            else if (argv[1] == string("--pmse")) getPeakMeanSquareError(image1, image2, analysis);
+            else if (argv[1] == string("--snr")) getSignalToNoiseRatio(image1, image2, analysis);
+            else if (argv[1] == string("--psnr")) getPeakSignalToNoiseRatio(image1, image2, analysis);
+            else if (argv[1] == string("--md")) getMaximumDifference(image1, image2, analysis);
 
             else cout << "No maching command. \nType --help to view the list of the available commands.";
         }
 
-        image2.save(argv[argc-1]); //save edited img in destination
-        image1.save("../out/original.bmp");
-        image2.save("../out/edited.bmp");
-        image1.append(image2, 'x').display("COMPARATION", 0); //display
+        if(justAnalysis){
+            cout << "Analysis result for those two images equils: " << analysis << endl;
+        } else {
+            image1.save("original.bmp");
+            image2.save("edited.bmp");
+            image2.save(argv[argc - 1]); //save edited img in destination
+            image1.append(image2, 'x').display("COMPARATION", 0); //display
+        }
     }
     return 0;
 }
