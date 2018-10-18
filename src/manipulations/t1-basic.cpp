@@ -12,10 +12,10 @@ void changeBrightness(CImg<int> &original, CImg<int> &edited, char* val) {
     for (int x = 0; x < original.width(); x++) {
         displayProgress(x, original.width()-1);
         for (int y = 0; y < original.height(); y++) {
-            for (int c = 0; c < 3; c++) {
-                if (original(x, y, 0, c) + value > 255) edited(x, y, 0, c) = 255;
-                else if (original(x, y, 0, c) + value < 0) edited(x, y, 0, c) = 0;
-                else edited(x, y, 0, c) = original(x, y, 0, c) + value;
+            for (int s = 0; s < original.spectrum(); s++) {
+                if (original(x, y, 0, s) + value > 255) edited(x, y, 0, s) = 255;
+                else if (original(x, y, 0, s) + value < 0) edited(x, y, 0, s) = 0;
+                else edited(x, y, 0, s) = original(x, y, 0, s) + value;
             }
         }
     }
@@ -29,10 +29,10 @@ void changeContrast(CImg<int> &original, CImg<int> &edited, char* fac) {
     for (int x = 0; x < original.width(); x++) {
         displayProgress(x, original.width()-1);
         for (int y = 0; y < original.height(); y++) {
-            for (int c = 0; c < 3; c++) {
-                if (factor * original(x, y, 0, c) + beta > 255) edited(x, y, 0, c) = 255;
-                else if (factor * original(x, y, 0, c) + beta < 0) edited(x, y, 0, c) = 0;
-                else edited(x, y, 0, c) = factor * original(x, y, 0, c) + beta;
+            for (int s = 0; s < original.spectrum(); s++) {
+                if (factor * original(x, y, 0, s) + beta > 255) edited(x, y, 0, s) = 255;
+                else if (factor * original(x, y, 0, s) + beta < 0) edited(x, y, 0, s) = 0;
+                else edited(x, y, 0, s) = factor * original(x, y, 0, s) + beta;
             }
         }
     }
@@ -43,8 +43,8 @@ void changeToNegative(CImg<int> &original, CImg<int> &edited) {
     for (int x = 0; x < original.width(); x++) {
         displayProgress(x, original.width()-1);
         for (int y = 0; y < original.height(); y++) {
-            for (int c = 0; c < 3; c++) {
-                edited(x, y, 0, c) = 255 - original(x, y, 0, c);
+            for (int s = 0; s < original.spectrum(); s++) {
+                edited(x, y, 0, s) = 255 - original(x, y, 0, s);
             }
         }
     }

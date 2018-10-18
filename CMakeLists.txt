@@ -11,7 +11,7 @@ find_package(PkgConfig)
 SET(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/out)
 
 #Path of CImg.h file relative to this file path
-set(CIMG_H_PATH ${PROJECT_SOURCE_DIR}/libs/)
+set(CIMG_H_PATH ${PROJECT_SOURCE_DIR}/lib/)
 include_directories( ${PROJECT_SOURCE_DIR} )
 include_directories( ${CIMG_H_PATH} )
 

@@ -11,8 +11,8 @@ float getMeanSquareError(CImg<int> &img1, CImg<int> &img2, float &result){
 
     for (int x = 0; x < img1.width(); x++) {
         for(int y = 0; y < img1.height(); y++) {
-            for(int c = 0; c < 3; c++) {
-                sum += pow((img1(x, y, 0, c) - img2(x, y, 0, c)), 2);
+            for (int s = 0; s < img1.spectrum(); s++) {
+                sum += pow((img1(x, y, 0, s) - img2(x, y, 0, s)), 2);
             }
         }
     }
@@ -28,9 +28,9 @@ float getPeakMeanSquareError(CImg<int> &img1, CImg<int> &img2, float &result) {
 
     for (int x = 0; x < img1.width(); x++){
         for (int y = 0; y < img1.height(); y++) {
-            for(int c = 0; c < 3; c++) {
-                if (img1(x, y, 0, c) > max)
-                    max = img1(x, y, 0, c);
+            for (int s = 0; s < img1.spectrum(); s++) {
+                if (img1(x, y, 0, s) > max)
+                    max = img1(x, y, 0, s);
             }
         }
     }
@@ -45,8 +45,8 @@ float getSignalToNoiseRatio(CImg<int> &img1, CImg<int> &img2, float &result){
 
     for (int x = 0; x < img1.width(); x++){
         for (int y = 0; y < img1.height(); y++) {
-            for (int c = 0; c < 3; c++) {
-                square += pow(img1(x, y, 0, c), 2);
+            for (int s = 0; s < img1.spectrum(); s++) {
+                square += pow(img1(x, y, 0, s), 2);
             }
         }
     }
@@ -62,9 +62,8 @@ float getPeakSignalToNoiseRatio(CImg<int> &img1, CImg<int> &img2, float &result)
 
     for (int x = 0; x < img1.width(); x++){
         for (int y = 0; y < img1.height(); y++){
-            for (int c = 0; c < 3; c++) {
-                if (img1(x, y, 0, c) > max)
-                    max += pow(img1(x, y, 0, c), 2);
+                for (int s = 0; s < img1.spectrum(); s++) {
+                    max += pow(img1(x, y, 0, s), 2);
             }
         }
     }
@@ -80,9 +79,9 @@ float getMaximumDifference(CImg<int> &img1, CImg<int> &img2, float &result){
 
     for (int x = 0; x < img1.width(); x++){
         for (int y = 0; y < img1.height(); y++) {
-            for (int c = 0; c < 3; c++) {
-                if (abs(img1(x, y, 0, c) - img2(x, y, 0, c)  > MD))
-                    MD = abs(img1(x, y, 0, c) - img2(x, y, 0, c));
+            for (int s = 0; s < img1.spectrum(); s++) {
+                if (abs(img1(x, y, 0, s) - img2(x, y, 0, s)  > MD))
+                    MD = abs(img1(x, y, 0, s) - img2(x, y, 0, s));
             }
         }
     }

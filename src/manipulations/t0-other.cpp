@@ -34,15 +34,15 @@ void applyBilinearInterpolation(CImg<int> &edited){
             if (y + 1 < edited.height()) U3 = (edited(x, y + 1, 0, 0) != 0 || edited(x, y + 1, 0, 1) != 0 || edited(x, y + 1, 0, 2) != 0); else U3 = false;
             if (x - 1 >= 0) U4 = (edited(x - 1, y, 0, 0) != 0 || edited(x - 1, y, 0, 1) != 0 || edited(x - 1, y, 0, 2) != 0); else U4 = false;
 
-            for (int c = 0; c < 3; c++) {
+            for (int s = 0; s < edited.spectrum(); s++) {
                 if (U1 && U2 && U3 && U4)
-                    edited(x, y, 0, c) = 0.25*(edited(x, y - 1, 0, c) + edited(x, y + 1, 0, c) + edited(x - 1, y, 0, c) + edited(x + 1, y, 0, c));
+                    edited(x, y, 0, s) = 0.25*(edited(x, y - 1, 0, s) + edited(x, y + 1, 0, s) + edited(x - 1, y, 0, s) + edited(x + 1, y, 0, s));
                 else if (K1 && K2 && K3 && K4)
-                    edited(x, y, 0, c) = 0.25*(edited(x - 1, y - 1, 0, c) + edited(x + 1, y - 1, 0, c) + edited(x - 1, y + 1, 0, c) + edited(x + 1, y + 1, 0, c));
+                    edited(x, y, 0, s) = 0.25*(edited(x - 1, y - 1, 0, s) + edited(x + 1, y - 1, 0, s) + edited(x - 1, y + 1, 0, s) + edited(x + 1, y + 1, 0, s));
                 else if (U1 && U3)
-                    edited(x, y, 0, c) = 0.5*(edited(x, y - 1, 0, c) + edited(x, y + 1, 0, c));
+                    edited(x, y, 0, s) = 0.5*(edited(x, y - 1, 0, s) + edited(x, y + 1, 0, s));
                 else if (U2 && U4)
-                    edited(x, y, 0, c) = 0.5*(edited(x - 1, y, 0, c) + edited(x + 1, y, 0, c));
+                    edited(x, y, 0, s) = 0.5*(edited(x - 1, y, 0, s) + edited(x + 1, y, 0, s));
             }
         }
     }
