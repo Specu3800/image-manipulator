@@ -38,6 +38,7 @@ int main(int argc, char* argv[]) {
 
         if (argv[1] == string("--brightness")) changeBrightness(image1, image2, argv[2]);
         else if (argv[1] == string("--contrast")) changeContrast(image1, image2, argv[2]);
+        else if (argv[1] == string("--contrast2")) changeContrast2(image1, image2, argv[2]);
         else if (argv[1] == string("--negative")) changeToNegative(image1, image2);
 
         else if (argv[1] == string("--hflip")) doHorizontalFlip(image1, image2);
@@ -63,7 +64,10 @@ int main(int argc, char* argv[]) {
             else if (argv[1] == string("--psnr")) getPeakSignalToNoiseRatio(image1, image2, analysis);
             else if (argv[1] == string("--md")) getMaximumDifference(image1, image2, analysis);
 
-            else cout << "No maching command. \nType --help to view the list of the available commands.";
+            else {
+                cout << "No maching command. \nType --help to view the list of the available commands.";
+                return 0;
+            }
         }
 
         if(justAnalysis){

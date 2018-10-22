@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cmath>
 #include "../../lib/CImg.templ"
 #include "t1-basic.h"
 #include "t0-other.h"
@@ -25,14 +26,30 @@ void changeContrast(CImg<int> &original, CImg<int> &edited, char* fac) {
     float factor = atof(fac);
     if (factor < 0) {cout << "Wrong value of the contrast. \nType --help to view information about available commands." << endl; exit(0);}
     cout << "Changing contrast by " << factor << endl;
-    float beta = 127 - 127 * factor;
     for (int x = 0; x < original.width(); x++) {
         displayProgress(x, original.width()-1);
         for (int y = 0; y < original.height(); y++) {
             for (int s = 0; s < original.spectrum(); s++) {
-                if (factor * original(x, y, 0, s) + beta > 255) edited(x, y, 0, s) = 255;
-                else if (factor * original(x, y, 0, s) + beta < 0) edited(x, y, 0, s) = 0;
-                else edited(x, y, 0, s) = factor * original(x, y, 0, s) + beta;
+                int newColor = (original(x, y, 0, s) - 128)*factor + 128;
+                if (newColor > 255) edited(x, y, 0, s) = 255;
+                else if (newColor< 0) edited(x, y, 0, s) = 0;
+                else edited(x, y, 0, s) = newColor;
+            }
+        }
+    }
+}
+void changeContrast2(CImg<int> &original, CImg<int> &edited, char* fac) {
+    float factor = atof(fac);
+    if (factor < 0) {cout << "Wrong value of the contrast. \nType --help to view information about available commands." << endl; exit(0);}
+    cout << "Changing contrast by " << factor << endl;
+    for (int x = 0; x < original.width(); x++) {
+        displayProgress(x, original.width()-1);
+        for (int y = 0; y < original.height(); y++) {
+            for (int s = 0; s < original.spectrum(); s++) {
+                int newColor = 255 * pow((float)(original(x, y, 0, s)) / 255.0, factor);
+                if (newColor > 255) edited(x, y, 0, s) = 255;
+                else if (newColor< 0) edited(x, y, 0, s) = 0;
+                else edited(x, y, 0, s) = newColor;
             }
         }
     }
