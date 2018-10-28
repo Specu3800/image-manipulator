@@ -36,8 +36,15 @@ Histogram::Histogram(CImg<int> &nazwa){
     createHistogram();
 }
 
+Histogram::Histogram() {
+    this->R = new int[256];
+    this->G = new int[256];
+    this->B = new int[256];
+}
+
+
 CImg<int>* Histogram::getHistogramGraph() {
-    CImg<int>* graph = new CImg<int>(256, 5000, 1, 3, 255);
+    CImg<int>* graph = new CImg<int>(500, 5000, 1, 3, 255);
     int* channel;
     int RGB = 0;
     switch (RGB){
@@ -73,26 +80,22 @@ CImg<int>* Histogram::getHistogramGraph() {
 }
 
 
-
-void applyExponentialPDF(CImg<int> &original, CImg<int> &edited){
+void applyExponentialPDF(CImg<int> &original, CImg<int> &edited, Histogram &histogram){
     //int depth = atoi(d);
     //if (depth < 1) {cout << "Wrong depth value. \nType --help to view information about available commands." << endl; exit(0);}
+
+
     vector<int> pixels;
     for (int x = 0; x < original.width(); x++) {
         displayProgress(x, original.width()-1);
         for (int y = 0; y < original.height(); y++) {
+
+
             //r
-            float gmin = 5;
+            float gmin = 50;
             int alpha = 3;
             int HM = 9;
             int sumaHM = 0;
-
-            for (int m = 0; m < original(x, y, 0, 0); m++){
-                //sumaHM += R[]
-            }
-
-
-
             edited(x, y, 0, 0) = gmin - (1.0/alpha) *
                     log(1 - 1/(original.width()*original.height()) * HM);
 

@@ -2,6 +2,7 @@
 #define HISTOGRAM
 
 #include "../../lib/CImg.templ"
+#include "t2-histogram.h"
 #include <vector>
 
 using namespace std;
@@ -17,13 +18,14 @@ public:
     int* B;
 
     Histogram(CImg<int> &nazwa);
+    Histogram();
 
     void createHistogram();
 
     CImg<int>* getHistogramGraph();
 };
 
-void applyExponentialPDF(CImg<int> &original, CImg<int> &edited, Histogram *histogram);
+void applyExponentialPDF(CImg<int> &original, CImg<int> &edited, Histogram &histogram);
 
 
 
