@@ -44,37 +44,35 @@ Histogram::Histogram() {
 
 
 CImg<int>* Histogram::getHistogramGraph() {
-    CImg<int>* graph = new CImg<int>(500, 5000, 1, 3, 255);
-    int* channel;
-    int RGB = 0;
-    switch (RGB){
-        case 0:
-            channel = this->R;
-            break;
-        case 1:
-            channel = G;
-            break;
-        case 2:
-            channel = B;
-            break;
-        default:
-            return nullptr;
-    }
+    int graphWidth = 256;
+    CImg<int>* graph = new CImg<int>(graphWidth*3, 5000, 1, 3, 255);
 
-    for (int x = 0; x < graph->width(); x++)
+
+    for (int x = 0; x < graphWidth; x++)
     {
-        for (int y = graph->height() - 1; y > graph->height() - channel[x] -1; y--)
+        for (int y = graph->height() - 1; y > graph->height() - R[x] -1; y--)
         {
-            (*graph)(x, y, 0, 0) = 0;
             (*graph)(x, y, 0, 1) = 0;
             (*graph)(x, y, 0, 2) = 0;
         }
     }
+    for (int x = graphWidth; x < 2 *graphWidth; x++)
+    {
+        for (int y = graph->height() - 1; y > graph->height() - G[x] -1; y--)
+        {
+            (*graph)(x, y, 0, 0) = 0;
+            (*graph)(x, y, 0, 2) = 0;
+        }
+    }
+    for (int x = 2*graphWidth; x < graph->width(); x++)
+    {
+        for (int y = graph->height() - 1; y > graph->height() - B[x] -1; y--)
+        {
+            (*graph)(x, y, 0, 1) = 0;
+            (*graph)(x, y, 0, 0) = 0;
+        }
+    }
 
-//    for (int x = 0; x < graph->width(); x++)
-//    {
-//        (*graph)(x, graph->height() - channel[x] - 1, 0, 0) = 0;
-//    }
 
     return graph;
 }
