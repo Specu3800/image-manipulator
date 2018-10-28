@@ -26,9 +26,9 @@ int main(int argc, char* argv[]) {
     CImg<int> image2;
     float analysis;
 
-    int* R = new int[255];
-    int* G = new int[255];
-    int* B = new int[255];
+    int* R = new int[256];
+    int* G = new int[256];
+    int* B = new int[256];
 
     if (argc < 2 || argc > 5) {cout << "Wrong number of parameters.\nType --help to view the list of the available commands." << endl;}
     else if (argv[1] == string("--help")) displayHelp();

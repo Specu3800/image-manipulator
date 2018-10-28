@@ -8,7 +8,9 @@
 using namespace std;
 using namespace cimg_library;
 
-void getHistogram(int* R, int* G, int* B){
-    R[1] = 7;
-    cout << R[1] << endl;
+void getHistogram(CImg<int> &image, int RGB){
+    int hist[256];
+    for (int i = 0; i < 256; i++)
+        hist[i] = 0;
+
 }
