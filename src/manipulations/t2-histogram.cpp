@@ -17,6 +17,7 @@ void getHistogram(CImg<int> &image, int* R, int* G, int* B){
         G[i] = 0;
         B[i] = 0;
     }
+
     for (int x = 0; x < image.width(); x++){
         for (int y = 0; y < image.height(); y++)
         {
@@ -29,7 +30,7 @@ void getHistogram(CImg<int> &image, int* R, int* G, int* B){
 
 }
 CImg<int>* getHistogramGraph(int* R, int* G, int* B, int RGB){
-    CImg<int>* graph = new CImg<int>(256, 256, 1, 3, 255);
+    CImg<int>* graph = new CImg<int>(256, 3000, 1, 3, 255);
     int* channel;
     switch (RGB){
         case 0:
@@ -42,19 +43,20 @@ CImg<int>* getHistogramGraph(int* R, int* G, int* B, int RGB){
             channel = B;
             break;
         default:
-            return;
             break;
     }
 
-    for (int x = 0; x < graph.width(); x++)
+    for (int x = 0; x < graph->width(); x++)
     {
-        for (int y = 0; y < channel[x]; y++)
+        for (int y = graph->height() - 1; y > graph->height() - channel[x] -1; y--)
         {
-            graph(x, y, 0, RGB) = 0;
+            (*graph)(x, y, 0, 0) = 0;
+            (*graph)(x, y, 0, 1) = 0;
+            (*graph)(x, y, 0, 2) = 0;
         }
     }
 
-
+    return graph;
 }
 
 void applyExponentialPDF(CImg<int> &original, CImg<int> &edited){
@@ -64,13 +66,15 @@ void applyExponentialPDF(CImg<int> &original, CImg<int> &edited){
     for (int x = 0; x < original.width(); x++) {
         displayProgress(x, original.width()-1);
         for (int y = 0; y < original.height(); y++) {
-            for (int s = 0; s < original.spectrum(); s++) {
-                float gmin = 5;
-                int alpha = 3;
-                int HM = 300;
-                edited(x, y, 0, s) = gmin - (1.0/alpha) *
-                        log(1 - 1/(original.width()*original.height()) * HM);
-            }
+            float gmin = 5;
+            int alpha = 3;
+            int sumaHM = 0;
+
+
+
+            edited(x, y, 0, s) = gmin - (1.0/alpha) *
+                    log(1 - 1/(original.width()*original.height()) * HM);
+
         }
     }
 }

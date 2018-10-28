@@ -32,7 +32,14 @@ int main(int argc, char* argv[]) {
 
     if (argc < 2 || argc > 5) {cout << "Wrong number of parameters.\nType --help to view the list of the available commands." << endl;}
     else if (argv[1] == string("--help")) displayHelp();
-    else if (argv[1] == string("--histogram")) getHistogram(R, G, B);
+    else if (argv[1] == string("--histogram")) {
+
+        image1 = CImg<int>(argv[argc-1]);
+        getHistogram(image1, R, G, B);
+
+        image2 = *getHistogramGraph(R, G, B, 1);
+        image2.display("chuj");
+    }
     else {
         ifstream in1(argv[argc-2]);
         if (!in1.good()) {
@@ -58,6 +65,7 @@ int main(int argc, char* argv[]) {
         else if (argv[1] == string("--median")) applyMedianFilter(image1, image2, argv[2]);
         else if (argv[1] == string("--min")) applyMinimumFilter(image1, image2, argv[2]);
         else if (argv[1] == string("--min")) applyMinimumFilter(image1, image2, argv[2]);
+
 
         else if (argv[1] == string("--hexponent")) applyMinimumFilter(image1, image2, argv[2]);
 
