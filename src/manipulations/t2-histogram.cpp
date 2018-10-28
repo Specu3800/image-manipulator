@@ -47,26 +47,27 @@ CImg<int>* Histogram::getHistogramGraph() {
     int graphWidth = 256;
     CImg<int>* graph = new CImg<int>(graphWidth*3, 5000, 1, 3, 255);
 
-
     for (int x = 0; x < graphWidth; x++)
     {
-        for (int y = graph->height() - 1; y > graph->height() - R[x] -1; y--)
+
+        for (int y = graph->height() - 1; y > graph->height() - R[x] - 1; y--)
         {
             (*graph)(x, y, 0, 1) = 0;
             (*graph)(x, y, 0, 2) = 0;
         }
     }
+
     for (int x = graphWidth; x < 2 *graphWidth; x++)
     {
-        for (int y = graph->height() - 1; y > graph->height() - G[x] -1; y--)
+        for (int y = graph->height() - 1; y > graph->height() - G[x-graphWidth] - 1; y--)
         {
             (*graph)(x, y, 0, 0) = 0;
             (*graph)(x, y, 0, 2) = 0;
         }
     }
-    for (int x = 2*graphWidth; x < graph->width(); x++)
+    for (int x = 2*graphWidth; x < graph->width()-1; x++)
     {
-        for (int y = graph->height() - 1; y > graph->height() - B[x] -1; y--)
+        for (int y = graph->height() - 1; y > graph->height() - B[x-2*graphWidth] -1; y--)
         {
             (*graph)(x, y, 0, 1) = 0;
             (*graph)(x, y, 0, 0) = 0;

@@ -31,18 +31,13 @@ int main(int argc, char* argv[]) {
 
     if (argc < 2 || argc > 5) {cout << "Wrong number of parameters.\nType --help to view the list of the available commands." << endl;}
     else if (argv[1] == string("--help")) displayHelp();
-    else if (argv[1] == string("--histogram")) {
-        image1 = CImg<int>(argv[argc-1]);
-        image1Histogram = new Histogram(image1);
-        (*image1Histogram->getHistogramGraph()).display("beniz");
-    }
-
     else if (argv[1] == string("--hexponent")) {
         image1 = CImg<int>(argv[argc-2]);
         image2 = CImg<int>(image1.width(), image1.height(), 1, 3, 0);
         image1Histogram = new Histogram(image1);
-        applyExponentialPDF(image1, image2, *image1Histogram);
-        image1.append(image2, 'x').display("COMPARATION", 0); //display
+        (*image1Histogram->getHistogramGraph()).display("beniz");
+//        applyExponentialPDF(image1, image2, *image1Histogram);
+//        image1.append(image2, 'x').display("COMPARATION", 0); //display
     }
 
     else {
