@@ -36,8 +36,8 @@ int main(int argc, char* argv[]) {
         image2 = CImg<int>(image1.width(), image1.height(), 1, 3, 0);
         image1Histogram = new Histogram(image1);
         (*image1Histogram->getHistogramGraph()).display("beniz");
-//        applyExponentialPDF(image1, image2, *image1Histogram);
-//        image1.append(image2, 'x').display("COMPARATION", 0); //display
+        applyExponentialPDF(image1, image2, argv[2], *image1Histogram);
+        image1.append(image2, 'x').display("COMPARATION", 0); //display
     }
 
     else {
@@ -65,8 +65,6 @@ int main(int argc, char* argv[]) {
         else if (argv[1] == string("--median")) applyMedianFilter(image1, image2, argv[2]);
         else if (argv[1] == string("--min")) applyMinimumFilter(image1, image2, argv[2]);
         else if (argv[1] == string("--min")) applyMinimumFilter(image1, image2, argv[2]);
-
-
 
         else {
             ifstream in2(argv[argc-1]);

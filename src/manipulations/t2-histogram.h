@@ -25,7 +25,7 @@ public:
     CImg<int>* getHistogramGraph();
 };
 
-void applyExponentialPDF(CImg<int> &original, CImg<int> &edited, Histogram &histogram);
+void applyExponentialPDF(CImg<int> &original, CImg<int> &edited, char*, Histogram &histogram);
 
 
 

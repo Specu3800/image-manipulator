@@ -1,8 +1,18 @@
-//
-// Created by mike on 28.10.18.
-//
+#ifndef CHARACTERISTICS
+#define CHARACTERISTICS
 
-#ifndef IMAGE_MANIPULATOR_T2_CHARACTERISTICS_H
-#define IMAGE_MANIPULATOR_T2_CHARACTERISTICS_H
+#include "../../lib/CImg.templ"
 
-#endif //IMAGE_MANIPULATOR_T2_CHARACTERISTICS_H
+using namespace std;
+using namespace cimg_library;
+
+float getMean(CImg<int> &image1, CImg<int> &image2, float &result);
+float getVariance(CImg<int> &image1, CImg<int> &image2, float &result);
+float getStandardDeviation(CImg<int> &image1, CImg<int> &image2, float &result);
+float getVariationCoefficientI(CImg<int> &image1, CImg<int> &image2, float &result);
+float getVariationCoefficientII(CImg<int> &image1, CImg<int> &image2, float &result);
+float getAsymmetryCoefficient(CImg<int> &image1, CImg<int> &image2, float &result);
+float getFlatteningCoefficient(CImg<int> &image1, CImg<int> &image2, float &result);
+float getInformationSourceEntropy(CImg<int> &image1, CImg<int> &image2, float &result);
+
+#endif //CHARACTERISTICS

@@ -55,7 +55,7 @@ add_executable(image-manipulator
         src/manipulations/t2-histogram.cpp
         src/manipulations/t2-histogram.h
         src/manipulations/t2-characteristics.cpp
-        src/manipulations/t2-characteristics.h)
+        src/manipulations/t2-characteristics.h src/manipulations/t2-filters.cpp src/manipulations/t2-filters.h)
 target_link_libraries(image-manipulator ${SYSTEM_LIBS})
 
 
