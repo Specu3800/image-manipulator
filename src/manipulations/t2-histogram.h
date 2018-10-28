@@ -20,10 +20,10 @@ public:
 
     void createHistogram();
 
-    CImg<int>* getHistogramGraph(int* R, int* G, int* B, int RGB);
+    CImg<int>* getHistogramGraph();
 };
 
-void applyExponentialPDF(CImg<int> &original, CImg<int> &edited);
+void applyExponentialPDF(CImg<int> &original, CImg<int> &edited, Histogram *histogram);
 
 
 

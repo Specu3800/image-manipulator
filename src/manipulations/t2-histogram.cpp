@@ -36,12 +36,13 @@ Histogram::Histogram(CImg<int> &nazwa){
     createHistogram();
 }
 
-CImg<int>* Histogram::getHistogramGraph(int *R, int *G, int *B, int RGB) {
-    CImg<int>* graph = new CImg<int>(256, 3000, 1, 3, 255);
+CImg<int>* Histogram::getHistogramGraph() {
+    CImg<int>* graph = new CImg<int>(256, 5000, 1, 3, 255);
     int* channel;
+    int RGB = 0;
     switch (RGB){
         case 0:
-            channel = R;
+            channel = this->R;
             break;
         case 1:
             channel = G;
@@ -63,10 +64,10 @@ CImg<int>* Histogram::getHistogramGraph(int *R, int *G, int *B, int RGB) {
         }
     }
 
-    for (int x = 0; x < graph->width(); x++)
-    {
-        (*graph)(x, graph->height() - channel[x] - 1, 0, 0) = 0;
-    }
+//    for (int x = 0; x < graph->width(); x++)
+//    {
+//        (*graph)(x, graph->height() - channel[x] - 1, 0, 0) = 0;
+//    }
 
     return graph;
 }

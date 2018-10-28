@@ -26,14 +26,14 @@ int main(int argc, char* argv[]) {
     CImg<int> image2;
     float analysis;
 
-    int* R = new int[256];
-    int* G = new int[256];
-    int* B = new int[256];
+    Histogram* image1Histogram;
 
     if (argc < 2 || argc > 5) {cout << "Wrong number of parameters.\nType --help to view the list of the available commands." << endl;}
     else if (argv[1] == string("--help")) displayHelp();
     else if (argv[1] == string("--histogram")) {
-;
+        image1 = CImg<int>(argv[argc-1]);
+        image1Histogram = new Histogram(image1);
+        (*image1Histogram->getHistogramGraph()).display("beniz");
     }
     else {
         ifstream in1(argv[argc-2]);
@@ -62,7 +62,7 @@ int main(int argc, char* argv[]) {
         else if (argv[1] == string("--min")) applyMinimumFilter(image1, image2, argv[2]);
 
 
-        else if (argv[1] == string("--hexponent")) applyMinimumFilter(image1, image2, argv[2]);
+        //else if (argv[1] == string("--hexponent")) applyExponentialPDF(image1, image2, argv[2]);
 
         else {
             ifstream in2(argv[argc-1]);
