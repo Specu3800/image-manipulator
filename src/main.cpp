@@ -59,6 +59,8 @@ int main(int argc, char* argv[]) {
         else if (argv[1] == string("--min")) applyMinimumFilter(image1, image2, argv[2]);
         else if (argv[1] == string("--min")) applyMinimumFilter(image1, image2, argv[2]);
 
+        else if (argv[1] == string("--hexponent")) applyMinimumFilter(image1, image2, argv[2]);
+
         else {
             ifstream in2(argv[argc-1]);
             if (!in2.good()) {
