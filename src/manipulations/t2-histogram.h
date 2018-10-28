@@ -14,16 +14,10 @@ private:
     int* R;
     int* G;
     int* B;
-    void createHistogram()
+    void createHistogram();
 
 public:
-    Histogram(CImg<int> &nazwa){
-        this -> R = new int[256];
-        this -> G = new int[256];
-        this -> B = new int[256];
-        this -> sourceImage = nazwa;
-        createHistogram();
-    }
+    Histogram(CImg<int> &nazwa);
 
 };
 
