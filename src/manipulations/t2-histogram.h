@@ -7,8 +7,22 @@
 using namespace std;
 using namespace cimg_library;
 
-void getHistogram(CImg<int> &image, int* R, int* G, int* B);
-CImg<int>* getHistogramGraph(int* R, int* G, int* B, int RGB);
+
+class Histogram{
+
+public:
+    CImg<int>* sourceImage;
+
+    int* R;
+    int* G;
+    int* B;
+
+    Histogram(CImg<int> &nazwa);
+
+    void createHistogram();
+
+    CImg<int>* getHistogramGraph(int* R, int* G, int* B, int RGB);
+};
 
 void applyExponentialPDF(CImg<int> &original, CImg<int> &edited);
 

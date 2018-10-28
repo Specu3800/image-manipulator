@@ -11,25 +11,32 @@
 using namespace std;
 using namespace cimg_library;
 
-void getHistogram(CImg<int> &image, int* R, int* G, int* B){
+void Histogram::createHistogram() {
     for (int i = 0; i < 256; i++) {
         R[i] = 0;
         G[i] = 0;
         B[i] = 0;
     }
 
-    for (int x = 0; x < image.width(); x++){
-        for (int y = 0; y < image.height(); y++)
+    for (int x = 0; x < this->sourceImage->width(); x++){
+        for (int y = 0; y < this->sourceImage->height(); y++)
         {
-            R[image(x, y, 0, 0)]++;
-            G[image(x, y, 0, 1)]++;
-            B[image(x, y, 0, 2)]++;
+            R[(*this->sourceImage)(x, y, 0, 0)]++;
+            G[(*this->sourceImage)(x, y, 0, 1)]++;
+            B[(*this->sourceImage)(x, y, 0, 2)]++;
         }
     }
-
-
 }
-CImg<int>* getHistogramGraph(int* R, int* G, int* B, int RGB){
+
+Histogram::Histogram(CImg<int> &nazwa){
+    this->R = new int[256];
+    this->G = new int[256];
+    this->B = new int[256];
+    this->sourceImage = &nazwa;
+    createHistogram();
+}
+
+CImg<int>* Histogram::getHistogramGraph(int *R, int *G, int *B, int RGB) {
     CImg<int>* graph = new CImg<int>(256, 3000, 1, 3, 255);
     int* channel;
     switch (RGB){
@@ -43,7 +50,7 @@ CImg<int>* getHistogramGraph(int* R, int* G, int* B, int RGB){
             channel = B;
             break;
         default:
-            break;
+            return nullptr;
     }
 
     for (int x = 0; x < graph->width(); x++)
@@ -56,8 +63,15 @@ CImg<int>* getHistogramGraph(int* R, int* G, int* B, int RGB){
         }
     }
 
+    for (int x = 0; x < graph->width(); x++)
+    {
+        (*graph)(x, graph->height() - channel[x] - 1, 0, 0) = 0;
+    }
+
     return graph;
 }
+
+
 
 void applyExponentialPDF(CImg<int> &original, CImg<int> &edited){
     //int depth = atoi(d);
@@ -66,13 +80,19 @@ void applyExponentialPDF(CImg<int> &original, CImg<int> &edited){
     for (int x = 0; x < original.width(); x++) {
         displayProgress(x, original.width()-1);
         for (int y = 0; y < original.height(); y++) {
+            //r
             float gmin = 5;
             int alpha = 3;
+            int HM = 9;
             int sumaHM = 0;
 
+            for (int m = 0; m < original(x, y, 0, 0); m++){
+                //sumaHM += R[]
+            }
 
 
-            edited(x, y, 0, s) = gmin - (1.0/alpha) *
+
+            edited(x, y, 0, 0) = gmin - (1.0/alpha) *
                     log(1 - 1/(original.width()*original.height()) * HM);
 
         }
