@@ -9,7 +9,6 @@ using namespace cimg_library;
 
 
 class Histogram{
-
 public:
     CImg<int>* sourceImage;
 

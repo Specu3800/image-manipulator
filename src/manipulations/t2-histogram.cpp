@@ -13,17 +13,17 @@ using namespace cimg_library;
 
 void Histogram::createHistogram() {
     for (int i = 0; i < 256; i++) {
-        R[i] = 0;
-        G[i] = 0;
-        B[i] = 0;
+        this->R[i] = 0;
+        this->G[i] = 0;
+        this->B[i] = 0;
     }
 
     for (int x = 0; x < this->sourceImage->width(); x++){
         for (int y = 0; y < this->sourceImage->height(); y++)
         {
-            R[(*this->sourceImage)(x, y, 0, 0)]++;
-            G[(*this->sourceImage)(x, y, 0, 1)]++;
-            B[(*this->sourceImage)(x, y, 0, 2)]++;
+            this->R[(*this->sourceImage)(x, y, 0, 0)]++;
+            this->G[(*this->sourceImage)(x, y, 0, 1)]++;
+            this->B[(*this->sourceImage)(x, y, 0, 2)]++;
         }
     }
 }
