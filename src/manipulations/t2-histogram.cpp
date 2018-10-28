@@ -45,33 +45,56 @@ Histogram::Histogram() {
 
 CImg<int>* Histogram::getHistogramGraph() {
     int graphWidth = 256;
-    CImg<int>* graph = new CImg<int>(graphWidth*3, 5000, 1, 3, 255);
+    int separatorWidth = 3;
+    int width = 8;
+    int index = 0;
 
-    for (int x = 0; x < graphWidth; x++)
+    CImg<int>* graph = new CImg<int>(width * graphWidth*3 + 2 * separatorWidth + 10, 5000, 1, 3, 255);
+
+    for (int x = 0; x < graphWidth * width; x += width)
     {
-
-        for (int y = graph->height() - 1; y > graph->height() - R[x] - 1; y--)
+        for (int r = 0; r < width; r++)
+            for (int y = graph->height() - 1; y > graph->height() - R[index] - 1; y--)
+            {
+                (*graph)(x + r, y, 0, 1) = 0;
+                (*graph)(x + r, y, 0, 2) = 0;
+            }
+        index++;
+    }
+    index = 0;
+    for (int x = graphWidth * width; x < graphWidth * width + separatorWidth; x++)
+        for (int y = 0; y < graph->height() - 1; y++)
         {
             (*graph)(x, y, 0, 1) = 0;
             (*graph)(x, y, 0, 2) = 0;
+            (*graph)(x, y, 0, 0) = 0;
         }
-    }
 
-    for (int x = graphWidth; x < 2 *graphWidth; x++)
+    for (int x = graphWidth * width + separatorWidth; x < 2 *graphWidth * width + separatorWidth; x += width)
     {
-        for (int y = graph->height() - 1; y > graph->height() - G[x-graphWidth] - 1; y--)
+        for (int y = graph->height() - 1; y > graph->height() - G[index] - 1; y--)
         {
             (*graph)(x, y, 0, 0) = 0;
             (*graph)(x, y, 0, 2) = 0;
         }
+        index++;
     }
-    for (int x = 2*graphWidth; x < graph->width()-1; x++)
+    index = 0;
+    for (int x = 2*graphWidth * width + separatorWidth; x < 2*graphWidth * width + 2*separatorWidth; x += width)
+        for (int y = 0; y < graph->height() - 1; y++)
+        {
+            (*graph)(x, y, 0, 1) = 0;
+            (*graph)(x, y, 0, 2) = 0;
+            (*graph)(x, y, 0, 0) = 0;
+        }
+    for (int x = 2*graphWidth * width + 2*separatorWidth; x < 3*graphWidth * width + 2*separatorWidth; x++)
     {
-        for (int y = graph->height() - 1; y > graph->height() - B[x-2*graphWidth] -1; y--)
+        for (int y = graph->height() - 1; y > graph->height() - B[index] -1; y--)
         {
             (*graph)(x, y, 0, 1) = 0;
             (*graph)(x, y, 0, 0) = 0;
         }
+        index++;
     }
 
 
