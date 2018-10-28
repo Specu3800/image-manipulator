@@ -8,20 +8,12 @@
 using namespace std;
 using namespace cimg_library;
 
-Histogram::Histogram(CImg<int> &nazwa){
-    this->R = new int[256];
-    this->G = new int[256];
-    this->B = new int[256];
-    this->sourceImage = &nazwa;
-    createHistogram();
+void getHistogram(CImg<int> &imagage, int* R, int* G, int* B){
+    int hist[256];
+    for (int i = 0; i < 256; i++)
+        hist[i] = 0;
 }
-
-void Histogram::createHistogram() {
-
-}
-
-
-void getHistogram(CImg<int> &image, int RGB){
+CImg<int>* getHistogramGraph(int* R, int* G, int* B){
     int hist[256];
     for (int i = 0; i < 256; i++)
         hist[i] = 0;

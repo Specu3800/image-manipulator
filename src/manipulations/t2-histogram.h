@@ -7,21 +7,7 @@
 using namespace std;
 using namespace cimg_library;
 
-
-class Histogram{
-private:
-    CImg<int>* sourceImage;
-    int* R;
-    int* G;
-    int* B;
-    void createHistogram();
-
-public:
-    Histogram(CImg<int> &nazwa);
-
-};
-
-
-void getHistogram(int* R, int* G, int* B);
+void getHistogram(CImg<int> &image, int* R, int* G, int* B);
+CImg<int>* getHistogramGraph(int* R, int* G, int* B);
 
 #endif //HISTOGRAM
