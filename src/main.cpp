@@ -12,27 +12,34 @@
 #include "manipulations/t1-geometric.h"
 #include "manipulations/t1-noise-removal.h"
 #include "manipulations/t1-analysis.h"
+#include "manipulations/t2-histogram.h"
+#include "manipulations/t2-characteristics.h"
 
 using namespace std;
 using namespace cimg_library;
 
 int main(int argc, char* argv[]) {
 
-    bool justAnalysis = false;
+    int whatDoWeDo = 0; // 0-nothing, 1-display and save image, 2-analysis
 
     CImg<int> image1;
     CImg<int> image2;
     float analysis;
 
-    if (argc < 2 || argc > 5) {cout << "Wrong number of parameters.\nType --help to view the list of the available commands." << endl; exit(0); }
-    else if (argv[1] == string("--help")) displayHelp();
-    else {
+    int* R = new int[255];
+    int* G = new int[255];
+    int* B = new int[255];
 
+    if (argc < 2 || argc > 5) {cout << "Wrong number of parameters.\nType --help to view the list of the available commands." << endl;}
+    else if (argv[1] == string("--help")) displayHelp();
+    else if (argv[1] == string("--histogram")) getHistogram(R, G, B);
+    else {
         ifstream in1(argv[argc-2]);
         if (!in1.good()) {
             cout << argv[argc-2] << " does not exist, try again." << endl; exit(0);
         }
 
+        whatDoWeDo = 1; //edit image
         image1 = CImg<int>(argv[argc-2]);
         image2 = CImg<int>(image1.width(), image1.height(), 1, 3, 0);
 
@@ -50,14 +57,15 @@ int main(int argc, char* argv[]) {
         else if (argv[1] == string("--adaptive")) applyAdaptiveMedianFilter(image1, image2, argv[2]);
         else if (argv[1] == string("--median")) applyMedianFilter(image1, image2, argv[2]);
         else if (argv[1] == string("--min")) applyMinimumFilter(image1, image2, argv[2]);
-        else if (argv[1] == string("--max")) applyMaximumFilter(image1, image2, argv[2]);
+        else if (argv[1] == string("--min")) applyMinimumFilter(image1, image2, argv[2]);
+
         else {
             ifstream in2(argv[argc-1]);
             if (!in2.good()) {
                 cout << argv[argc-1] << " does not exist, try again." << endl; exit(0);
             }
             image2 = CImg<int>(argv[argc-1]);
-            justAnalysis = true;
+            whatDoWeDo = 2;
             if      (argv[1] == string("--mse")) getMeanSquareError(image1, image2, analysis);
             else if (argv[1] == string("--pmse")) getPeakMeanSquareError(image1, image2, analysis);
             else if (argv[1] == string("--snr")) getSignalToNoiseRatio(image1, image2, analysis);
@@ -70,13 +78,20 @@ int main(int argc, char* argv[]) {
             }
         }
 
-        if(justAnalysis){
-            cout << "Analysis result for those two images equils: " << analysis << endl;
-        } else {
-            image1.save("original.bmp");
-            image2.save("edited.bmp");
-            image2.save(argv[argc - 1]); //save edited img in destination
-            image1.append(image2, 'x').display("COMPARATION", 0); //display
+        switch(whatDoWeDo){
+            case 0:
+                break;
+            case 1:
+                image1.save("original.bmp");
+                image2.save("edited.bmp");
+                image2.save(argv[argc - 1]); //save edited img in destination
+                image1.append(image2, 'x').display("COMPARATION", 0); //display
+                break;
+            case 2:
+                cout << "Analysis result for those two images equils: " << analysis << endl;
+                break;
+            default:
+                break;
         }
     }
     return 0;

@@ -1,5 +1,5 @@
-#ifndef OTHER_MANIPULATIONS
-#define OTHER_MANIPULATIONS
+#ifndef OTHER
+#define OTHER
 
 #include "../../lib/CImg.templ"
 
@@ -12,6 +12,6 @@ void displayProgress(int x, int max);
 
 void displayHelp();
 
-#endif //OTHER_MANIPULATIONS
+#endif //OTHER
 
 

@@ -1,5 +1,5 @@
-#ifndef BASIC_MANIPULATIONS
-#define BASIC_MANIPULATIONS
+#ifndef BASIC
+#define BASIC
 
 #include "../../lib/CImg.templ"
 
@@ -11,6 +11,6 @@ void changeContrast(CImg<int> &original, CImg<int> &edited, char *value);
 void changeContrast2(CImg<int> &original, CImg<int> &edited, char *value);
 void changeToNegative(CImg<int> &original, CImg<int> &edited);
 
-#endif //BASIC_MANIPULATIONS
+#endif //BASIC
 
 

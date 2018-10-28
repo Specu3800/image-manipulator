@@ -1,5 +1,5 @@
-#ifndef GEOMETRIC_MANIPULATIONS
-#define GEOMETRIC_MANIPULATIONS
+#ifndef GEOMETRIC
+#define GEOMETRIC
 
 #include "../../lib/CImg.templ"
 
@@ -13,6 +13,6 @@ void doDiagonalFlip(CImg<int> &original, CImg<int> &edited);
 void shrinkBy(CImg<int> &original, CImg<int> &edited, char*);
 void enlargeBy(CImg<int> &original, CImg<int> &edited, char*);
 
-#endif //GEOMETRIC_MANIPULATIONS
+#endif //GEOMETRIC
 
 

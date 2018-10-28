@@ -1,5 +1,5 @@
-#ifndef ANALYSIS_MANIPULATIONS
-#define ANALYSIS_MANIPULATIONS
+#ifndef ANALYSIS
+#define ANALYSIS
 
 #include "../../lib/CImg.templ"
 
@@ -12,6 +12,6 @@ float getSignalToNoiseRatio(CImg<int> &image1, CImg<int> &image2, float &result)
 float getPeakSignalToNoiseRatio(CImg<int> &image1, CImg<int> &image2, float &result);
 float getMaximumDifference(CImg<int> &image1, CImg<int> &image2, float &result);
 
-#endif //ANALYSIS_MANIPULATIONS
+#endif //ANALYSIS
 
 
