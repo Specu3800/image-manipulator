@@ -46,7 +46,7 @@ void changeContrast2(CImg<int> &original, CImg<int> &edited, char* fac) {
         displayProgress(x, original.width()-1);
         for (int y = 0; y < original.height(); y++) {
             for (int s = 0; s < original.spectrum(); s++) {
-                int newColor = 255 * pow((float)(original(x, y, 0, s)) / 255.0, factor);
+                int newColor = 255 * pow((original(x, y, 0, s)) / 255.0, factor);
                 if (newColor > 255) edited(x, y, 0, s) = 255;
                 else if (newColor< 0) edited(x, y, 0, s) = 0;
                 else edited(x, y, 0, s) = newColor;
