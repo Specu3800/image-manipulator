@@ -10,6 +10,8 @@ void applyBilinearInterpolation(CImg<int> &edited);
 
 void displayProgress(int x, int max);
 
+bool fileExists(char* name);
+
 void displayHelp();
 
 #endif //OTHER

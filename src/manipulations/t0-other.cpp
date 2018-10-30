@@ -1,4 +1,5 @@
 #include <iostream>
+#include <fstream>
 #include "../../lib/CImg.templ"
 #include "t0-other.h"
 
@@ -61,6 +62,15 @@ void displayProgress(int x, int max){
     }
     cout << "] " << int(progress * 100.0) << " %\r";
     cout.flush();
+}
+
+bool fileExists(char* name){
+    ifstream fin(name);
+    if (!fin.good()) {
+        cout << name << " does not exist, try again." << endl;
+        exit(0);
+    }
+    return true;
 }
 
 void displayHelp() {
