@@ -73,6 +73,12 @@ bool fileExists(char* name){
     return true;
 }
 
+int normalized(int value){
+    if (value < 0) return 0;
+    else if (value > 255) return 255;
+    else return value;
+}
+
 void displayHelp() {
     cout <<
         "###############################################################################\n"

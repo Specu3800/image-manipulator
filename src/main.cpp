@@ -23,10 +23,12 @@ int main(int argc, char* argv[]) {
 
     int whatDoWeDo = 0; // 0-nothing, 1-display and save image, 2-analysis
 
+
     CImg<int> image1;
     CImg<int> image2;
 
     float analysis;
+
 
     Histogram image1Histogram;
     Histogram image2Histogram;
@@ -36,10 +38,12 @@ int main(int argc, char* argv[]) {
     else if (argv[1] == string("--help")) displayHelp();
 
     else if (argv[1] == string("--histogram")) {
-        image1 = CImg<int>(argv[argc-1]);
+
+        fileExists(argv[argc - 1]);
+        image1 = CImg<int>(argv[argc - 1]);
         image1Histogram = Histogram(image1);
-        (image1Histogram.getHistogramGraph())->display("", false);
-        image1.append(image2, 'x').display("COMPARATION", false); //display
+        image1Histogram.displayUniformHistogram(0);
+        image1Histogram.displayCumulativeHistogram(0);
     }
 
     else {
@@ -48,6 +52,7 @@ int main(int argc, char* argv[]) {
         whatDoWeDo = 1; //edit image
         image1 = CImg<int>(argv[argc-2]);
         image2 = CImg<int>(image1.width(), image1.height(), 1, 3, 0);
+        image1Histogram = Histogram(image1);
 
         if (argv[1] == string("--brightness")) changeBrightness(image1, image2, argv[2]);
         else if (argv[1] == string("--contrast")) changeContrast(image1, image2, argv[2]);
@@ -88,21 +93,15 @@ int main(int argc, char* argv[]) {
 
     }
 
-    switch(whatDoWeDo){
-        case 0: //nothing
-            break;
-        case 1:
-                image1.save("original.bmp");
-                image2.save("edited.bmp");
-                image2.save(argv[argc - 1]); //save edited img in destination
-                image1.append(image2, 'x').display("COMPARATION", false); //display
-            break;
-        case 2:
-            cout << "Analysis result for those two images equils: " << analysis << endl;
-            break;
-        default:
-            break;
-    }
+    if (whatDoWeDo == 0) ;
+    else if (whatDoWeDo == 1) {
+        image1.save("original.bmp");
+        image2.save("edited.bmp");
+        //image2.save(argv[argc - 1]); //save edited img in destination
+        image1.append(image2, 'x').display("COMPARATION", false); //display
+}
+    else if (whatDoWeDo == 2) {
+        cout << "Analysis result for those two images equils: " << analysis << endl;}
 
     return 0;
 }

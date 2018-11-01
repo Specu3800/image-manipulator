@@ -12,6 +12,8 @@ void displayProgress(int x, int max);
 
 bool fileExists(char* name);
 
+int normalized(int value);
+
 void displayHelp();
 
 #endif //OTHER

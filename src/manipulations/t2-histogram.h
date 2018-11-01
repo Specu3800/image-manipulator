@@ -3,7 +3,6 @@
 
 #include "../../lib/CImg.templ"
 #include "t2-histogram.h"
-#include <vector>
 
 using namespace std;
 using namespace cimg_library;
@@ -13,16 +12,28 @@ class Histogram{
 public:
     CImg<int>* sourceImage;
 
-    int* R;
-    int* G;
-    int* B;
+    int** uniform;
+    int** cumulative;
+    double** probability;
 
-    Histogram(CImg<int> &nazwa);
+    bool isUniformCalculated;
+    bool isCumulativeCalculated;
+
     Histogram();
+    Histogram(CImg<int> &nazwa);
 
-    void createHistogram();
+    void calculateHistogram(CImg<int> &name);
 
-    CImg<int>* getHistogramGraph();
+    CImg<int>* getUniformHistogramGraph(int);
+    CImg<int>* getCumulativeHistogramGraph(int);
+
+    void displayUniformHistogram(int);
+    void displayCumulativeHistogram(int);
+
+private:
+    void initialize();
+    void calculateHistogram();
+    CImg<int>* getHistogramGraph(int, int**);
 };
 
 
