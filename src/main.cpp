@@ -84,6 +84,15 @@ int main(int argc, char* argv[]) {
             else if (argv[1] == string("--psnr")) getPeakSignalToNoiseRatio(image1, image2, analysis);
             else if (argv[1] == string("--md")) getMaximumDifference(image1, image2, analysis);
 
+            else if (argv[1] == string("--cmean")) getMean(image1, analysis);
+            else if (argv[1] == string("--cvariance")) getVariance(image1, analysis);
+            else if (argv[1] == string("--cstdev")) getStandardDeviation(image1, analysis);
+            else if (argv[1] == string("--cvarcoi")) getVariationCoefficientI(image1, analysis);
+            else if (argv[1] == string("--cvarcoii")) getVariationCoefficientII(image1, analysis);
+            else if (argv[1] == string("--casyco")) getAsymmetryCoefficient(image1, analysis);
+            else if (argv[1] == string("--cflaco")) getFlatteningCoefficient(image1, analysis);
+            else if (argv[1] == string("--centropy")) getInformationSourceEntropy(image1, analysis);
+
             else {
                 cout << "No maching command. \nType --help to view the list of the available commands.";
                 return 0;
