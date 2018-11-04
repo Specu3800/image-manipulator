@@ -68,7 +68,7 @@ float getPeakSignalToNoiseRatio(CImg<int> &img1, CImg<int> &img2, float &result)
         }
     }
 
-    float PSNR = 10 * log10(max/(getMeanSquareError(img1, img2, result)));
+    float PSNR = 10 * log10(max/((getMeanSquareError(img1, img2, result)) * img1.width() * img1.height()));
     result = PSNR;
     return PSNR;
 }
