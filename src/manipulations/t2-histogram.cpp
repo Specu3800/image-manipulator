@@ -17,12 +17,20 @@ Histogram::Histogram() {
     initialize();
 }
 
+Histogram::~Histogram() {
+//    delete this->uniform;
+//    delete this->cumulative;
+//    delete this->probability;
+}
+
 
 void Histogram::calculateHistogram() {
     //uniform
     for (int x = 0; x < this->sourceImage->width(); x++){
         for (int y = 0; y < this->sourceImage->height(); y++) {
             for (int s = 0; s < this->sourceImage->spectrum(); s++) {
+                //cout << "uni[" << s << "][" << (*this->sourceImage)(x, y, 0, s) << "]++          -    now has: " << uniform[s][(*this->sourceImage)(x, y, 0, s)] << "           it was for x,y: " << x << ", " << y << endl;
+                //cout << "(*this->sourceImage)(x, y, 0, s) " << (*this->sourceImage)(x, y, 0, s) << endl;
                 this->uniform[s][(*this->sourceImage)(x, y, 0, s)]++;
             }
         }
@@ -46,44 +54,78 @@ void Histogram::calculateHistogram(CImg<int> &name) {
 
 
 
-CImg<int> *Histogram::getUniformHistogramGraph(int channel) {
-    return getHistogramGraph(channel, uniform);
+CImg<int> *Histogram::getUniformHistogramGraph(int channel, bool scale) {
+
+
+    if (scale) return getScaleHistogramGraph(channel, uniform);
+    else return getHistogramGraph(channel, uniform);
 }
 
-CImg<int>* Histogram::getCumulativeHistogramGraph(int channel) {
-    return getHistogramGraph(channel, cumulative);
+CImg<int>* Histogram::getCumulativeHistogramGraph(int channel, bool scale) {
+    if (scale) return getScaleHistogramGraph(channel, cumulative);
+    else return getHistogramGraph(channel, cumulative);
 }
 
-void Histogram::displayUniformHistogram(int channel){
-    (*this->getUniformHistogramGraph(channel)).display("HISTOGRAM", false);
+void Histogram::displayUniformHistogram(int channel, bool scale){
+    (*this->getUniformHistogramGraph(channel, scale)).display("HISTOGRAM", false);
 }
-void Histogram::displayCumulativeHistogram(int channel){
-    (*this->getCumulativeHistogramGraph(channel)).display("HISTOGRAM", false);
+void Histogram::displayCumulativeHistogram(int channel, bool scale){
+    (*this->getCumulativeHistogramGraph(channel, scale)).display("HISTOGRAM", false);
+}
+
+void Histogram::displayUniformValues(int channel) {
+    cout << "Values of histogram for channel " << channel << ":" << endl;
+    for (int i = 0; i < 256; i++){
+        cout << i << ": " << uniform[channel][i] << endl;
+    }
 }
 
 
 CImg<int> *Histogram::getHistogramGraph(int channel, int** values) {
-    int** valuesCopy = values;
+    int maxH = 0;
+    for (int i = 0; i < 256; i++) {
+        if (values[channel][i] > maxH) {
+            maxH = values[channel][i];
+        }
+    }
+
+    CImg<int>* graph = new CImg<int>(256, maxH, 1, 3, 255);
+
+    for (int x = 0; x < 256 ; x++) {
+        for (int y = graph->height() - 1; y > graph->height() - values[channel][x] - 1; y--) {
+            for (int s = 0; s < 3; s++) {
+                (*graph)(x, y, 0, s) = 0;
+            }
+        }
+    }
+    return graph;
+}
+
+CImg<int> *Histogram::getScaleHistogramGraph(int channel, int** values) {
+    int* valuesCopy = new int[256];
+    for (int i = 0; i < 256; i++) {
+        valuesCopy[i] = values[channel][i];
+    }
 
     int maxH = 0;
     int index = 0;
     for (int i = 0; i < 256; i++) {
-        if (values[channel][i] > maxH) {
-            maxH = values[channel][i];
+        if (valuesCopy[i] > maxH) {
+            maxH = valuesCopy[i];
             index = i;
         }
     }
 
-    while(valuesCopy[channel][index] > 512){
+    while(valuesCopy[index] > 256){
         for (int i = 0; i < 256; i++) {
-            valuesCopy[channel][i] /= 2;
+            valuesCopy[i] /= 2;
         }
     }
 
-    CImg<int>* graph = new CImg<int>(512, 512, 1, 3, 255);
+    CImg<int>* graph = new CImg<int>(256, 256, 1, 3, 255);
 
-    for (int x = 0; x < 512; x += 2) {
-        for (int y = graph->height() - 1; y > graph->height() - values[channel][x/2] - 1; y--) {
+    for (int x = 0; x < 256; x += 2) {
+        for (int y = graph->height() - 1; y > graph->height() - valuesCopy[x] - 1; y--) {
             for (int s = 0; s < 3; s++) {
                 (*graph)(x, y, 0, s) = 0;
                 (*graph)(x+1, y, 0, s) = 0;
@@ -108,6 +150,7 @@ void Histogram::initialize() {
         }
     }
 }
+
 
 
 

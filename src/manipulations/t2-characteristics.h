@@ -2,17 +2,18 @@
 #define CHARACTERISTICS
 
 #include "../../lib/CImg.templ"
+#include "../manipulations/t2-histogram.h"
 
 using namespace std;
 using namespace cimg_library;
 
-float getMean(CImg<int> &image1, float &result);
-float getVariance(CImg<int> &image1, float &result);
-float getStandardDeviation(CImg<int> &image, float &result);
-float getVariationCoefficientI(CImg<int> &image, float &result);
-float getVariationCoefficientII(CImg<int> &image, float &result);
-float getAsymmetryCoefficient(CImg<int> &image, float &result);
-float getFlatteningCoefficient(CImg<int> &image, float &result);
-float getInformationSourceEntropy(CImg<int> &image, float &result);
+float getMean(Histogram &histogram, float &result);
+float getVariance(Histogram &histogram, float &result);
+float getStandardDeviation(Histogram &histogram, float &result);
+float getVariationCoefficientI(Histogram &histogram, float &result);
+float getVariationCoefficientII(Histogram &histogram, float &result);
+float getAsymmetryCoefficient(Histogram &histogram, float &result);
+float getFlatteningCoefficient(Histogram &histogram, float &result);
+float getInformationSourceEntropy(Histogram &histogram, float &result);
 
 #endif //CHARACTERISTICS

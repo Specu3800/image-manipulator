@@ -21,19 +21,22 @@ public:
 
     Histogram();
     Histogram(CImg<int> &nazwa);
+    ~Histogram();
 
     void calculateHistogram(CImg<int> &name);
 
-    CImg<int>* getUniformHistogramGraph(int);
-    CImg<int>* getCumulativeHistogramGraph(int);
+    CImg<int>* getUniformHistogramGraph(int, bool);
+    CImg<int>* getCumulativeHistogramGraph(int, bool);
 
-    void displayUniformHistogram(int);
-    void displayCumulativeHistogram(int);
+    void displayUniformHistogram(int, bool);
+    void displayCumulativeHistogram(int, bool);
+    void displayUniformValues(int);
 
 private:
     void initialize();
     void calculateHistogram();
     CImg<int>* getHistogramGraph(int, int**);
+    CImg<int>* getScaleHistogramGraph(int, int**);
 };
 
 

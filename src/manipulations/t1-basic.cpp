@@ -24,7 +24,7 @@ void changeBrightness(CImg<int> &original, CImg<int> &edited, char* val) {
 
 void changeContrast(CImg<int> &original, CImg<int> &edited, char* fac) {
     float factor = atof(fac);
-    if (factor < 0) {cout << "Wrong value of the contrast. \nType --help to view information about available commands." << endl; exit(0);}
+    if (factor <= 0) {cout << "Wrong value of the contrast. \nType --help to view information about available commands." << endl; exit(0);}
     cout << "Changing contrast by " << factor << endl;
     for (int x = 0; x < original.width(); x++) {
         displayProgress(x, original.width()-1);
@@ -40,7 +40,7 @@ void changeContrast(CImg<int> &original, CImg<int> &edited, char* fac) {
 }
 void changeContrast2(CImg<int> &original, CImg<int> &edited, char* fac) {
     float factor = atof(fac);
-    if (factor < 0) {cout << "Wrong value of the contrast. \nType --help to view information about available commands." << endl; exit(0);}
+    if (factor <= 0) {cout << "Wrong value of the contrast. \nType --help to view information about available commands." << endl; exit(0);}
     cout << "Changing contrast by " << factor << endl;
     for (int x = 0; x < original.width(); x++) {
         displayProgress(x, original.width()-1);

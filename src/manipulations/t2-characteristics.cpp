@@ -6,34 +6,71 @@ using namespace std;
 using namespace cimg_library;
 
 
-float getMean(CImg<int> &image, float &result){
+float getMean(Histogram &histogram, float &result){
+    float sum = 0;
 
+    for (int m = 0; m < 256; m++) {
+        sum += m * histogram.uniform[0][m];
+    }
+
+    float MEAN = (1.0 / (histogram.sourceImage->width() * histogram.sourceImage->height())) * sum;
+    result = MEAN;
+    return MEAN;
 }
 
-float getVariance(CImg<int> &image, float &result){
+float getVariance(Histogram &histogram, float &result){
+    float sum = 0;
 
+    for (int m = 0; m < 256; m++) {
+        sum += pow((m-getMean(histogram, result)), 2) * histogram.uniform[0][m];
+    }
+
+    float VARIANCE = (1.0 / (histogram.sourceImage->width() * histogram.sourceImage->height())) * sum;
+    result = VARIANCE;
+    return VARIANCE;
 }
 
-float getStandardDeviation(CImg<int> &image, float &result){
-
+float getStandardDeviation(Histogram &histogram, float &result){
+    float STANDARD_DEVIATION = sqrt(getVariance(histogram, result));
+    result = STANDARD_DEVIATION;
+    return STANDARD_DEVIATION;
 }
 
-float getVariationCoefficientI(CImg<int> &image, float &result){
-
+float getVariationCoefficientI(Histogram &histogram, float &result){
+    float VARIATION_COEFFICIENT_I = getStandardDeviation(histogram, result) / getMean(histogram, result);
+    result = VARIATION_COEFFICIENT_I;
+    return VARIATION_COEFFICIENT_I;
 }
 
-float getVariationCoefficientII(CImg<int> &image, float &result){
+float getVariationCoefficientII(Histogram &histogram, float &result){
+    float sum = 0;
 
+    for (int m = 0; m < 256; m++) {
+        sum += pow(histogram.uniform[0][m], 2);
+    }
+
+    float VARIATION_COEFFICIENT_II = pow(1.0/(histogram.sourceImage->width() * histogram.sourceImage->height()), 2) * sum;
+    result = VARIATION_COEFFICIENT_II;
+    return VARIATION_COEFFICIENT_II;
 }
 
-float getAsymmetryCoefficient(CImg<int> &image, float &result){
+float getAsymmetryCoefficient(Histogram &histogram, float &result){
+    float sum = 0;
 
+    for (int m = 0; m < 256; m++) {
+        sum += pow(m - getMean(histogram, result), 3) * histogram.uniform[0][m];
+    }
+
+    float ASYMETRY_COEFFICIENT = (1.0/pow(getStandardDeviation(histogram, result), 2)) *
+        (1.0 /(histogram.sourceImage->width() * histogram.sourceImage->height())) * sum;
+    result = ASYMETRY_COEFFICIENT;
+    return ASYMETRY_COEFFICIENT;
 }
 
-float getFlatteningCoefficient(CImg<int> &image, float &result){
-
+float getFlatteningCoefficient(Histogram &histogram, float &result){
+    return 0;
 }
 
-float getInformationSourceEntropy(CImg<int> &image, float &result){
-
+float getInformationSourceEntropy(Histogram &histogram, float &result){
+    return 0;
 }
