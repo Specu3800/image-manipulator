@@ -9,21 +9,11 @@
 using namespace std;
 using namespace cimg_library;
 
-void applyExponentialPDF(CImg<int> &original, CImg<int> &edited, char *a, Histogram &histogram){
-    //run with: --hexponent 0.009 ../img/grey/lena.bmp edited.bmp
-    float alpha = atof(a);
+void applyExponentialPDF(CImg<int> &original, CImg<int> &edited, char *gm, Histogram &histogram){
+    float gmin = atof(gm);
     for (int s = 0; s < original.spectrum(); s++) {
 
-        int gmin = 0; //find gmin as the smallest intensity different than 0
-        for (int i = 0; i < 256; i++) {
-            if (histogram.cumulative[s][i] > 0) {
-                gmin = i;
-                break;
-            }
-        }
-
-        //alpha = 0.05; //set custom alpha, different than parameter
-        //gmin = 10;
+        float alpha = 0.015; //set custom alpha, different than parameter
 
         int* improvedColors = new int[256];
         for (int i = 0; i < 256; i++) { //apply histogram modification
@@ -40,6 +30,7 @@ void applyExponentialPDF(CImg<int> &original, CImg<int> &edited, char *a, Histog
     }
 
     Histogram newHistogram = Histogram(edited);
+    newHistogram.displayUniformValues(0);
     ((*histogram.getUniformHistogramGraph(0, false)).append(*newHistogram.getUniformHistogramGraph(0, false), 'x', 1))
     .display("HISTOGRAM", false); //show difference in histogram
 }

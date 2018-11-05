@@ -89,10 +89,10 @@ CImg<int> *Histogram::getHistogramGraph(int channel, int** values) {
         }
     }
 
-    CImg<int>* graph = new CImg<int>(256, maxH, 1, 3, 255);
+    CImg<int>* graph = new CImg<int>(256 + 2, maxH, 1, 3, 255);
 
-    for (int x = 0; x < 256 ; x++) {
-        for (int y = graph->height() - 1; y > graph->height() - values[channel][x] - 1; y--) {
+    for (int x = 1; x < 257 ; x++) {
+        for (int y = graph->height() - 1; y > graph->height() - values[channel][x-1] - 1; y--) {
             for (int s = 0; s < 3; s++) {
                 (*graph)(x, y, 0, s) = 0;
             }
