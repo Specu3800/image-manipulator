@@ -11,6 +11,9 @@ using namespace cimg_library;
 class Histogram{
 public:
     CImg<int>* sourceImage;
+    int sourceImageW;
+    int sourceImageH;
+    int sourceImageP;
 
     int** uniform;
     int** cumulative;
