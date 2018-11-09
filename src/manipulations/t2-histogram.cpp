@@ -149,6 +149,9 @@ void Histogram::initialize() {
             this->probability[s][j] = 0;
         }
     }
+    this->sourceImageW = this->sourceImage->width();
+    this->sourceImageH = this->sourceImage->height();
+    this->sourceImageP = this->sourceImage->width() * this->sourceImage->height();
 }
 
 
