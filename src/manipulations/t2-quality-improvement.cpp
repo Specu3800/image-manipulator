@@ -31,8 +31,7 @@ void applyExponentialPDF(CImg<int> &original, CImg<int> &edited, char *gm, Histo
 
     Histogram newHistogram = Histogram(edited);
     newHistogram.displayUniformValues(0);
-    ((*histogram.getUniformHistogramGraph(0, false)).append(*newHistogram.getUniformHistogramGraph(0, false), 'x', 1))
-    .display("HISTOGRAM", false); //show difference in histogram
+    ((*histogram.getUniformHistogramGraph(0, true)).append(*newHistogram.getUniformHistogramGraph(0, true), 'x', 1)).display("HISTOGRAM", false); //show difference in histogram
 }
 
 void applyLaplacianFilter(CImg<int> &original, CImg<int> &edited, char*, Histogram &histogram){
