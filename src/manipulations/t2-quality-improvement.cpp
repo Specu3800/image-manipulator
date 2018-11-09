@@ -34,11 +34,65 @@ void applyExponentialPDF(CImg<int> &original, CImg<int> &edited, char *gm, Histo
     ((*histogram.getUniformHistogramGraph(0, false)).append(*newHistogram.getUniformHistogramGraph(0, false), 'x', 1))
     .display("HISTOGRAM", false); //show difference in histogram
 }
+const int mask[3][3] = {-1, -1, -1, -1, 8, -1, -1, -1, -1};
+//const int mask[3][3] = {0, -1, 0, -1, 4, -1, 0, -1, 0};
+//const int mask[3][3] = {1, -2, 1, -2, 4, -2, 1, -2, 1};
+
+
 
 void applyLaplacianFilter(CImg<int> &original, CImg<int> &edited, char*, Histogram &histogram){
+
+    for (int channel = 0; channel < 3; channel++)
+    {
+        for (int x = 1; x < original.width() - 1; x++)
+        {
+            for (int y = 1; y < original.height() - 1; y++)
+            {
+                int p = 0;
+                int q = 0;
+                int pixelValue = 0;
+
+                for (int i = x - 1; i < x + 2; i++)
+                {
+                    p = 0;
+                    for (int j = y - 1; j < y + 2; j++)
+                    {
+
+                        pixelValue += original(i, j, 0, channel) * mask[p][q];
+                        //cout << "!!" << pixelValue;
+                        p++;
+                    }
+                    q++;
+                }
+                if (pixelValue > 255) pixelValue = 255;
+                if (pixelValue < 0) pixelValue = 0;
+
+               // cout << x << " " << y << " " << pixelValue << endl;
+                edited(x, y, 0, channel) = pixelValue;
+
+            }
+        }
+
+
+    }
+
 
 }
 
 void applyRobertsOperatorFilter(CImg<int> &original, CImg<int> &edited, char*, Histogram &histogram){
+
+    for (int channel = 0; channel < 3; channel++)
+    {
+        for (int x = 1; x < original.width() - 1; x++)
+        {
+            for (int y = 1; y < original.height() - 1; y++)
+            {
+               edited(x, y, 0, channel) = abs(original(x, y, 0, channel) - original(x + 1, y + 1, 0, channel)) + abs(original(x, y + 1, 0, channel) - original(x + 1, y, 0, channel));
+
+            }
+        }
+
+
+    }
 
 }
