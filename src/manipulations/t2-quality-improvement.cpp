@@ -56,26 +56,17 @@ void applyLaplacianFilter(CImg<int> &original, CImg<int> &edited, char*, Histogr
                     p = 0;
                     for (int j = y - 1; j < y + 2; j++)
                     {
-
                         pixelValue += original(i, j, 0, channel) * mask[p][q];
                         //cout << "!!" << pixelValue;
                         p++;
                     }
                     q++;
                 }
-                if (pixelValue > 255) pixelValue = 255;
-                if (pixelValue < 0) pixelValue = 0;
-
                // cout << x << " " << y << " " << pixelValue << endl;
-                edited(x, y, 0, channel) = pixelValue;
-
+                edited(x, y, 0, channel) = normalized(pixelValue);
             }
         }
-
-
     }
-
-
 }
 
 void applyRobertsOperatorFilter(CImg<int> &original, CImg<int> &edited, char*, Histogram &histogram){
@@ -90,8 +81,5 @@ void applyRobertsOperatorFilter(CImg<int> &original, CImg<int> &edited, char*, H
 
             }
         }
-
-
     }
-
 }
