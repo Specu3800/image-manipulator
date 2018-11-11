@@ -13,13 +13,15 @@ void applyExponentialPDF(CImg<int> &original, CImg<int> &edited, char *gm, Histo
     float gmin = atof(gm);
     for (int s = 0; s < original.spectrum(); s++) {
 
-        float alpha = 0.015; //set custom alpha, different than parameter
+        float alpha = 0.014; //set custom alpha, different than parameter
 
         int* improvedColors = new int[256];
-        for (int i = 0; i < 256; i++) { //apply histogram modification
-            improvedColors[i] = gmin - 1.0/alpha *
-                    log(1.0 - (1.0/(original.width()*original.height())) * histogram.cumulative[s][i]);
-            improvedColors[i] = normalized(improvedColors[i]);
+        for (int m = 0; m < 256; m++) { //apply histogram modification
+            cout << "m: " << m << " " << gmin - 1.0/alpha * log(1.0 - (1.0/(original.width()*original.height())) * histogram.cumulative[s][m]) << endl;
+
+            improvedColors[m] = gmin - 1.0/alpha *
+                    log(1.0 - (1.0/(original.width()*original.height())) * histogram.cumulative[s][m]);
+            improvedColors[m] = normalized(improvedColors[m]);
         }
 
         for (int x = 0; x < original.width(); x++) { //apply to image
@@ -30,8 +32,10 @@ void applyExponentialPDF(CImg<int> &original, CImg<int> &edited, char *gm, Histo
     }
 
     Histogram newHistogram = Histogram(edited);
-    newHistogram.displayUniformValues(0);
-    ((*histogram.getUniformHistogramGraph(0, true)).append(*newHistogram.getUniformHistogramGraph(0, true), 'x', 1)).display("HISTOGRAM", false); //show difference in histogram
+    //newHistogram.displayUniformValues(0);
+    ((*histogram.getUniformHistogramGraph(0, false)).append(*newHistogram.getUniformHistogramGraph(0, false), 'x', 1)).display("HISTOGRAM", false); //show difference in histogram
+    histogram.getUniformHistogramGraph(0, false)->save("original_histogram.png");
+    newHistogram.getUniformHistogramGraph(0, false)->save("edited_histogram.png");
 }
 const int mask[3][3] = {-1, -1, -1, -1, 8, -1, -1, -1, -1};
 //const int mask[3][3] = {0, -1, 0, -1, 4, -1, 0, -1, 0};

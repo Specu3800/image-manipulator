@@ -72,6 +72,8 @@ int main(int argc, char* argv[]) {
 
         image1.save("original.bmp");
         image2.save("edited.bmp");
+        image1.save("original.png");
+        image2.save("edited.png");
         image2.save(argv[argc - 1]); //save edited img in destination
         image1.append(image2, 'x').display("COMPARATION", false); //display
 

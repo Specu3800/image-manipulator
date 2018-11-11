@@ -71,11 +71,11 @@ float getFlatteningCoefficient(Histogram &histogram, float &result){
     float sum = 0;
 
     for (int m = 0; m < 256; m++) {
-        sum += pow(m - getMean(histogram, result), 4) * histogram.uniform[0][m] - 3;
+        sum += pow(m - getMean(histogram, result), 4) * histogram.uniform[0][m];
     }
 
     float FLATTENING_COEFFICIENT = (1.0/pow(getStandardDeviation(histogram, result), 4)) *
-            (1.0/histogram.sourceImageP) * sum;
+            (1.0/histogram.sourceImageP) * sum - 3;
     result = FLATTENING_COEFFICIENT;
     return FLATTENING_COEFFICIENT;
 }
@@ -84,8 +84,7 @@ float getInformationSourceEntropy(Histogram &histogram, float &result){
     float sum = 0;
 
     for (int m = 0; m < 256; m++) {
-        cout << histogram.uniform[0][m] * log2(histogram.probability[0][m]) << endl;
-        sum += histogram.uniform[0][m] * log2(histogram.probability[0][m]);
+        if (histogram.uniform[0][m] != 0) sum += histogram.uniform[0][m] * log2(histogram.probability[0][m]);
     }
 
     float INFORMATION_SOURCE_ENTROPY = (-1.0/histogram.sourceImageP) * sum;
