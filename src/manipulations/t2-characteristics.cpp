@@ -61,7 +61,7 @@ float getAsymmetryCoefficient(Histogram &histogram, float &result){
         sum += pow(m - getMean(histogram, result), 3) * histogram.uniform[0][m];
     }
 
-    float ASYMETRY_COEFFICIENT = (1.0/pow(getStandardDeviation(histogram, result), 2)) *
+    float ASYMETRY_COEFFICIENT = (1.0/pow(getStandardDeviation(histogram, result), 3)) *
         (1.0 /histogram.sourceImageP) * sum;
     result = ASYMETRY_COEFFICIENT;
     return ASYMETRY_COEFFICIENT;
@@ -84,10 +84,10 @@ float getInformationSourceEntropy(Histogram &histogram, float &result){
     float sum = 0;
 
     for (int m = 0; m < 256; m++) {
-        sum += histogram.uniform[0][m] * log2(histogram.uniform[0][m]/histogram.sourceImageP);
+        sum += histogram.uniform[0][m] * log2(histogram.probability[0][m]);
     }
 
-    float INFORMATION_SOURCE_ENTROPY = -(1.0/histogram.sourceImageP) * sum;
+    float INFORMATION_SOURCE_ENTROPY = (-1.0/histogram.sourceImageP) * sum;
     result = INFORMATION_SOURCE_ENTROPY;
     return INFORMATION_SOURCE_ENTROPY;
 }
