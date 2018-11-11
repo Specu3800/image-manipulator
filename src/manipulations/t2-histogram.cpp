@@ -31,23 +31,23 @@ void Histogram::calculateHistogram() {
     //uniform
     for (int x = 0; x < this->sourceImage->width(); x++){
         for (int y = 0; y < this->sourceImage->height(); y++) {
-            for (int s = 0; s < this->sourceImage->spectrum(); s++) {
-                //cout << "uni[" << s << "][" << (*this->sourceImage)(x, y, 0, s) << "]++          -    now has: " << uniform[s][(*this->sourceImage)(x, y, 0, s)] << "           it was for x,y: " << x << ", " << y << endl;
-                //cout << "(*this->sourceImage)(x, y, 0, s) " << (*this->sourceImage)(x, y, 0, s) << endl;
-                this->uniform[s][(*this->sourceImage)(x, y, 0, s)]++;
+            for (int c = 0; c < this->sourceImage->spectrum(); c++) {
+                //cout << "uni[" << c << "][" << (*this->sourceImage)(x, y, 0, c) << "]++          -    now has: " << uniform[c][(*this->sourceImage)(x, y, 0, c)] << "           it was for x,y: " << x << ", " << y << endl;
+                //cout << "(*this->sourceImage)(x, y, 0, c) " << (*this->sourceImage)(x, y, 0, c) << endl;
+                this->uniform[c][(*this->sourceImage)(x, y, 0, c)]++;
             }
         }
     }
     //cumulative
-    for(int s = 0; s < 3; s++){
-        cumulative[s][0] = uniform[s][0];
+    for(int c = 0; c < 3; c++){
+        cumulative[c][0] = uniform[c][0];
         for(int i = 1; i < 256; i++)
-            cumulative[s][i] = cumulative[s][i-1] + uniform[s][i];
+            cumulative[c][i] = cumulative[c][i-1] + uniform[c][i];
     }
     //probability
-    for(int s = 0; s < 3; s++){
+    for(int c = 0; c < 3; c++){
         for(int i = 0; i < 256; i++)
-            probability[s][i] = ((double)(uniform[s][i]))/(sourceImage->width()*sourceImage->height());
+            probability[c][i] = ((double)(uniform[c][i]))/(sourceImage->width()*sourceImage->height());
     }
 }
 void Histogram::calculateHistogram(CImg<int> &name) {
@@ -96,8 +96,8 @@ CImg<int> *Histogram::getHistogramGraph(int channel, int** values) {
 
     for (int x = 1; x < 257 ; x++) {
         for (int y = graph->height() - 1; y > graph->height() - values[channel][x-1] - 1; y--) {
-            for (int s = 0; s < 3; s++) {
-                (*graph)(x, y, 0, s) = 0;
+            for (int c = 0; c < 3; c++) {
+                (*graph)(x, y, 0, c) = 0;
             }
         }
     }
@@ -129,9 +129,9 @@ CImg<int> *Histogram::getScaleHistogramGraph(int channel, int** values) {
 
     for (int x = 0; x < 256; x += 2) {
         for (int y = graph->height() - 1; y > graph->height() - valuesCopy[x] - 1; y--) {
-            for (int s = 0; s < 3; s++) {
-                (*graph)(x, y, 0, s) = 0;
-                (*graph)(x+1, y, 0, s) = 0;
+            for (int c = 0; c < 3; c++) {
+                (*graph)(x, y, 0, c) = 0;
+                (*graph)(x+1, y, 0, c) = 0;
             }
         }
     }
@@ -142,14 +142,14 @@ void Histogram::initialize() {
     this->uniform = new int*[3];
     this->cumulative = new int*[3];
     this->probability = new double*[3];
-    for (int s = 0; s < 3; s++) {
-        this->uniform[s] = new int[256];
-        this->cumulative[s] = new int[256];
-        this->probability[s] = new double[256];
+    for (int c = 0; c < 3; c++) {
+        this->uniform[c] = new int[256];
+        this->cumulative[c] = new int[256];
+        this->probability[c] = new double[256];
         for (int j = 0; j < 256; j++) {
-            this->uniform[s][j] = 0;
-            this->cumulative[s][j] = 0;
-            this->probability[s][j] = 0;
+            this->uniform[c][j] = 0;
+            this->cumulative[c][j] = 0;
+            this->probability[c][j] = 0;
         }
     }
 }

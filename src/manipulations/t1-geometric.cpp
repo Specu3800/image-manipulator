@@ -13,8 +13,8 @@ void doHorizontalFlip(CImg<int> &original, CImg<int> &edited){
     for (int x = 0; x < original.width(); x++) {
         displayProgress(x, original.width()-1);
         for (int y = 0; y < original.height(); y++) {
-            for (int s = 0; s < original.spectrum(); s++) {
-                edited(x, y, 0, s) = original(x, edited.height() - y -1, 0, s);
+            for (int c = 0; c < original.spectrum(); c++) {
+                edited(x, y, 0, c) = original(x, edited.height() - y -1, 0, c);
             }
         }
     }
@@ -25,8 +25,8 @@ void doVerticalFlip(CImg<int> &original, CImg<int> &edited){
     for (int x = 0; x < original.width(); x++) {
         displayProgress(x, original.width()-1);
         for (int y = 0; y < original.height(); y++) {
-            for (int s = 0; s < original.spectrum(); s++) {
-                edited(x, y, 0, s) = original(edited.width() - x - 1, y, 0, s);
+            for (int c = 0; c < original.spectrum(); c++) {
+                edited(x, y, 0, c) = original(edited.width() - x - 1, y, 0, c);
             }
         }
     }
@@ -37,8 +37,8 @@ void doDiagonalFlip(CImg<int> &original, CImg<int> &edited){ //rotate and vflip
     for (int x = 0; x < original.width(); x++) {
         displayProgress(x, original.width()-1);
         for (int y = 0; y < original.height(); y++) {
-            for (int s = 0; s < original.spectrum(); s++) {
-                edited(x, y, 0, s) = original(edited.width() - x - 1, edited.height() - y -1, 0, s);
+            for (int c = 0; c < original.spectrum(); c++) {
+                edited(x, y, 0, c) = original(edited.width() - x - 1, edited.height() - y -1, 0, c);
             }
         }
     }
@@ -52,9 +52,9 @@ void shrinkBy(CImg<int> &original, CImg<int> &edited, char* fac){ //dodac interp
     for (int x = 0; x < original.width(); x++) {
         displayProgress(x, original.width()-1);
         for (int y = 0; y < original.height(); y++) {
-            for (int s = 0; s < original.spectrum(); s++) {
+            for (int c = 0; c < original.spectrum(); c++) {
                 if (x/factor >= 0 && x/factor < edited.width() && y/factor >= 0 && y/factor < edited.height())
-                    edited(x/factor, y/factor, 0, s) = original(x, y, 0, s);
+                    edited(x/factor, y/factor, 0, c) = original(x, y, 0, c);
             }
         }
     }
@@ -73,10 +73,10 @@ void enlargeBy(CImg<int> &original, CImg<int> &edited, char* fac){ //dodac inter
     for (int x = 0; x < original.width(); x++) {
         displayProgress(x, original.width()-1);
         for (int y = 0; y < original.height(); y++) {
-            for (int s = 0; s < original.spectrum(); s++) {
+            for (int c = 0; c < original.spectrum(); c++) {
                 for (int xx = 0; xx < repeat; xx++) {
                     for (int yy = 0; yy < repeat; yy++) {
-                        edited(x*factor + xx, y*factor + yy, 0, s) = original(x, y, 0, s);
+                        edited(x*factor + xx, y*factor + yy, 0, c) = original(x, y, 0, c);
                     }
                 }
             }

@@ -68,8 +68,8 @@ int main(int argc, char* argv[]) {
 
         else if (argv[1] == string("--hexponent")) {applyExponentialPDF(image1, image2, argv[2], image1Histogram);}
         else if (argv[1] == string("--slaplace")) applyLaplacianFilter(image1, image2, argv[2], image1Histogram);
-        else if (argv[1] == string("--slaplaceopt")) applyLaplacianFilterOptimised(image1, image2, argv[2], image1Histogram);
-        else if (argv[1] == string("--orobertsii")) applyRobertsOperatorFilter(image1, image2, argv[2], image1Histogram);
+        else if (argv[1] == string("--slaplaceopt")) applyLaplacianFilterOptimised(image1, image2, image1Histogram);
+        else if (argv[1] == string("--orobertsii")) applyRobertsOperatorFilter(image1, image2, image1Histogram);
 
         image1.save("original.bmp");
         image2.save("edited.bmp");
