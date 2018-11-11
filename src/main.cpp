@@ -24,7 +24,6 @@ using namespace cimg_library;
 
 int main(int argc, char* argv[]) {
 
-    clock_t start = clock();
 
     vector<string> variant1 = {"--brightness", "--contrast", "--contrast2", "--negative",
                                "--hflip", "--vflip", "--dflip", "--shrink", "--enlarge",
@@ -53,6 +52,7 @@ int main(int argc, char* argv[]) {
         image2 = CImg<int>(image1.width(), image1.height(), 1, 3, 0);
         image1Histogram = Histogram(image1);
 
+        clock_t start = clock();
         if (argv[1] == string("--brightness")) changeBrightness(image1, image2, argv[2]);
         else if (argv[1] == string("--contrast")) changeContrast(image1, image2, argv[2]);
         else if (argv[1] == string("--contrast2")) changeContrast2(image1, image2, argv[2]);
@@ -72,7 +72,9 @@ int main(int argc, char* argv[]) {
         else if (argv[1] == string("--hexponent")) {applyExponentialPDF(image1, image2, argv[2], image1Histogram);}
         else if (argv[1] == string("--slaplace")) applyLaplacianFilter(image1, image2, argv[2], image1Histogram);
         else if (argv[1] == string("--slaplaceopt")) applyLaplacianFilterOptimised(image1, image2, image1Histogram);
+        else if (argv[1] == string("--slaplaceopt2")) applyLaplacianFilterOptimised2(image1, image2, image1Histogram);
         else if (argv[1] == string("--orobertsii")) applyRobertsOperatorFilter(image1, image2, image1Histogram);
+        clock_t stop = clock();
 
         image1.save("original.bmp");
         image2.save("edited.bmp");
@@ -80,9 +82,7 @@ int main(int argc, char* argv[]) {
 //        image2.save("edited.png");
         image2.save(argv[argc - 1]); //save edited img in destination
 
-        clock_t stop = clock();
         double elapsed = (double) (stop - start);
-
         cout << "Time of execution: " << elapsed << endl;
 
         image1.append(image2, 'x').display("COMPARATION", false); //display

@@ -97,6 +97,23 @@ void applyLaplacianFilterOptimised(CImg<int> &original, CImg<int> &edited, Histo
     }
 }
 
+void applyLaplacianFilterOptimised2(CImg<int> &original, CImg<int> &edited, Histogram &histogram){
+    for (int x = 1; x < original.width() - 1; x++)
+    {
+        for (int y = 1; y < original.height() - 1; y++)
+        {
+            for (int c = 0; c < original.spectrum(); c++)
+            {
+                edited(x, y, 0, c) = normalized(
+                        -original(x-1, y - 1, 0, c) -original(x-1, y, 0, c) -original(x-1, y + 1, 0, c)
+                        -original(x, y - 1, 0, c) -8*original(x, y, 0, c) -original(x, y + 1, 0, c)
+                        -original(x+1, y - 1, 0, c) -original(x+1, y, 0, c) -original(x+1, y + 1, 0, c)
+                );
+            }
+        }
+    }
+}
+
 void applyRobertsOperatorFilter(CImg<int> &original, CImg<int> &edited, Histogram &histogram){
     for (int x = 1; x < original.width() - 1; x++)
     {
