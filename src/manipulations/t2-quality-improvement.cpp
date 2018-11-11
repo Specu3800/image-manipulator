@@ -69,6 +69,27 @@ void applyLaplacianFilter(CImg<int> &original, CImg<int> &edited, char*, Histogr
     }
 }
 
+void applyLaplacianFilterOptimised(CImg<int> &original, CImg<int> &edited, char*, Histogram &histogram){
+
+    for (int channel = 0; channel < 3; channel++)
+    {
+        for (int x = 1; x < original.width() - 1; x++)
+        {
+            for (int y = 1; y < original.height() - 1; y++)
+            {
+                int pixelValue = 0;
+                for (int i = x - 1; i < x + 2; i++)
+                {
+                    pixelValue += -original(i, y - 1, 0, channel) -original(i, y, 0, channel) -original(i, y + 1, 0, channel);
+                }
+                pixelValue += 9*original(x, y, 0, channel);
+
+                edited(x, y, 0, channel) = normalized(pixelValue);
+            }
+        }
+    }
+}
+
 void applyRobertsOperatorFilter(CImg<int> &original, CImg<int> &edited, char*, Histogram &histogram){
 
     for (int channel = 0; channel < 3; channel++)
