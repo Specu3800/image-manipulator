@@ -3,7 +3,7 @@
 #include <algorithm>
 #include "../../lib/CImg.templ"
 #include "t0-other.h"
-#include "t2-quality-improvement.h"
+#include "t2-filters.h"
 #include "t2-histogram.h"
 
 using namespace std;
@@ -17,8 +17,6 @@ void applyExponentialPDF(CImg<int> &original, CImg<int> &edited, char *gm, Histo
 
         int* improvedColors = new int[256];
         for (int m = 0; m < 256; m++) { //apply histogram modification
-            cout << "m: " << m << " " << gmin - 1.0/alpha * log(1.0 - (1.0/(original.width()*original.height())) * histogram.cumulative[c][m]) << endl;
-
             improvedColors[m] = gmin - 1.0/alpha *
                     log(1.0 - (1.0/(original.width()*original.height())) * histogram.cumulative[c][m]);
             improvedColors[m] = normalized(improvedColors[m]);
@@ -33,9 +31,9 @@ void applyExponentialPDF(CImg<int> &original, CImg<int> &edited, char *gm, Histo
 
     Histogram newHistogram = Histogram(edited);
     //newHistogram.displayUniformValues(0);
-    ((*histogram.getUniformHistogramGraph(0, false)).append(*newHistogram.getUniformHistogramGraph(0, false), 'x', 1)).display("HISTOGRAM", false); //show difference in histogram
-    histogram.getUniformHistogramGraph(0, false)->save("original_histogram.png");
-    newHistogram.getUniformHistogramGraph(0, false)->save("edited_histogram.png");
+    ((*histogram.getUniformHistogramGraph(0, true)).append(*newHistogram.getUniformHistogramGraph(0, true), 'x', 1)).display("HISTOGRAM", false); //show difference in histogram
+    histogram.getUniformHistogramGraph(0, false)->save("original_histogram.bmp");
+    newHistogram.getUniformHistogramGraph(0, false)->save("edited_histogram.bmp");
 }
 
 void applyLaplacianFilter(CImg<int> &original, CImg<int> &edited, char* m, Histogram &histogram){
@@ -92,23 +90,6 @@ void applyLaplacianFilterOptimised(CImg<int> &original, CImg<int> &edited, Histo
                 pixelValue += 9*original(x, y, 0, c);
 
                 edited(x, y, 0, c) = normalized(pixelValue);
-            }
-        }
-    }
-}
-
-void applyLaplacianFilterOptimised2(CImg<int> &original, CImg<int> &edited, Histogram &histogram){
-    for (int x = 1; x < original.width() - 1; x++)
-    {
-        for (int y = 1; y < original.height() - 1; y++)
-        {
-            for (int c = 0; c < original.spectrum(); c++)
-            {
-                edited(x, y, 0, c) = normalized(
-                        -original(x-1, y - 1, 0, c) -original(x-1, y, 0, c) -original(x-1, y + 1, 0, c)
-                        -original(x, y - 1, 0, c) -8*original(x, y, 0, c) -original(x, y + 1, 0, c)
-                        -original(x+1, y - 1, 0, c) -original(x+1, y, 0, c) -original(x+1, y + 1, 0, c)
-                );
             }
         }
     }

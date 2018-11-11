@@ -3,7 +3,6 @@ project(image-manipulator)
 
 set(CMAKE_CXX_STANDARD 11)
 
-
 # To use PKG_CHECK_MODULES to find some optional packages
 find_package(PkgConfig)
 
@@ -137,8 +136,8 @@ add_executable(image-manipulator
         src/manipulations/t2-histogram.h
         src/manipulations/t2-characteristics.cpp
         src/manipulations/t2-characteristics.h
-        src/manipulations/t2-quality-improvement.cpp
-        src/manipulations/t2-quality-improvement.h
+        src/manipulations/t2-filters.cpp
+        src/manipulations/t2-filters.h
         )
 
 target_link_libraries(image-manipulator ${SYSTEM_LIBS})

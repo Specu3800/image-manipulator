@@ -21,9 +21,6 @@ Histogram::Histogram() {
 }
 
 Histogram::~Histogram() {
-//    delete this->uniform;
-//    delete this->cumulative;
-//    delete this->probability;
 }
 
 
@@ -32,8 +29,6 @@ void Histogram::calculateHistogram() {
     for (int x = 0; x < this->sourceImage->width(); x++){
         for (int y = 0; y < this->sourceImage->height(); y++) {
             for (int c = 0; c < this->sourceImage->spectrum(); c++) {
-                //cout << "uni[" << c << "][" << (*this->sourceImage)(x, y, 0, c) << "]++          -    now has: " << uniform[c][(*this->sourceImage)(x, y, 0, c)] << "           it was for x,y: " << x << ", " << y << endl;
-                //cout << "(*this->sourceImage)(x, y, 0, c) " << (*this->sourceImage)(x, y, 0, c) << endl;
                 this->uniform[c][(*this->sourceImage)(x, y, 0, c)]++;
             }
         }
@@ -50,12 +45,11 @@ void Histogram::calculateHistogram() {
             probability[c][i] = ((double)(uniform[c][i]))/(sourceImage->width()*sourceImage->height());
     }
 }
+
 void Histogram::calculateHistogram(CImg<int> &name) {
     this->sourceImage = &name;
     calculateHistogram();
 }
-
-
 
 CImg<int> *Histogram::getUniformHistogramGraph(int channel, bool scale) {
 

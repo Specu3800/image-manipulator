@@ -17,13 +17,12 @@
 #include "manipulations/t1-analysis.h"
 #include "manipulations/t2-histogram.h"
 #include "manipulations/t2-characteristics.h"
-#include "manipulations/t2-quality-improvement.h"
+#include "manipulations/t2-filters.h"
 
 using namespace std;
 using namespace cimg_library;
 
 int main(int argc, char* argv[]) {
-
 
     vector<string> variant1 = {"--brightness", "--contrast", "--contrast2", "--negative",
                                "--hflip", "--vflip", "--dflip", "--shrink", "--enlarge",
@@ -41,7 +40,6 @@ int main(int argc, char* argv[]) {
     //Histogram image2Histogram;
 
 
-
     if (argc < 2 || argc > 5) {cout << "Wrong number of parameters.\nType --help to view the list of the available commands." << endl;}
 
     else if (argv[1] == string("--help")) displayHelp();
@@ -52,7 +50,6 @@ int main(int argc, char* argv[]) {
         image2 = CImg<int>(image1.width(), image1.height(), 1, 3, 0);
         image1Histogram = Histogram(image1);
 
-        clock_t start = clock();
         if (argv[1] == string("--brightness")) changeBrightness(image1, image2, argv[2]);
         else if (argv[1] == string("--contrast")) changeContrast(image1, image2, argv[2]);
         else if (argv[1] == string("--contrast2")) changeContrast2(image1, image2, argv[2]);
@@ -69,22 +66,14 @@ int main(int argc, char* argv[]) {
         else if (argv[1] == string("--min")) applyMinimumFilter(image1, image2, argv[2]);
         else if (argv[1] == string("--max")) applyMaximumFilter(image1, image2, argv[2]);
 
-        else if (argv[1] == string("--hexponent")) {applyExponentialPDF(image1, image2, argv[2], image1Histogram);}
+        else if (argv[1] == string("--hexponent")) applyExponentialPDF(image1, image2, argv[2], image1Histogram);
         else if (argv[1] == string("--slaplace")) applyLaplacianFilter(image1, image2, argv[2], image1Histogram);
         else if (argv[1] == string("--slaplaceopt")) applyLaplacianFilterOptimised(image1, image2, image1Histogram);
-        else if (argv[1] == string("--slaplaceopt2")) applyLaplacianFilterOptimised2(image1, image2, image1Histogram);
         else if (argv[1] == string("--orobertsii")) applyRobertsOperatorFilter(image1, image2, image1Histogram);
-        clock_t stop = clock();
 
         image1.save("original.bmp");
         image2.save("edited.bmp");
-//        image1.save("original.png");
-//        image2.save("edited.png");
         image2.save(argv[argc - 1]); //save edited img in destination
-
-        double elapsed = (double) (stop - start);
-        cout << "Time of execution: " << elapsed << endl;
-
         image1.append(image2, 'x').display("COMPARATION", false); //display
 
     } else if (find(variant2.begin(), variant2.end(), argv[1]) != variant2.end()){
@@ -108,7 +97,6 @@ int main(int argc, char* argv[]) {
         image1Histogram.displayUniformHistogram(atoi(argv[2]), true);
         image1Histogram.displayCumulativeHistogram(atoi(argv[2]), true);
 
-
     } else if (find(variant3.begin(), variant3.end(), argv[1]) != variant3.end()) {
 
         if (fileExists(argv[argc - 1])) image1 = CImg<int>(argv[argc - 1]);
@@ -130,10 +118,7 @@ int main(int argc, char* argv[]) {
         cout << "No maching command. \nType --help to view the list of the available commands.";
     }
 
-
-
     return 0;
-
 }
 
 
