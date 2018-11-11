@@ -84,6 +84,7 @@ float getInformationSourceEntropy(Histogram &histogram, float &result){
     float sum = 0;
 
     for (int m = 0; m < 256; m++) {
+        cout << histogram.uniform[0][m] * log2(histogram.probability[0][m]) << endl;
         sum += histogram.uniform[0][m] * log2(histogram.probability[0][m]);
     }
 
