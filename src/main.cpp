@@ -6,6 +6,7 @@
 #include <fstream>
 #include <vector>
 #include <algorithm>
+#include <time.h>
 
 #include "../lib/CImg.templ"
 
@@ -22,6 +23,8 @@ using namespace std;
 using namespace cimg_library;
 
 int main(int argc, char* argv[]) {
+
+    clock_t start = clock();
 
     vector<string> variant1 = {"--brightness", "--contrast", "--contrast2", "--negative",
                                "--hflip", "--vflip", "--dflip", "--shrink", "--enlarge",
@@ -73,9 +76,15 @@ int main(int argc, char* argv[]) {
 
         image1.save("original.bmp");
         image2.save("edited.bmp");
-        image1.save("original.png");
-        image2.save("edited.png");
+//        image1.save("original.png");
+//        image2.save("edited.png");
         image2.save(argv[argc - 1]); //save edited img in destination
+
+        clock_t stop = clock();
+        double elapsed = (double) (stop - start);
+
+        cout << "Time of execution: " << elapsed << endl;
+
         image1.append(image2, 'x').display("COMPARATION", false); //display
 
     } else if (find(variant2.begin(), variant2.end(), argv[1]) != variant2.end()){
@@ -120,6 +129,8 @@ int main(int argc, char* argv[]) {
     } else {
         cout << "No maching command. \nType --help to view the list of the available commands.";
     }
+
+
 
     return 0;
 
