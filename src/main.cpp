@@ -18,6 +18,7 @@
 #include "manipulations/t2-histogram.h"
 #include "manipulations/t2-characteristics.h"
 #include "manipulations/t2-filters.h"
+#include "manipulations/t3-morphological-operations.h"
 
 using namespace std;
 using namespace cimg_library;
@@ -27,7 +28,8 @@ int main(int argc, char* argv[]) {
     vector<string> variant1 = {"--brightness", "--contrast", "--contrast2", "--negative",
                                "--hflip", "--vflip", "--dflip", "--shrink", "--enlarge",
                                "--adaptive", "--median", "--min", "--max",
-                               "--hexponent", "--slaplace", "--slaplaceopt", "--orobertsii"};
+                               "--hexponent", "--slaplace", "--slaplaceopt", "--orobertsii",
+                               "--morphopi", "--morphopii", "--morphopiii"};
     vector<string> variant2 = {"--mse", "--pmse", "--snr", "--psnr", "--md"};
     vector<string> variant3 = {"--cmean", "--cvariance", "--cstdev", "--cvarcoi", "--cvarcoii", "--casyco", "--cflaco", "--centropy"};
 
@@ -70,6 +72,10 @@ int main(int argc, char* argv[]) {
         else if (argv[1] == string("--slaplace")) applyLaplacianFilter(image1, image2, argv[2], image1Histogram);
         else if (argv[1] == string("--slaplaceopt")) applyLaplacianFilterOptimised(image1, image2, image1Histogram);
         else if (argv[1] == string("--orobertsii")) applyRobertsOperatorFilter(image1, image2, image1Histogram);
+
+        else if (argv[1] == string("--morphopi")) applyMorphologicalOperationI(image1, image2);
+        else if (argv[1] == string("--morphopii")) applyMorphologicalOperationII(image1, image2);
+        else if (argv[1] == string("--morphopiii")) applyMorphologicalOperationIII(image1, image2);
 
         image1.save("original.bmp");
         image2.save("edited.bmp");

@@ -138,7 +138,7 @@ add_executable(image-manipulator
         src/manipulations/t2-characteristics.h
         src/manipulations/t2-filters.cpp
         src/manipulations/t2-filters.h
-        )
+        src/manipulations/t3-morphological-operations.cpp src/manipulations/t3-morphological-operations.h)
 
 target_link_libraries(image-manipulator ${SYSTEM_LIBS})
 
