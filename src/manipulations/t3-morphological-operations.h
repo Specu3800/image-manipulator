@@ -16,10 +16,12 @@ public:
 
 void applyDilation(CImg<int> &original, CImg<int> &edited, vector<Point> mask);
 void applyErosion(CImg<int> &original, CImg<int> &edited, vector<Point> mask);
-void applyDifference(CImg<int> &original, CImg<int> &edited, CImg<int> &mask);
-void applyOpening(CImg<int> &original, CImg<int> &edited, CImg<int> &mask);
-void applyClosing(CImg<int> &original, CImg<int> &edited, CImg<int> &mask);
-void applyHMTTransformation(CImg<int> &original, CImg<int> &edited, CImg<int> &mask);
+void applyUnion(CImg<int> &original, CImg<int> &edited);
+void applyIntersection(CImg<int> &original, CImg<int> &edited);
+void applyDifference(CImg<int> &original, CImg<int> &edited);
+void applyOpening(CImg<int> &original, CImg<int> &edited, vector<Point> mask);
+void applyClosing(CImg<int> &original, CImg<int> &edited, vector<Point> mask);
+void applyHMTTransformation(CImg<int> &original, CImg<int> &edited, vector<Point> mask);
 
 void applyMorphologicalOperationI(CImg<int> &original, CImg<int> &edited);
 void applyMorphologicalOperationII(CImg<int> &original, CImg<int> &edited);

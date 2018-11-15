@@ -46,10 +46,12 @@ int main(int argc, char* argv[]) {
 
     else if (argv[1] == string("--help")) displayHelp();
 
+    else if (argv[1] == string("--version")) displayVersion();
+
     else if (find(variant1.begin(), variant1.end(), argv[1]) != variant1.end()){
 
         if (fileExists(argv[argc - 2])) image1 = CImg<int>(argv[argc - 2]);
-        image2 = CImg<int>(image1.width(), image1.height(), 1, 3, 0);
+        CImg<int> image2 = CImg<int>(image1.width(), image1.height(), 1, image1.spectrum(), 0);
         image1Histogram = Histogram(image1);
 
         if (argv[1] == string("--brightness")) changeBrightness(image1, image2, argv[2]);

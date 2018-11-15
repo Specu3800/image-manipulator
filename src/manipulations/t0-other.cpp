@@ -81,19 +81,7 @@ int normalized(int value){
 
 void displayHelp() {
     cout <<
-        "###############################################################################\n"
-        "#########################---   " << (char)27 << "[1m" << "Image Manipulator" << (char)27 << "[0m" << "   ---#########################\n"
-        "###############################################################################\n"
-        "#                                                                             #\n"
-        "#                          Michał Suliborski  217863                          #\n"
-        "#                          Arek Zasina        217868                          #\n"
-        "#                                                                             #\n"
-        "#                             Politechnika Łódzka                             #\n"
-        "#                                 2018/2019                                   #\n"
-        "#                                                                             #\n"
-        "###############################################################################\n"
-        "\n"
-        << (char)27 << "[1m" << "USAGE:\n" << (char)27 << "[0m" <<
+        (char)27 << "[1m" << "USAGE:\n" << (char)27 << "[0m" <<
         "    image-manipulator --command [parameter] [source_file] [destination_file]\n"
         "                                OR\n"
         "    image-manipulator --command [source_file] [destination_file]\n"
@@ -218,6 +206,24 @@ void displayHelp() {
         "\n"
         "    --centropy src\n"
         "        displays Information Source Entropy of an images\n"
+        "\n";
+}
+
+void displayVersion() {
+    cout <<
+        "###############################################################################\n"
+        "#########################---   " << (char)27 << "[1m" << "Image Manipulator" << (char)27 << "[0m" << "   ---#########################\n"
+        "###############################################################################\n"
+        "#                                                                             #\n"
+        "#                          Michał Suliborski  217863                          #\n"
+        "#                          Arek Zasina        217868                          #\n"
+        "#                                                                             #\n"
+        "#                             Politechnika Łódzka                             #\n"
+        "#                                 2018/2019                                   #\n"
+        "#                                                                             #\n"
+        "#                               Version: 3.0                                  #\n"
+        "#                                                                             #\n"
+        "###############################################################################\n"
         "\n";
 }
 

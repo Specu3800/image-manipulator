@@ -15,6 +15,7 @@ bool fileExists(char* name);
 int normalized(int value);
 
 void displayHelp();
+void displayVersion();
 
 #endif //OTHER
 

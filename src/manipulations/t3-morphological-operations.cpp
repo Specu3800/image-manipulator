@@ -14,47 +14,107 @@ Point::Point(int x, int y) {
 }
 
 void applyErosion(CImg<int> &original, CImg<int> &edited, vector<Point> mask){ //delete 0,0 if whole mask cannot fit
-    edited = original;
-    for (int x = 1; x < original.width()-1; x++) {
-        for (int y = 1; y < original.height()-1; y++) {
+    for (int x = 0; x < original.width(); x++) {
+        for (int y = 0; y < original.height(); y++) {
             for (int c = 0; c < original.spectrum(); c++) {
-
                 bool fits = true;
                 for (int i = 0; i < mask.size(); i++) {
-                    //check if were not out of photo and chg x = 0 y = 0 width +1
-                    //if all point fit color pixel
-                    //if not break;
-                    if(original(x+mask[i].x, y+mask[i].y, 0, c) == 0) {
-                        fits = false;
-                        break;
+                    if (x+mask[i].x >= 0 && x+mask[i].x < original.width() && y+mask[i].y >= 0 && y+mask[i].y < original.height()) {
+                        if (original(x + mask[i].x, y + mask[i].y, 0, c) == 0) {
+                            fits = false;
+                            break;
+                        }
                     }
                 }
                 if(fits) edited(x, y, 0, c) = 255;
                 else edited(x, y, 0, c) = 0;
-//@@@@@@@@@@@@@@@22 chaeck it it is correct
             }
         }
     }
 }
 
-void applyDilation(CImg<int> &original, CImg<int> &edited, vector<Point> mask){ //add 0,0 if it has at least one commont point with mask
-;
+void applyDilation(CImg<int> &original, CImg<int> &edited, vector<Point> mask){ //add 0,0 if it has at least one common point with mask
+    for (int x = 0; x < original.width(); x++) {
+        for (int y = 0; y < original.height(); y++) {
+            for (int c = 0; c < original.spectrum(); c++) {
+                bool hasCommonPoint = false;
+                for (int i = 0; i < mask.size(); i++) {
+                    if (x+mask[i].x >= 0 && x+mask[i].x < original.width() && y+mask[i].y >= 0 && y+mask[i].y < original.height()){
+                        if(original(x+mask[i].x, y+mask[i].y, 0, c) == 255) {
+                            hasCommonPoint = true;
+                            break;
+                        }
+                    }
+                }
+                if(hasCommonPoint) edited(x, y, 0, c) = 255;
+                else edited(x, y, 0, c) = 0;
+            }
+        }
+    }
 }
 
-
-void applyDifference(CImg<int> &original, CImg<int> &edited, CImg<int> &mask){
-;
+void applyUnion(CImg<int> &original, CImg<int> &edited){
+    if(original.width() == edited.width() && original.height() == edited.height()){
+        for (int x = 0; x < original.width(); x++) {
+            for (int y = 0; y < original.height(); y++) {
+                for (int c = 0; c < original.spectrum(); c++) {
+                    if (original(x, y, 0, c) == 255 && edited(x, y, 0, c) == 0)
+                        edited(x, y, 0, c) = 255;
+                }
+            }
+        }
+    }
+    else
+        cout << "Works only for same size images!" <<endl;
 }
 
-void applyOpening(CImg<int> &original, CImg<int> &edited, CImg<int> &mask){ //if whole mask fits, all pixels are rewritten to edited, if not continue // it cuts this alone pixels // in inner border of an image
-;
+void applyIntersection(CImg<int> &original, CImg<int> &edited){
+    if(original.width() == edited.width() && original.height() == edited.height()){
+        for (int x = 0; x < original.width(); x++) {
+            for (int y = 0; y < original.height(); y++) {
+                for (int c = 0; c < original.spectrum(); c++) {
+                    if (original(x, y, 0, c) == 0 && edited(x, y, 0, c) == 255)
+                        edited(x, y, 0, c) = 0;
+                }
+            }
+        }
+    }
+    else
+        cout << "Works only for same size images!" <<endl;
 }
 
-void applyClosing(CImg<int> &original, CImg<int> &edited, CImg<int> &mask){ //roll in outer border of an image // filfill alone pixels //
-;
+void applyDifference(CImg<int> &original, CImg<int> &edited){
+    CImg<int> diff(original);
+    for (int x = 0; x < edited.width(); x++) {
+        for (int y = 0; y < edited.height(); y++) {
+            for (int c = 0; c < edited.spectrum(); c++) {
+                if (x >= 0 && x < original.width() && y >= 0 && y < original.height()){
+                if (edited(x, y, 0, c) == 255 && diff(x, y, 0, c) == 255)
+                    diff(x, y, 0, c) = 0;
+                }
+            }
+        }
+    }
+    edited = diff;
 }
 
-void applyHMTTransformation(CImg<int> &original, CImg<int> &edited, CImg<int> &mask){
+void applyOpening(CImg<int> &original, CImg<int> &edited, vector<Point> mask){ //if whole mask fits, all pixels are rewritten to edited, if not continue // it cuts this alone pixels // in inner border of an image
+    applyErosion(original, edited, mask);
+    CImg<int> backup(original);
+    original = edited;
+    applyDilation(original, edited, mask);
+    original = backup;
+}
+
+void applyClosing(CImg<int> &original, CImg<int> &edited, vector<Point> mask){ //roll in outer border of an image // filfill alone pixels //
+    applyDilation(original, edited, mask);
+    CImg<int> backup(original);
+    original = edited;
+    applyErosion(original, edited, mask);
+    original = backup;
+}
+
+void applyHMTTransformation(CImg<int> &original, CImg<int> &edited, vector<Point> mask){
 ;
 }
 
@@ -66,7 +126,9 @@ void applyMorphologicalOperationI(CImg<int> &original, CImg<int> &edited){
     mask.emplace_back(Point(1, 0));
     mask.emplace_back(Point(0, -1));
     mask.emplace_back(Point(0, 1));
-    applyErosion(original, edited, mask);
+
+    applyDilation(original, edited, mask);
+    applyDifference(original, edited);
 }
 
 void applyMorphologicalOperationII(CImg<int> &original, CImg<int> &edited){

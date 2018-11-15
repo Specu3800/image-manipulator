@@ -81,7 +81,7 @@ void applyLaplacianFilterOptimised(CImg<int> &original, CImg<int> &edited, Histo
         for (int y = 1; y < original.height() - 1; y++)
         {
             for (int c = 0; c < original.spectrum(); c++)
-                {
+            {
                 int pixelValue = 0;
                 for (int i = x - 1; i < x + 2; i++)
                 {
