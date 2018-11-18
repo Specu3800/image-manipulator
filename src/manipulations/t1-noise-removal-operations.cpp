@@ -2,15 +2,15 @@
 #include <vector>
 #include <algorithm>
 #include "../../lib/CImg.templ"
-#include "t1-noise-removal.h"
+#include "t1-noise-removal-operations.h"
 #include "t0-other.h"
 
 using namespace std;
 using namespace cimg_library;
 
-void applyAdaptiveMedianFilter(CImg<int> &original, CImg<int> &edited, char* maxD){
-    int maxDepth = atoi(maxD);
+CImg<int>& applyAdaptiveMedianFilter(CImg<int> &original, int maxDepth){
     if (maxDepth < 1) {cout << "Wrong depth value. \nType --help to view information about available commands." << endl; exit(0);}
+    CImg<int>* edited = new CImg<int>(original.width(), original.height(), 1, original.spectrum(), 0);
     vector<int> pixels;
     int currDepth;
     for (int x = 0; x < original.width(); x++) {
@@ -43,14 +43,14 @@ void applyAdaptiveMedianFilter(CImg<int> &original, CImg<int> &edited, char* max
                         int B1 = original(x, y, 0, c) - zmin;
                         int B2 = original(x, y, 0, c) - zmax;
 
-                        if (B1 > 0 && B2 < 0) edited(x, y, 0, c) = original(x, y, 0, c);
-                        else edited(x, y, 0, c) = zmed;
+                        if (B1 > 0 && B2 < 0) (*edited)(x, y, 0, c) = original(x, y, 0, c);
+                        else (*edited)(x, y, 0, c) = zmed;
 
                         break;
                     } else {
                         currDepth++;
                         if(currDepth > maxDepth) {
-                            edited(x, y, 0, c) = original(x, y, 0, c);
+                            (*edited)(x, y, 0, c) = original(x, y, 0, c);
                             break;
                         }
                     }
@@ -59,11 +59,12 @@ void applyAdaptiveMedianFilter(CImg<int> &original, CImg<int> &edited, char* max
             }
         }
     }
+    return *edited;
 }
 
-void applyMinimumFilter(CImg<int> &original, CImg<int> &edited, char* d){
-    int depth = atoi(d);
+CImg<int>& applyMinimumFilter(CImg<int> &original, int depth){
     if (depth < 1) {cout << "Wrong depth value. \nType --help to view information about available commands." << endl; exit(0);}
+    CImg<int>* edited = new CImg<int>(original.width(), original.height(), 1, original.spectrum(), 0);
     vector<int> pixels;
     for (int x = 0; x < original.width(); x++) {
         displayProgress(x, original.width()-1);
@@ -79,16 +80,17 @@ void applyMinimumFilter(CImg<int> &original, CImg<int> &edited, char* d){
                 }
 
                 sort(pixels.begin(), pixels.end());
-                edited(x, y, 0, c) = pixels[0];
+                (*edited)(x, y, 0, c) = pixels[0];
                 pixels.clear();
             }
         }
     }
+    return *edited;
 }
 
-void applyMaximumFilter(CImg<int> &original, CImg<int> &edited, char* d){
-    int depth = atoi(d);
+CImg<int>& applyMaximumFilter(CImg<int> &original, int depth){
     if (depth < 1) {cout << "Wrong depth value. \nType --help to view information about available commands." << endl; exit(0);}
+    CImg<int>* edited = new CImg<int>(original.width(), original.height(), 1, original.spectrum(), 0);
     vector<int> pixels;
     for (int x = 0; x < original.width(); x++) {
         displayProgress(x, original.width()-1);
@@ -104,15 +106,17 @@ void applyMaximumFilter(CImg<int> &original, CImg<int> &edited, char* d){
                 }
 
                 sort(pixels.begin(), pixels.end());
-                edited(x, y, 0, c) = pixels[pixels.size()-1];
+                (*edited)(x, y, 0, c) = pixels[pixels.size()-1];
                 pixels.clear();
             }
         }
     }
+    return *edited;
 }
-void applyMedianFilter(CImg<int> &original, CImg<int> &edited, char* d){
-    int depth = atoi(d);
+
+CImg<int>& applyMedianFilter(CImg<int> &original, int depth){
     if (depth < 1) {cout << "Wrong depth value. \nType --help to view information about available commands." << endl; exit(0);}
+    CImg<int>* edited = new CImg<int>(original.width(), original.height(), 1, original.spectrum(), 0);
     vector<int> pixels;
     for (int x = 0; x < original.width(); x++) {
         displayProgress(x, original.width()-1);
@@ -128,10 +132,11 @@ void applyMedianFilter(CImg<int> &original, CImg<int> &edited, char* d){
                 }
 
                 sort(pixels.begin(), pixels.end());
-                if (pixels.size() % 2 == 0) edited(x, y, 0, c) = (pixels[pixels.size() / 2 - 1] + pixels[pixels.size() / 2]) / 2;
-                else edited(x, y, 0, c) = pixels[pixels.size() / 2];
+                if (pixels.size() % 2 == 0) (*edited)(x, y, 0, c) = (pixels[pixels.size() / 2 - 1] + pixels[pixels.size() / 2]) / 2;
+                else (*edited)(x, y, 0, c) = pixels[pixels.size() / 2];
                 pixels.clear();
             }
         }
     }
+    return *edited;
 }

@@ -2,11 +2,9 @@
 #define HISTOGRAM
 
 #include "../../lib/CImg.templ"
-#include "t2-histogram.h"
 
 using namespace std;
 using namespace cimg_library;
-
 
 class Histogram{
 public:

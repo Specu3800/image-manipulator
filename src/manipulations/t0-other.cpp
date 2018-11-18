@@ -6,47 +6,49 @@
 using namespace std;
 using namespace cimg_library;
 
-void applyBilinearInterpolation(CImg<int> &edited){
-    /*
-     * __x-1___x___x+1_
-     *
-     * | K1 | U1 | K2 |   y-1
-     * ________________
-     * | U4 | XX | U2 |   y
-     * ________________
-     * | K3 | U3 | K4 |   y+1
-     *
-     * */
-    for (int x = 0; x < edited.width(); x++) {
-        displayProgress(x, edited.width()-1);
-        for (int y = 0; y < edited.height(); y++) {
-            //if(edited(x, y, 0, 0) != 0 || edited(x, y, 0, 1) != 0 || edited(x, y, 0, 2) != 0) continue; //apply only on black pixels //uncommented smooths the whole image
+CImg<int>& applyBilinearInterpolation(CImg<int> &original){
+    CImg<int>* edited = new CImg<int>(original);
+    for (int x = 0; x < (*edited).width(); x++) {
+        displayProgress(x, (*edited).width()-1);
+        for (int y = 0; y < (*edited).height(); y++) {
+            //if((*edited)(x, y, 0, 0) != 0 || (*edited)(x, y, 0, 1) != 0 || (*edited)(x, y, 0, 2) != 0) continue; //apply only on black pixels //uncommented smooths the whole image
 
             bool K1, K2, K3, K4;
             bool U1, U2, U3, U4;
 
-            if (x - 1 >= 0 && y - 1 >= 0) K1 = (edited(x - 1, y - 1, 0, 0) != 0 || edited(x - 1, y - 1, 0, 1) != 0 || edited(x - 1, y - 1, 0, 2) != 0); else K1 = false;
-            if (x + 1 < edited.width() && y - 1 >= 0) K2 = (edited(x + 1, y - 1, 0, 0) != 0 || edited(x + 1, y - 1, 0, 1) != 0 || edited(x + 1, y - 1, 0, 2) != 0); else K2 = false;
-            if (x - 1 >= 0 && y + 1 < edited.height()) K3 = (edited(x - 1, y + 1, 0, 0) != 0 || edited(x - 1, y + 1, 0, 1) != 0 || edited(x - 1, y + 1, 0, 2) != 0); else K3 = false;
-            if (x + 1 < edited.width() && y + 1 < edited.height()) K4 = (edited(x + 1, y + 1, 0, 0) != 0 || edited(x + 1, y + 1, 0, 1) != 0 || edited(x + 1, y + 1, 0, 2) != 0); else K4 = false;
+            if (x - 1 >= 0 && y - 1 >= 0) K1 = ((*edited)(x - 1, y - 1, 0, 0) != 0 || (*edited)(x - 1, y - 1, 0, 1) != 0 || (*edited)(x - 1, y - 1, 0, 2) != 0); else K1 = false;
+            if (x + 1 < (*edited).width() && y - 1 >= 0) K2 = ((*edited)(x + 1, y - 1, 0, 0) != 0 || (*edited)(x + 1, y - 1, 0, 1) != 0 || (*edited)(x + 1, y - 1, 0, 2) != 0); else K2 = false;
+            if (x - 1 >= 0 && y + 1 < (*edited).height()) K3 = ((*edited)(x - 1, y + 1, 0, 0) != 0 || (*edited)(x - 1, y + 1, 0, 1) != 0 || (*edited)(x - 1, y + 1, 0, 2) != 0); else K3 = false;
+            if (x + 1 < (*edited).width() && y + 1 < (*edited).height()) K4 = ((*edited)(x + 1, y + 1, 0, 0) != 0 || (*edited)(x + 1, y + 1, 0, 1) != 0 || (*edited)(x + 1, y + 1, 0, 2) != 0); else K4 = false;
 
-            if (y - 1 >= 0) U1 = (edited(x, y - 1, 0, 0) != 0 || edited(x, y - 1, 0, 1) != 0 || edited(x, y - 1, 0, 2) != 0); else U1 = false;
-            if (x + 1 < edited.width()) U2 = (edited(x + 1, y, 0, 0) != 0 || edited(x + 1, y, 0, 1) != 0 || edited(x + 1, y, 0, 2) != 0); else U2 = false;
-            if (y + 1 < edited.height()) U3 = (edited(x, y + 1, 0, 0) != 0 || edited(x, y + 1, 0, 1) != 0 || edited(x, y + 1, 0, 2) != 0); else U3 = false;
-            if (x - 1 >= 0) U4 = (edited(x - 1, y, 0, 0) != 0 || edited(x - 1, y, 0, 1) != 0 || edited(x - 1, y, 0, 2) != 0); else U4 = false;
+            if (y - 1 >= 0) U1 = ((*edited)(x, y - 1, 0, 0) != 0 || (*edited)(x, y - 1, 0, 1) != 0 || (*edited)(x, y - 1, 0, 2) != 0); else U1 = false;
+            if (x + 1 < (*edited).width()) U2 = ((*edited)(x + 1, y, 0, 0) != 0 || (*edited)(x + 1, y, 0, 1) != 0 || (*edited)(x + 1, y, 0, 2) != 0); else U2 = false;
+            if (y + 1 < (*edited).height()) U3 = ((*edited)(x, y + 1, 0, 0) != 0 || (*edited)(x, y + 1, 0, 1) != 0 || (*edited)(x, y + 1, 0, 2) != 0); else U3 = false;
+            if (x - 1 >= 0) U4 = ((*edited)(x - 1, y, 0, 0) != 0 || (*edited)(x - 1, y, 0, 1) != 0 || (*edited)(x - 1, y, 0, 2) != 0); else U4 = false;
 
-            for (int c = 0; c < edited.spectrum(); c++) {
+            for (int c = 0; c < (*edited).spectrum(); c++) {
                 if (U1 && U2 && U3 && U4)
-                    edited(x, y, 0, c) = 0.25*(edited(x, y - 1, 0, c) + edited(x, y + 1, 0, c) + edited(x - 1, y, 0, c) + edited(x + 1, y, 0, c));
+                    (*edited)(x, y, 0, c) = 0.25*((*edited)(x, y - 1, 0, c) + (*edited)(x, y + 1, 0, c) + (*edited)(x - 1, y, 0, c) + (*edited)(x + 1, y, 0, c));
                 else if (K1 && K2 && K3 && K4)
-                    edited(x, y, 0, c) = 0.25*(edited(x - 1, y - 1, 0, c) + edited(x + 1, y - 1, 0, c) + edited(x - 1, y + 1, 0, c) + edited(x + 1, y + 1, 0, c));
+                    (*edited)(x, y, 0, c) = 0.25*((*edited)(x - 1, y - 1, 0, c) + (*edited)(x + 1, y - 1, 0, c) + (*edited)(x - 1, y + 1, 0, c) + (*edited)(x + 1, y + 1, 0, c));
                 else if (U1 && U3)
-                    edited(x, y, 0, c) = 0.5*(edited(x, y - 1, 0, c) + edited(x, y + 1, 0, c));
+                    (*edited)(x, y, 0, c) = 0.5*((*edited)(x, y - 1, 0, c) + (*edited)(x, y + 1, 0, c));
                 else if (U2 && U4)
-                    edited(x, y, 0, c) = 0.5*(edited(x - 1, y, 0, c) + edited(x + 1, y, 0, c));
+                    (*edited)(x, y, 0, c) = 0.5*((*edited)(x - 1, y, 0, c) + (*edited)(x + 1, y, 0, c));
             }
         }
     }
+    return *edited;
+    /*
+     *         x-1   x   x+1
+     *
+     *       | K1 | U1 | K2 |   y-1
+     *       ________________
+     *       | U4 | XX | U2 |   y
+     *       ________________
+     *       | K3 | U3 | K4 |   y+1
+     *
+     * */
 }
 
 void displayProgress(int x, int max){
@@ -86,6 +88,8 @@ void displayHelp() {
         "                                OR\n"
         "    image-manipulator --command [source_file] [destination_file]\n"
         "                                OR\n"
+        "    image-manipulator --command [source1_file] [source2_file] [destination_file]\n"
+        "                                OR\n"
         "    image-manipulator --command [source1_file] [source2_file]\n"
         "                                OR\n"
         "    image-manipulator --command [source_file] \n"
@@ -123,7 +127,7 @@ void displayHelp() {
         "    --enlarge parameter dest\n"
         "        outputs image enlarged by a parameter\n"
         "\n"
-        << (char)27 << "[1m" << "  NOISE-REMOVAL:" << (char)27 << "[0m--------------------------------------------------------------\n"
+        << (char)27 << "[1m" << "  NOISE-REMOVAL OPERATIONS:" << (char)27 << "[0m----------------------------------------------------\n"
         "    --median parameter src dest\n"
         "        applies median filter with depth of parameter \n"
         "        (1 < parameter < infinity)\n"
@@ -206,6 +210,29 @@ void displayHelp() {
         "\n"
         "    --centropy src\n"
         "        displays Information Source Entropy of an images\n"
+        "\n"
+        << (char)27 << "[1m" << "  MORPHOLOGICAL OPERATIONS: "<< (char)27 << "[0m----------------------------------------------------\n"
+        "    --union src1 src2 dest\n"
+        "        applies union on two images\n"
+        "\n"
+        "    --intersection src1 src2 dest\n"
+        "        applies intersection on two images\n"
+        "\n"
+        "    --defference src1 src2 dest\n"
+        "        applies defference on two images\n"
+        "\n"
+        "    --morphopi src dest\n"
+        "        applies preset Morphological Operation I\n"
+        "\n"
+        "    --morphopii src dest\n"
+        "        applies preset Morphological Operation II\n"
+        "\n"
+        "    --morphopiii src dest\n"
+        "        applies preset Morphological Operation III\n"
+        "\n"
+        << (char)27 << "[1m" << "  SEGMENTATION:" << (char)27 << "[0m---------------------------------------------------------------\n"
+        "    --????? ????\n"
+        "        ???????????????????\n"
         "\n";
 }
 

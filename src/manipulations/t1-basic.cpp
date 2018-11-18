@@ -1,5 +1,6 @@
 #include <iostream>
 #include <cmath>
+#include <memory>
 #include "../../lib/CImg.templ"
 #include "t1-basic.h"
 #include "t0-other.h"
@@ -7,62 +8,59 @@
 using namespace std;
 using namespace cimg_library;
 
-void changeBrightness(CImg<int> &original, CImg<int> &edited, char* val) {
-    int value = atoi(val);
-    cout << "Changing brightness by " << val << endl;
+CImg<int>& changeBrightness(CImg<int> &original, int value) {
+    CImg<int>* edited = new CImg<int>(original.width(), original.height(), 1, original.spectrum(), 0);
+    cout << "Changing brightness by " << value << endl;
     for (int x = 0; x < original.width(); x++) {
         displayProgress(x, original.width()-1);
         for (int y = 0; y < original.height(); y++) {
             for (int c = 0; c < original.spectrum(); c++) {
-                if (original(x, y, 0, c) + value > 255) edited(x, y, 0, c) = 255;
-                else if (original(x, y, 0, c) + value < 0) edited(x, y, 0, c) = 0;
-                else edited(x, y, 0, c) = original(x, y, 0, c) + value;
+                (*edited)(x, y, 0, c) = normalized(original(x, y, 0, c) + value);
             }
         }
     }
+    return *edited;
 }
 
-void changeContrast(CImg<int> &original, CImg<int> &edited, char* fac) {
-    float factor = atof(fac);
+CImg<int>& changeContrast(CImg<int> &original, float factor) {
+    if (factor <= 0) {cout << "Wrong value of the contrast. \nType --help to view information about available commands." << endl; exit(0);}
+    CImg<int>* edited = new CImg<int>(original.width(), original.height(), 1, original.spectrum(), 0);
+    cout << "Changing contrast by " << factor << endl;
+    for (int x = 0; x < original.width(); x++) {
+        displayProgress(x, original.width()-1);
+        for (int y = 0; y < original.height(); y++) {
+            for (int c = 0; c < original.spectrum(); c++) {
+                (*edited)(x, y, 0, c) = normalized((original(x, y, 0, c) - 128)*factor + 128);
+            }
+        }
+    }
+    return *edited;
+}
+CImg<int>& changeContrast2(CImg<int> &original, float factor) {
+    CImg<int>* edited = new CImg<int>(original.width(), original.height(), 1, original.spectrum(), 0);
     if (factor <= 0) {cout << "Wrong value of the contrast. \nType --help to view information about available commands." << endl; exit(0);}
     cout << "Changing contrast by " << factor << endl;
     for (int x = 0; x < original.width(); x++) {
         displayProgress(x, original.width()-1);
         for (int y = 0; y < original.height(); y++) {
             for (int c = 0; c < original.spectrum(); c++) {
-                int newColor = (original(x, y, 0, c) - 128)*factor + 128;
-                if (newColor > 255) edited(x, y, 0, c) = 255;
-                else if (newColor< 0) edited(x, y, 0, c) = 0;
-                else edited(x, y, 0, c) = newColor;
+                (*edited)(x, y, 0, c) = normalized(255 * pow((original(x, y, 0, c)) / 255.0, factor));
             }
         }
     }
-}
-void changeContrast2(CImg<int> &original, CImg<int> &edited, char* fac) {
-    float factor = atof(fac);
-    if (factor <= 0) {cout << "Wrong value of the contrast. \nType --help to view information about available commands." << endl; exit(0);}
-    cout << "Changing contrast by " << factor << endl;
-    for (int x = 0; x < original.width(); x++) {
-        displayProgress(x, original.width()-1);
-        for (int y = 0; y < original.height(); y++) {
-            for (int c = 0; c < original.spectrum(); c++) {
-                int newColor = 255 * pow((original(x, y, 0, c)) / 255.0, factor);
-                if (newColor > 255) edited(x, y, 0, c) = 255;
-                else if (newColor< 0) edited(x, y, 0, c) = 0;
-                else edited(x, y, 0, c) = newColor;
-            }
-        }
-    }
+    return *edited;
 }
 
-void changeToNegative(CImg<int> &original, CImg<int> &edited) {
+CImg<int>& changeToNegative(CImg<int> &original) {
+    CImg<int>* edited = new CImg<int>(original.width(), original.height(), 1, original.spectrum(), 0);
     cout << "Changing image to negative" << endl;
     for (int x = 0; x < original.width(); x++) {
         displayProgress(x, original.width()-1);
         for (int y = 0; y < original.height(); y++) {
             for (int c = 0; c < original.spectrum(); c++) {
-                edited(x, y, 0, c) = 255 - original(x, y, 0, c);
+                (*edited)(x, y, 0, c) = 255 - original(x, y, 0, c);
             }
         }
     }
+    return *edited;
 }

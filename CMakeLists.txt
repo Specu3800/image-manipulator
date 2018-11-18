@@ -126,8 +126,8 @@ add_executable(image-manipulator
         src/manipulations/t1-basic.cpp
         src/manipulations/t1-geometric.h
         src/manipulations/t1-geometric.cpp
-        src/manipulations/t1-noise-removal.h
-        src/manipulations/t1-noise-removal.cpp
+        src/manipulations/t1-noise-removal-operations.h
+        src/manipulations/t1-noise-removal-operations.cpp
         src/manipulations/t1-analysis.h
         src/manipulations/t1-analysis.cpp
         src/manipulations/t0-other.cpp
@@ -138,7 +138,8 @@ add_executable(image-manipulator
         src/manipulations/t2-characteristics.h
         src/manipulations/t2-filters.cpp
         src/manipulations/t2-filters.h
-        src/manipulations/t3-morphological-operations.cpp src/manipulations/t3-morphological-operations.h)
+        src/manipulations/t3-morphological-operations.cpp
+        src/manipulations/t3-morphological-operations.h src/manipulations/t3-segmentation.cpp src/manipulations/t3-segmentation.h)
 
 target_link_libraries(image-manipulator ${SYSTEM_LIBS})
 

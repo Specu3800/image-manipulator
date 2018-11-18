@@ -5,7 +5,7 @@
 using namespace std;
 using namespace cimg_library;
 
-float getMeanSquareError(CImg<int> &img1, CImg<int> &img2, float &result){
+float getMeanSquareError(CImg<int> &img1, CImg<int> &img2){
 
     float sum = 0;
 
@@ -18,11 +18,10 @@ float getMeanSquareError(CImg<int> &img1, CImg<int> &img2, float &result){
     }
 
     float MSE = sum/(img1.width() * img1.height());
-    result = MSE;
     return MSE;
 }
 
-float getPeakMeanSquareError(CImg<int> &img1, CImg<int> &img2, float &result) {
+float getPeakMeanSquareError(CImg<int> &img1, CImg<int> &img2) {
 
     float max = 0;
 
@@ -34,12 +33,11 @@ float getPeakMeanSquareError(CImg<int> &img1, CImg<int> &img2, float &result) {
             }
         }
     }
-    float PMSE = getMeanSquareError(img1, img2, result)/pow(max, 2);
-    result = PMSE;
+    float PMSE = getMeanSquareError(img1, img2)/pow(max, 2);
     return PMSE;
 }
 
-float getSignalToNoiseRatio(CImg<int> &img1, CImg<int> &img2, float &result){
+float getSignalToNoiseRatio(CImg<int> &img1, CImg<int> &img2){
 
     float square = 0;
 
@@ -51,12 +49,11 @@ float getSignalToNoiseRatio(CImg<int> &img1, CImg<int> &img2, float &result){
         }
     }
 
-    float SNR = 10 * log10(square/(getMeanSquareError(img1, img2, result) * img1.width() * img1.height()));
-    result = SNR;
+    float SNR = 10 * log10(square/(getMeanSquareError(img1, img2) * img1.width() * img1.height()));
     return SNR;
 }
 
-float getPeakSignalToNoiseRatio(CImg<int> &img1, CImg<int> &img2, float &result){
+float getPeakSignalToNoiseRatio(CImg<int> &img1, CImg<int> &img2){
 
     float max = 0;
 
@@ -68,12 +65,11 @@ float getPeakSignalToNoiseRatio(CImg<int> &img1, CImg<int> &img2, float &result)
         }
     }
 
-    float PSNR = 10 * log10(max/((getMeanSquareError(img1, img2, result)) * img1.width() * img1.height()));
-    result = PSNR;
+    float PSNR = 10 * log10(max/((getMeanSquareError(img1, img2)) * img1.width() * img1.height()));
     return PSNR;
 }
 
-float getMaximumDifference(CImg<int> &img1, CImg<int> &img2, float &result){
+float getMaximumDifference(CImg<int> &img1, CImg<int> &img2){
 
     float MD = 0;
 
@@ -86,6 +82,5 @@ float getMaximumDifference(CImg<int> &img1, CImg<int> &img2, float &result){
         }
     }
 
-    result = MD;
     return MD;
 }

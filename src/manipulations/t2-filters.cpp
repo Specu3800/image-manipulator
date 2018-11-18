@@ -9,35 +9,37 @@
 using namespace std;
 using namespace cimg_library;
 
-void applyExponentialPDF(CImg<int> &original, CImg<int> &edited, char *gm, Histogram &histogram){
-    float gmin = atof(gm);
+CImg<int>& applyExponentialPDF(CImg<int> &original, int Gmin, Histogram &histogram){
+    CImg<int>* edited = new CImg<int>(original.width(), original.height(), 1, original.spectrum(), 0);
     for (int c = 0; c < original.spectrum(); c++) {
 
         float alpha = 0.014; //set custom alpha, different than parameter
 
         int* improvedColors = new int[256];
         for (int m = 0; m < 256; m++) { //apply histogram modification
-            improvedColors[m] = gmin - 1.0/alpha *
+            improvedColors[m] = Gmin - 1.0/alpha *
                     log(1.0 - (1.0/(original.width()*original.height())) * histogram.cumulative[c][m]);
             improvedColors[m] = normalized(improvedColors[m]);
         }
 
         for (int x = 0; x < original.width(); x++) { //apply to image
             for (int y = 0; y < original.height(); y++) {
-                edited(x, y, 0, c) = improvedColors[original(x, y, 0, c)];
+                (*edited)(x, y, 0, c) = improvedColors[original(x, y, 0, c)];
             }
         }
     }
 
-    Histogram newHistogram = Histogram(edited);
+    Histogram newHistogram = Histogram((*edited));
     //newHistogram.displayUniformValues(0);
     ((*histogram.getUniformHistogramGraph(0, true)).append(*newHistogram.getUniformHistogramGraph(0, true), 'x', 1)).display("HISTOGRAM", false); //show difference in histogram
     histogram.getUniformHistogramGraph(0, false)->save("original_histogram.bmp");
     newHistogram.getUniformHistogramGraph(0, false)->save("edited_histogram.bmp");
+
+    return *edited;
 }
 
-void applyLaplacianFilter(CImg<int> &original, CImg<int> &edited, char* m, Histogram &histogram){
-    float maskNumber = atoi(m);
+CImg<int>& applyLaplacianFilter(CImg<int> &original, int maskNumber, Histogram &histogram){
+    CImg<int>* edited = new CImg<int>(original.width(), original.height(), 1, original.spectrum(), 0);
 
     int filterMask1[3][3] = {-1, -1, -1, -1, 8, -1, -1, -1, -1};
     int filterMask2[3][3] = {0, -1, 0, -1, 4, -1, 0, -1, 0};
@@ -69,13 +71,15 @@ void applyLaplacianFilter(CImg<int> &original, CImg<int> &edited, char* m, Histo
                     }
                     q++;
                 }
-                edited(x, y, 0, c) = normalized(pixelValue);
+                (*edited)(x, y, 0, c) = normalized(pixelValue);
             }
         }
     }
+    return *edited;
 }
 
-void applyLaplacianFilterOptimised(CImg<int> &original, CImg<int> &edited, Histogram &histogram){
+CImg<int>& applyLaplacianFilterOptimised(CImg<int> &original, Histogram &histogram){
+    CImg<int>* edited = new CImg<int>(original.width(), original.height(), 1, original.spectrum(), 0);
     for (int x = 1; x < original.width() - 1; x++)
     {
         for (int y = 1; y < original.height() - 1; y++)
@@ -89,21 +93,24 @@ void applyLaplacianFilterOptimised(CImg<int> &original, CImg<int> &edited, Histo
                 }
                 pixelValue += 9*original(x, y, 0, c);
 
-                edited(x, y, 0, c) = normalized(pixelValue);
+                (*edited)(x, y, 0, c) = normalized(pixelValue);
             }
         }
     }
+    return *edited;
 }
 
-void applyRobertsOperatorFilter(CImg<int> &original, CImg<int> &edited, Histogram &histogram){
+CImg<int>& applyRobertsOperatorFilter(CImg<int> &original, Histogram &histogram){
+    CImg<int>* edited = new CImg<int>(original.width(), original.height(), 1, original.spectrum(), 0);
     for (int x = 1; x < original.width() - 1; x++)
     {
         for (int y = 1; y < original.height() - 1; y++)
         {
             for (int c = 0; c < original.spectrum(); c++)
             {
-               edited(x, y, 0, c) = abs(original(x, y, 0, c) - original(x + 1, y + 1, 0, c)) + abs(original(x, y + 1, 0, c) - original(x + 1, y, 0, c));
+               (*edited)(x, y, 0, c) = abs(original(x, y, 0, c) - original(x + 1, y + 1, 0, c)) + abs(original(x, y + 1, 0, c) - original(x + 1, y, 0, c));
             }
         }
     }
+    return *edited;
 }

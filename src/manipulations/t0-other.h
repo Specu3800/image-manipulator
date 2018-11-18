@@ -6,7 +6,7 @@
 using namespace std;
 using namespace cimg_library;
 
-void applyBilinearInterpolation(CImg<int> &edited);
+CImg<int>& applyBilinearInterpolation(CImg<int> &image);
 
 void displayProgress(int x, int max);
 
