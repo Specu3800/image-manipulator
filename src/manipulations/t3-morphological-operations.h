@@ -1,7 +1,9 @@
 #ifndef MORPHOLOGICAL_OPERATIONS
 #define MORPHOLOGICAL_OPERATIONS
 
+#include <vector>
 #include "../../lib/CImg.templ"
+
 
 using namespace std;
 using namespace cimg_library;
