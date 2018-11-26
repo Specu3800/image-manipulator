@@ -17,6 +17,9 @@ public:
     int** cumulative;
     double** probability;
 
+    int* combined;
+    int* combinedCumulative;
+
     bool isUniformCalculated;
     bool isCumulativeCalculated;
 

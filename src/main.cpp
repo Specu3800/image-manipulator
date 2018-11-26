@@ -30,8 +30,9 @@ int main(int argc, char* argv[]) {
                                "--hflip", "--vflip", "--dflip", "--shrink", "--enlarge",
                                "--adaptive", "--median", "--min", "--max",
                                "--hexponent", "--slaplace", "--slaplaceopt", "--orobertsii",
-                               "--morphopi", "--morphopii", "--morphopiii"
-                               "--segmentation"};
+                               "--morphopi", "--morphopii", "--morphopiii",
+                               "--segmentation",
+                               "--labs"};
     vector<string> variant2 = {"--union", "--intersection", "--difference"};
     vector<string> variant3 = {"--mse", "--pmse", "--snr", "--psnr", "--md"};
     vector<string> variant4 = {"--cmean", "--cvariance", "--cstdev", "--cvarcoi", "--cvarcoii", "--casyco", "--cflaco", "--centropy"};
@@ -86,6 +87,12 @@ int main(int argc, char* argv[]) {
         else if (argv[1] == string("--morphopiii")) image2 = applyMorphologicalOperationIII(image1);
 
         else if (argv[1] == string("--segmentation")) image2 = applySegmentation(image1);
+
+        else if (argv[1] == string("--labs")){
+            image2 = applyExponentialPDF(image1, atoi(argv[2]), image1Histogram);
+            image3 = applyExponentialPDFSeparately(image1, atoi(argv[2]), image1Histogram);
+            image1.append(image2, 'x').append(image3, 'x').display("COMPARE", false);
+        }
 
         image1.save("original.bmp");
         image2.save("edited.bmp");

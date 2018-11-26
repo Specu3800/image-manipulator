@@ -44,6 +44,15 @@ void Histogram::calculateHistogram() {
         for(int i = 0; i < 256; i++)
             probability[c][i] = ((double)(uniform[c][i]))/(sourceImage->width()*sourceImage->height());
     }
+    //combined
+    for(int i = 0; i < 256; i++){
+        combined[i] = (uniform[0][i] + uniform[0][i] + uniform[0][i])/3;
+    }
+    //combinedCumulative
+    combinedCumulative[0] = combined[0];
+    for(int i = 1; i < 256; i++)
+        combinedCumulative[i] = combinedCumulative[i-1] + combined[i];
+
 }
 
 void Histogram::calculateHistogram(CImg<int> &name) {
@@ -133,6 +142,13 @@ CImg<int> *Histogram::getScaleHistogramGraph(int channel, int** values) {
 }
 
 void Histogram::initialize() {
+    this->combined = new int[256];
+    this->combinedCumulative = new int[256];
+    for (int i = 0; i < 256; i++) {
+        this->combined[i] = 0;
+        this->combinedCumulative[i] = 0;
+    }
+
     this->uniform = new int*[3];
     this->cumulative = new int*[3];
     this->probability = new double*[3];
