@@ -181,7 +181,28 @@ CImg<int>& applyRobertsOperatorFilter(CImg<int> &original, Histogram &histogram)
         {
             for (int c = 0; c < original.spectrum(); c++)
             {
-               (*edited)(x, y, 0, c) = abs(original(x, y, 0, c) - original(x + 1, y + 1, 0, c)) + abs(original(x, y + 1, 0, c) - original(x + 1, y, 0, c));
+               (*edited)(x, y, 0, c) = normalized(abs(original(x, y, 0, c) - original(x + 1, y + 1, 0, c)) + abs(original(x, y + 1, 0, c) - original(x + 1, y, 0, c)));
+            }
+        }
+    }
+    return *edited;
+}
+
+CImg<int>& applySobelOperatorFilter(CImg<int> &original, Histogram &histogram){
+    CImg<int>* edited = new CImg<int>(original.width(), original.height(), 1, original.spectrum(), 0);
+    for (int x = 1; x < original.width() - 1; x++)
+    {
+        for (int y = 1; y < original.height() - 1; y++)
+        {
+            for (int c = 0; c < original.spectrum(); c++)
+            {
+                //(*edited)(x, y, 0, c) = abs(original(x, y, 0, c) - original(x + 1, y + 1, 0, c)) + abs(original(x, y + 1, 0, c) - original(x + 1, y, 0, c));
+
+                float xx = original(x + 1, y - 1, 0, c) + 2*original(x + 1, y, 0, c) + original(x + 1, y + 1, 0, c) - original(x - 1, y - 1, 0, c) - 2*original(x - 1, y, 0, c) - original(x - 1, y + 1, 0, c);
+                float yy = original(x - 1, y - 1, 0, c) + 2*original(x, y - 1, 0, c) + original(x + 1, y - 1, 0, c) - original(x - 1, y + 1, 0, c) - 2*original(x, y + 1, 0, c) - original(x + 1, y + 1, 0, c);
+                xx *= xx;
+                yy *= yy;
+                (*edited)(x, y, 0, c) = normalized(sqrt(xx + yy));
             }
         }
     }

@@ -29,7 +29,7 @@ int main(int argc, char* argv[]) {
     vector<string> variant1 = {"--brightness", "--contrast", "--contrast2", "--negative",
                                "--hflip", "--vflip", "--dflip", "--shrink", "--enlarge",
                                "--adaptive", "--median", "--min", "--max",
-                               "--hexponent", "--slaplace", "--slaplaceopt", "--orobertsii",
+                               "--hexponent", "--slaplace", "--slaplaceopt", "--orobertsii", "--osobel",
                                "--morphopi", "--morphopii", "--morphopiii",
                                "--segmentation",
                                "--labs"};
@@ -77,6 +77,7 @@ int main(int argc, char* argv[]) {
         else if (argv[1] == string("--slaplace")) image2 = applyLaplacianFilter(image1, atoi(argv[2]), image1Histogram);
         else if (argv[1] == string("--slaplaceopt")) image2 = applyLaplacianFilterOptimised(image1, image1Histogram);
         else if (argv[1] == string("--orobertsii")) image2 = applyRobertsOperatorFilter(image1, image1Histogram);
+        else if (argv[1] == string("--osobel")) image2 = applySobelOperatorFilter(image1, image1Histogram);
 
         else if (argv[1] == string("--union")) image2 = applyUnion(image1, image2);
         else if (argv[1] == string("--intersection")) image2 = applyIntersection(image1, image2);
