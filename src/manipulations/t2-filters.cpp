@@ -107,6 +107,12 @@ CImg<int>& applyLaplacianFilter(CImg<int> &original, int maskNumber, Histogram &
 }
 
 CImg<int>& applyLaplacianFilterOptimised(CImg<int> &original, Histogram &histogram){
+
+
+    //optimise using caching mechanism, no idea how, no idea why....
+
+
+
     CImg<int>* edited = new CImg<int>(original.width(), original.height(), 1, original.spectrum(), 0);
     for (int x = 1; x < original.width() - 1; x++)
     {

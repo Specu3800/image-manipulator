@@ -19,7 +19,8 @@ struct MorphMask{
     vector<Point> miss;
 };
 
-MorphMask getMask(int number);
+MorphMask getNormalMask(int number);
+MorphMask getHMTMask(int number);
 
 CImg<int>& applyUnion(CImg<int> &image1, CImg<int> &image2);
 CImg<int>& applyIntersection(CImg<int> &image1, CImg<int> &image2);
@@ -31,9 +32,9 @@ CImg<int>& applyOpening(CImg<int> &original, MorphMask mask);
 CImg<int>& applyClosing(CImg<int> &original, MorphMask mask);
 CImg<int>& applyHMT(CImg<int> &original, MorphMask mask);
 
-CImg<int>& applyMorphologicalOperationI(CImg<int> &original, int maskNumber);
-CImg<int>& applyMorphologicalOperationII(CImg<int> &original, int maskNumber);
-CImg<int>& applyMorphologicalOperationIII(CImg<int> &original, int maskNumber);
+CImg<int>& applyOuterBorder(CImg<int> &original, int maskNumber);
+CImg<int>& applyInnerBorder(CImg<int> &original, int maskNumber);
+CImg<int>& applyInnerOuterBorder(CImg<int> &original, int maskNumber);
 
 
 #endif //MORPHOLOGICAL_OPERATIONS

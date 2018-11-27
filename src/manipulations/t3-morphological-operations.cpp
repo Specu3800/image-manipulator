@@ -14,7 +14,7 @@ Point::Point(int x, int y) {
 }
 
 
-MorphMask getMask(int number){
+MorphMask getNormalMask(int number){
 
     MorphMask mask;
 
@@ -70,7 +70,65 @@ MorphMask getMask(int number){
             mask.hit.emplace_back(Point(1, 0));
             mask.hit.emplace_back(Point(0, 1)); break;
     }
+    return mask;
+}
 
+MorphMask getHMTMask(int number){
+
+    MorphMask mask;
+
+    switch (number){
+        case 1:
+            mask.hit.emplace_back(Point(-1, 1));
+            mask.hit.emplace_back(Point(-1, 0));
+            mask.hit.emplace_back(Point(-1, -1));
+            mask.miss.emplace_back(Point(0, 1));
+            mask.miss.emplace_back(Point(0, -1));
+            mask.miss.emplace_back(Point(1, 1));
+            mask.miss.emplace_back(Point(1, 0));
+            mask.miss.emplace_back(Point(1, -1));break;
+        case 2:
+            mask.hit.emplace_back(Point(-1, -1));
+            mask.hit.emplace_back(Point(0, -1));
+            mask.hit.emplace_back(Point(1, -1));
+            mask.miss.emplace_back(Point(-1, 0));
+            mask.miss.emplace_back(Point(1, 0));
+            mask.miss.emplace_back(Point(-1, 1));
+            mask.miss.emplace_back(Point(0, 1));
+            mask.miss.emplace_back(Point(1, 1));break;
+        case 3:
+            mask.hit.emplace_back(Point(1, 1));
+            mask.hit.emplace_back(Point(1, 0));
+            mask.hit.emplace_back(Point(1, -1));
+            mask.miss.emplace_back(Point(0, 1));
+            mask.miss.emplace_back(Point(0, -1));
+            mask.miss.emplace_back(Point(-1, 1));
+            mask.miss.emplace_back(Point(-1, 0));
+            mask.miss.emplace_back(Point(-1, -1));break;
+        case 4:
+            mask.hit.emplace_back(Point(-1, 1));
+            mask.hit.emplace_back(Point(0, 1));
+            mask.hit.emplace_back(Point(1, 1));
+            mask.miss.emplace_back(Point(-1, 0));
+            mask.miss.emplace_back(Point(1, 0));
+            mask.miss.emplace_back(Point(-1, -1));
+            mask.miss.emplace_back(Point(0, -1));
+            mask.miss.emplace_back(Point(1, -1));break;
+        case 5:
+            mask.hit.emplace_back(Point(0, 0));
+            mask.hit.emplace_back(Point(1, 1));
+            mask.hit.emplace_back(Point(0, 1));
+            mask.hit.emplace_back(Point(-1, 1));
+            mask.miss.emplace_back(Point(-1, 0));
+            mask.miss.emplace_back(Point(1, 0));break;
+        default: //mask 5
+            mask.hit.emplace_back(Point(0, 0));
+            mask.hit.emplace_back(Point(1, 1));
+            mask.hit.emplace_back(Point(0, 1));
+            mask.hit.emplace_back(Point(-1, 1));
+            mask.miss.emplace_back(Point(-1, 0));
+            mask.miss.emplace_back(Point(1, 0)); break;
+    }
     return mask;
 }
 
@@ -186,16 +244,38 @@ CImg<int>& applyClosing(CImg<int> &original, MorphMask mask){ //roll in outer bo
     return *edited;
 }
 
-CImg<int>& applyHMT(CImg<int> &original, MorphMask mask){
-    return original;
+CImg<int>& applyHMT(CImg<int> &original, MorphMask mask){ //hit points must fit, miss point must not fit :)
+    CImg<int>* edited = new CImg<int>(original.width(), original.height(), 1, original.spectrum(), 0);
+    for (int x = 0; x < original.width(); x++) {
+        for (int y = 0; y < original.height(); y++) {
+            for (int c = 0; c < original.spectrum(); c++) {
+                bool maskFits = true;
+                for (int i = 0; i < mask.hit.size(); i++) {
+                    if (!maskFits) break;
+                    if (x+mask.hit[i].x >= 0 && x+mask.hit[i].x < original.width() && y+mask.hit[i].y >= 0 && y+mask.hit[i].y < original.height()){
+                        if(original(x+mask.hit[i].x, y+mask.hit[i].y, 0, c) == 0) maskFits = false;
+                    } else maskFits = false;
+                }
+                for (int i = 0; i < mask.miss.size(); i++) {
+                    if (!maskFits) break;
+                    if (x+mask.miss[i].x >= 0 && x+mask.miss[i].x < original.width() && y+mask.miss[i].y >= 0 && y+mask.miss[i].y < original.height()){
+                        if(original(x+mask.miss[i].x, y+mask.miss[i].y, 0, c) == 255) maskFits = false;
+                    } else maskFits = false;
+                }
+                if(maskFits) (*edited)(x, y, 0, c) = 255;
+                else (*edited)(x, y, 0, c) = 0;
+            }
+        }
+    }
+    return *edited;
 }
 
 
-CImg<int>& applyMorphologicalOperationI(CImg<int> &original, int maskNumber){
+CImg<int>& applyOuterBorder(CImg<int> &original, int maskNumber){
 
     CImg<int>* edited = new CImg<int>(original.width(), original.height(), 1, original.spectrum(), 0);
 
-    MorphMask mask = getMask(maskNumber);
+    MorphMask mask = getNormalMask(maskNumber);
 
     *edited = applyDilation(original, mask);
     *edited = applyDifference(*edited, original);
@@ -203,10 +283,10 @@ CImg<int>& applyMorphologicalOperationI(CImg<int> &original, int maskNumber){
     return *edited;
 }
 
-CImg<int>& applyMorphologicalOperationII(CImg<int> &original, int maskNumber){
+CImg<int>& applyInnerBorder(CImg<int> &original, int maskNumber){
     CImg<int>* edited = new CImg<int>(original.width(), original.height(), 1, original.spectrum(), 0);
 
-    MorphMask mask = getMask(maskNumber);
+    MorphMask mask = getNormalMask(maskNumber);
 
     *edited = applyErosion(original, mask);
     *edited = applyDifference(original, *edited);
@@ -214,11 +294,11 @@ CImg<int>& applyMorphologicalOperationII(CImg<int> &original, int maskNumber){
     return *edited;
 }
 
-CImg<int>& applyMorphologicalOperationIII(CImg<int> &original, int maskNumber){
+CImg<int>& applyInnerOuterBorder(CImg<int> &original, int maskNumber){
 
     CImg<int>* edited = new CImg<int>(original.width(), original.height(), 1, original.spectrum(), 0);
 
-    MorphMask mask = getMask(maskNumber);
+    MorphMask mask = getNormalMask(maskNumber);
 
     *edited = applyDifference(applyDilation(original, mask), applyErosion(original, mask));
 

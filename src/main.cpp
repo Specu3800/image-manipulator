@@ -30,7 +30,8 @@ int main(int argc, char* argv[]) {
                                "--hflip", "--vflip", "--dflip", "--shrink", "--enlarge",
                                "--adaptive", "--median", "--min", "--max",
                                "--hexponent", "--hexponentseg", "--slaplace", "--slaplaceopt", "--orobertsii", "--osobel",
-                               "--morphopi", "--morphopii", "--morphopiii",
+                               "--erosion", "--dilation", "--opening", "--closing", "--hmt",
+                               "--oborder", "--iborder", "--ioborder",
                                "--segmentation"};
     vector<string> variant2 = {"--union", "--intersection", "--difference"};
     vector<string> variant3 = {"--mse", "--pmse", "--snr", "--psnr", "--md"};
@@ -83,15 +84,15 @@ int main(int argc, char* argv[]) {
         else if (argv[1] == string("--intersection")) image2 = applyIntersection(image1, image2);
         else if (argv[1] == string("--difference")) image2 = applyDifference(image1, image2);
 
-        else if (argv[1] == string("--erosion")) image2 = applyErosion(image1, getMask(atoi(argv[2])));
-        else if (argv[1] == string("--dilation")) image2 = applyDilation(image1, getMask(atoi(argv[2])));
-        else if (argv[1] == string("--opening")) image2 = applyOpening(image1, getMask(atoi(argv[2])));
-        else if (argv[1] == string("--closing")) image2 = applyClosing(image1, getMask(atoi(argv[2])));
-        else if (argv[1] == string("--hmt")) image2 = applyHMT(image1, getMask(atoi(argv[2])));
+        else if (argv[1] == string("--erosion")) image2 = applyErosion(image1, getNormalMask(atoi(argv[2])));
+        else if (argv[1] == string("--dilation")) image2 = applyDilation(image1, getNormalMask(atoi(argv[2])));
+        else if (argv[1] == string("--opening")) image2 = applyOpening(image1, getNormalMask(atoi(argv[2])));
+        else if (argv[1] == string("--closing")) image2 = applyClosing(image1, getNormalMask(atoi(argv[2])));
+        else if (argv[1] == string("--hmt")) image2 = applyHMT(image1, getHMTMask(atoi(argv[2])));
 
-        else if (argv[1] == string("--morphopi")) image2 = applyMorphologicalOperationI(image1, atoi(argv[2]));
-        else if (argv[1] == string("--morphopii")) image2 = applyMorphologicalOperationII(image1, atoi(argv[2]));
-        else if (argv[1] == string("--morphopiii")) image2 = applyMorphologicalOperationIII(image1, atoi(argv[2]));
+        else if (argv[1] == string("--oborder")) image2 = applyOuterBorder(image1, atoi(argv[2]));
+        else if (argv[1] == string("--iborder")) image2 = applyInnerBorder(image1, atoi(argv[2]));
+        else if (argv[1] == string("--ioborder")) image2 = applyInnerOuterBorder(image1, atoi(argv[2]));
 
         else if (argv[1] == string("--segmentation")) image2 = applySegmentation(image1);
 
@@ -99,6 +100,7 @@ int main(int argc, char* argv[]) {
         image2.save("edited.bmp");
         image2.save(argv[argc - 1]); //save edited img in destination
         image1.append(image2, 'x').display("COMPARATION", false); //display
+        //disp.display(image1.append(image2, 'x'));
 
     } else if (find(variant2.begin(), variant2.end(), argv[1]) != variant2.end()){
 
