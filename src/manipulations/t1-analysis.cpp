@@ -12,7 +12,7 @@ float getMeanSquareError(CImg<int> &img1, CImg<int> &img2){
     for (int x = 0; x < img1.width(); x++) {
         for(int y = 0; y < img1.height(); y++) {
             for (int c = 0; c < img1.spectrum(); c++) {
-                sum += pow((img1(x, y, 0, c) - img2(x, y, 0, c)), 2);
+                sum += pow((img1(x, y, c) - img2(x, y, c)), 2);
             }
         }
     }
@@ -28,8 +28,8 @@ float getPeakMeanSquareError(CImg<int> &img1, CImg<int> &img2) {
     for (int x = 0; x < img1.width(); x++){
         for (int y = 0; y < img1.height(); y++) {
             for (int c = 0; c < img1.spectrum(); c++) {
-                if (img1(x, y, 0, c) > max)
-                    max = img1(x, y, 0, c);
+                if (img1(x, y, c) > max)
+                    max = img1(x, y, c);
             }
         }
     }
@@ -44,7 +44,7 @@ float getSignalToNoiseRatio(CImg<int> &img1, CImg<int> &img2){
     for (int x = 0; x < img1.width(); x++){
         for (int y = 0; y < img1.height(); y++) {
             for (int c = 0; c < img1.spectrum(); c++) {
-                square += pow(img1(x, y, 0, c), 2);
+                square += pow(img1(x, y, c), 2);
             }
         }
     }
@@ -60,7 +60,7 @@ float getPeakSignalToNoiseRatio(CImg<int> &img1, CImg<int> &img2){
     for (int x = 0; x < img1.width(); x++){
         for (int y = 0; y < img1.height(); y++){
                 for (int c = 0; c < img1.spectrum(); c++) {
-                    max += pow(img1(x, y, 0, c), 2);
+                    max += pow(img1(x, y, c), 2);
             }
         }
     }
@@ -76,8 +76,8 @@ float getMaximumDifference(CImg<int> &img1, CImg<int> &img2){
     for (int x = 0; x < img1.width(); x++){
         for (int y = 0; y < img1.height(); y++) {
             for (int c = 0; c < img1.spectrum(); c++) {
-                if (abs(img1(x, y, 0, c) - img2(x, y, 0, c)  > MD))
-                    MD = abs(img1(x, y, 0, c) - img2(x, y, 0, c));
+                if (abs(img1(x, y, c) - img2(x, y, c)  > MD))
+                    MD = abs(img1(x, y, c) - img2(x, y, c));
             }
         }
     }

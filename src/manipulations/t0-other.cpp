@@ -28,13 +28,13 @@ CImg<int>& applyBilinearInterpolation(CImg<int> &original){
 
             for (int c = 0; c < (*edited).spectrum(); c++) {
                 if (U1 && U2 && U3 && U4)
-                    (*edited)(x, y, 0, c) = 0.25*((*edited)(x, y - 1, 0, c) + (*edited)(x, y + 1, 0, c) + (*edited)(x - 1, y, 0, c) + (*edited)(x + 1, y, 0, c));
+                    (*edited)(x, y, c) = 0.25*((*edited)(x, y - 1, 0, c) + (*edited)(x, y + 1, 0, c) + (*edited)(x - 1, y, 0, c) + (*edited)(x + 1, y, 0, c));
                 else if (K1 && K2 && K3 && K4)
-                    (*edited)(x, y, 0, c) = 0.25*((*edited)(x - 1, y - 1, 0, c) + (*edited)(x + 1, y - 1, 0, c) + (*edited)(x - 1, y + 1, 0, c) + (*edited)(x + 1, y + 1, 0, c));
+                    (*edited)(x, y, c) = 0.25*((*edited)(x - 1, y - 1, 0, c) + (*edited)(x + 1, y - 1, 0, c) + (*edited)(x - 1, y + 1, 0, c) + (*edited)(x + 1, y + 1, 0, c));
                 else if (U1 && U3)
-                    (*edited)(x, y, 0, c) = 0.5*((*edited)(x, y - 1, 0, c) + (*edited)(x, y + 1, 0, c));
+                    (*edited)(x, y, c) = 0.5*((*edited)(x, y - 1, 0, c) + (*edited)(x, y + 1, 0, c));
                 else if (U2 && U4)
-                    (*edited)(x, y, 0, c) = 0.5*((*edited)(x - 1, y, 0, c) + (*edited)(x + 1, y, 0, c));
+                    (*edited)(x, y, c) = 0.5*((*edited)(x - 1, y, 0, c) + (*edited)(x + 1, y, 0, c));
             }
         }
     }
@@ -169,9 +169,15 @@ void displayHelp() {
         "        displays histogram of an images on channel parameter (default 0)\n"
         "\n"
         << (char)27 << "[1m" << "  FILTERS:" << (char)27 << "[0m--------------------------------------------------------------------\n"
-        "    --hexponent parameter src dest \n"
+        "    --hexponent parameter1 parameter2 src dest \n"
         "        applies exponential final probability density function on an image\n"
         "        which should enhance image quality and flatter its histogram\n"
+        "        parameters - denotes gmin and gmax respectively\n"
+        "\n"
+        "    --hexponentseg parameter1 parameter2 src dest \n"
+        "        applies exponential final probability density function on an image\n"
+        "        which should enhance image quality and flatter its histogram\n"
+        "        parameters - denotes gmin and gmax respectively\n"
         "\n"
         "    --slaplace parameter src dest \n"
         "        applies linear laplacian filter on an image\n"

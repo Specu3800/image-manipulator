@@ -15,7 +15,7 @@ CImg<int>& doHorizontalFlip(CImg<int> &original){
         displayProgress(x, original.width()-1);
         for (int y = 0; y < original.height(); y++) {
             for (int c = 0; c < original.spectrum(); c++) {
-                (*edited)(x, y, 0, c) = original(x, original.height() - y -1, 0, c);
+                (*edited)(x, y, c) = original(x, original.height() - y -1, 0, c);
             }
         }
     }
@@ -29,7 +29,7 @@ CImg<int>& doVerticalFlip(CImg<int> &original){
         displayProgress(x, original.width()-1);
         for (int y = 0; y < original.height(); y++) {
             for (int c = 0; c < original.spectrum(); c++) {
-                (*edited)(x, y, 0, c) = original(original.width() - x - 1, y, 0, c);
+                (*edited)(x, y, c) = original(original.width() - x - 1, y, 0, c);
             }
         }
     }
@@ -43,7 +43,7 @@ CImg<int>& doDiagonalFlip(CImg<int> &original){
         displayProgress(x, original.width()-1);
         for (int y = 0; y < original.height(); y++) {
             for (int c = 0; c < original.spectrum(); c++) {
-                (*edited)(x, y, 0, c) = original(original.width() - x - 1, original.height() - y -1, 0, c);
+                (*edited)(x, y, c) = original(original.width() - x - 1, original.height() - y -1, 0, c);
             }
         }
     }
@@ -58,7 +58,7 @@ CImg<int>& shrinkBy(CImg<int> &original, float factor){
         for (int y = 0; y < original.height(); y++) {
             for (int c = 0; c < original.spectrum(); c++) {
                 if (x/factor >= 0 && x/factor < original.width() && y/factor >= 0 && y/factor < original.height())
-                    (*edited)(x/factor, y/factor, 0, c) = original(x, y, 0, c);
+                    (*edited)(x/factor, y/factor, 0, c) = original(x, y, c);
             }
         }
     }
@@ -79,7 +79,7 @@ CImg<int>& enlargeBy(CImg<int> &original, float factor){
             for (int c = 0; c < original.spectrum(); c++) {
                 for (int xx = 0; xx < repeat; xx++) {
                     for (int yy = 0; yy < repeat; yy++) {
-                        (*edited)(x*factor + xx, y*factor + yy, 0, c) = original(x, y, 0, c);
+                        (*edited)(x*factor + xx, y*factor + yy, 0, c) = original(x, y, c);
                     }
                 }
             }

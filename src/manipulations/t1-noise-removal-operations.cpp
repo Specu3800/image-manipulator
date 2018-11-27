@@ -41,17 +41,17 @@ CImg<int>& applyAdaptiveMedianFilter(CImg<int> &original, int maxDepth){
                     int A2 = zmed - zmax;
 
                     if (A1 > 0 && A2 < 0) {
-                        int B1 = original(x, y, 0, c) - zmin;
-                        int B2 = original(x, y, 0, c) - zmax;
+                        int B1 = original(x, y, c) - zmin;
+                        int B2 = original(x, y, c) - zmax;
 
-                        if (B1 > 0 && B2 < 0) (*edited)(x, y, 0, c) = original(x, y, 0, c);
-                        else (*edited)(x, y, 0, c) = zmed;
+                        if (B1 > 0 && B2 < 0) (*edited)(x, y, c) = original(x, y, c);
+                        else (*edited)(x, y, c) = zmed;
 
                         break;
                     } else {
                         currDepth++;
                         if(currDepth > maxDepth) {
-                            (*edited)(x, y, 0, c) = original(x, y, 0, c);
+                            (*edited)(x, y, c) = original(x, y, c);
                             break;
                         }
                     }
@@ -82,7 +82,7 @@ CImg<int>& applyMinimumFilter(CImg<int> &original, int depth){
                 }
 
                 sort(pixels, pixels + pixelsSize);
-                (*edited)(x, y, 0, c) = pixels[0];
+                (*edited)(x, y, c) = pixels[0];
                 pixelsSize = 0;
             }
         }
@@ -110,7 +110,7 @@ CImg<int>& applyMaximumFilter(CImg<int> &original, int depth){
                 }
 
                 sort(pixels, pixels + pixelsSize);
-                (*edited)(x, y, 0, c) = pixels[pixelsSize-1];
+                (*edited)(x, y, c) = pixels[pixelsSize-1];
                 pixelsSize = 0;
             }
         }
@@ -138,8 +138,8 @@ CImg<int>& applyMedianFilter(CImg<int> &original, int depth){
                 }
 
                 sort(pixels, pixels + pixelsSize);
-                if (pixelsSize % 2 == 0) (*edited)(x, y, 0, c) = (pixels[pixelsSize / 2 - 1] + pixels[pixelsSize / 2]) / 2;
-                else (*edited)(x, y, 0, c) = pixels[pixelsSize / 2];
+                if (pixelsSize % 2 == 0) (*edited)(x, y, c) = (pixels[pixelsSize / 2 - 1] + pixels[pixelsSize / 2]) / 2;
+                else (*edited)(x, y, c) = pixels[pixelsSize / 2];
                 pixelsSize = 0;
             }
         }

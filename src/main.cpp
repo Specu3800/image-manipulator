@@ -29,10 +29,9 @@ int main(int argc, char* argv[]) {
     vector<string> variant1 = {"--brightness", "--contrast", "--contrast2", "--negative",
                                "--hflip", "--vflip", "--dflip", "--shrink", "--enlarge",
                                "--adaptive", "--median", "--min", "--max",
-                               "--hexponent", "--slaplace", "--slaplaceopt", "--orobertsii", "--osobel",
+                               "--hexponent", "--hexponentseg", "--slaplace", "--slaplaceopt", "--orobertsii", "--osobel",
                                "--morphopi", "--morphopii", "--morphopiii",
-                               "--segmentation",
-                               "--labs"};
+                               "--segmentation"};
     vector<string> variant2 = {"--union", "--intersection", "--difference"};
     vector<string> variant3 = {"--mse", "--pmse", "--snr", "--psnr", "--md"};
     vector<string> variant4 = {"--cmean", "--cvariance", "--cstdev", "--cvarcoi", "--cvarcoii", "--casyco", "--cflaco", "--centropy"};
@@ -46,7 +45,7 @@ int main(int argc, char* argv[]) {
     Histogram image1Histogram;
 
 
-    if (argc < 2 || argc > 5) {cout << "Wrong number of parameters.\nType --help to view the list of the available commands." << endl;}
+    if (argc < 2 || argc > 6) {cout << "Wrong number of parameters.\nType --help to view the list of the available commands." << endl;}
 
     else if (argv[1] == string("--help")) displayHelp();
 
@@ -73,7 +72,8 @@ int main(int argc, char* argv[]) {
         else if (argv[1] == string("--min")) image2 = applyMinimumFilter(image1, atoi(argv[2]));
         else if (argv[1] == string("--max")) image2 = applyMaximumFilter(image1, atoi(argv[2]));
 
-        else if (argv[1] == string("--hexponent")) image2 = applyExponentialPDF(image1, atoi(argv[2]), image1Histogram);
+        else if (argv[1] == string("--hexponent")) image2 = applyExponentialPDF(image1, atoi(argv[2]), atoi(argv[3]), image1Histogram);
+        else if (argv[1] == string("--hexponentseg")) image2 = applyExponentialPDFSeparately(image1, atoi(argv[2]), atoi(argv[3]), image1Histogram);
         else if (argv[1] == string("--slaplace")) image2 = applyLaplacianFilter(image1, atoi(argv[2]), image1Histogram);
         else if (argv[1] == string("--slaplaceopt")) image2 = applyLaplacianFilterOptimised(image1, image1Histogram);
         else if (argv[1] == string("--orobertsii")) image2 = applyRobertsOperatorFilter(image1, image1Histogram);
@@ -83,17 +83,17 @@ int main(int argc, char* argv[]) {
         else if (argv[1] == string("--intersection")) image2 = applyIntersection(image1, image2);
         else if (argv[1] == string("--difference")) image2 = applyDifference(image1, image2);
 
-        else if (argv[1] == string("--morphopi")) image2 = applyMorphologicalOperationI(image1);
-        else if (argv[1] == string("--morphopii")) image2 = applyMorphologicalOperationII(image1);
-        else if (argv[1] == string("--morphopiii")) image2 = applyMorphologicalOperationIII(image1);
+        else if (argv[1] == string("--erosion")) image2 = applyErosion(image1, getMask(atoi(argv[2])));
+        else if (argv[1] == string("--dilation")) image2 = applyDilation(image1, getMask(atoi(argv[2])));
+        else if (argv[1] == string("--opening")) image2 = applyOpening(image1, getMask(atoi(argv[2])));
+        else if (argv[1] == string("--closing")) image2 = applyClosing(image1, getMask(atoi(argv[2])));
+        else if (argv[1] == string("--hmt")) image2 = applyHMT(image1, getMask(atoi(argv[2])));
+
+        else if (argv[1] == string("--morphopi")) image2 = applyMorphologicalOperationI(image1, atoi(argv[2]));
+        else if (argv[1] == string("--morphopii")) image2 = applyMorphologicalOperationII(image1, atoi(argv[2]));
+        else if (argv[1] == string("--morphopiii")) image2 = applyMorphologicalOperationIII(image1, atoi(argv[2]));
 
         else if (argv[1] == string("--segmentation")) image2 = applySegmentation(image1);
-
-        else if (argv[1] == string("--labs")){
-            image2 = applyExponentialPDF(image1, atoi(argv[2]), image1Histogram);
-            image3 = applyExponentialPDFSeparately(image1, atoi(argv[2]), image1Histogram);
-            image1.append(image2, 'x').append(image3, 'x').display("COMPARE", false);
-        }
 
         image1.save("original.bmp");
         image2.save("edited.bmp");

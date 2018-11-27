@@ -9,12 +9,13 @@
 using namespace std;
 using namespace cimg_library;
 
-CImg<int>& applyExponentialPDF(CImg<int> &original, int Gmin, Histogram &histogram){
+CImg<int>& applyExponentialPDF(CImg<int> &original, int Gmin, int Gmax, Histogram &histogram){
+    if (Gmax == 0) {cout << "Wrong Gmax value. \nType --help to view information about available commands." << endl; exit(0);}
     CImg<int>* edited = new CImg<int>(original.width(), original.height(), 1, original.spectrum(), 0);
     for (int c = 0; c < original.spectrum(); c++) {
 
-        float alpha = 0.014; //set custom alpha, different than parameter
-//        float alpha = 0.005;
+        double alpha = (log(1) + log(1.0/(original.width()*original.height()))) / (Gmin - Gmax);
+
         int* improvedColors = new int[256];
         for (int m = 0; m < 256; m++) { //apply histogram modification
             improvedColors[m] = Gmin - 1.0/alpha *
@@ -24,11 +25,11 @@ CImg<int>& applyExponentialPDF(CImg<int> &original, int Gmin, Histogram &histogr
 
         for (int x = 0; x < original.width(); x++) { //apply to image
             for (int y = 0; y < original.height(); y++) {
-                (*edited)(x, y, 0, c) = improvedColors[original(x, y, 0, c)];
+                (*edited)(x, y, c) = improvedColors[original(x, y, c)];
             }
         }
     }
-
+//TO DISPLAY AND SAVE HISTOGRAM
 //    Histogram newHistogram = Histogram(*edited);
 //    newHistogram.displayUniformValues(0);
 //    ((*histogram.getUniformHistogramGraph(0, false)).append(*newHistogram.getUniformHistogramGraph(0, false), 'x', 1)).display("HISTOGRAM", false); //show difference in histogram
@@ -38,72 +39,26 @@ CImg<int>& applyExponentialPDF(CImg<int> &original, int Gmin, Histogram &histogr
     return *edited;
 }
 
-CImg<int>& applyExponentialPDFSeparately(CImg<int> &original, int Gmin, Histogram &histogram){
-    //z labow
-//    CImg<int>* edited = new CImg<int>(original.width(), original.height(), 1, original.spectrum(), 0);
-//
-//    float alpha = 0.004; //set custom alpha, different than parameter
-//
-//    int* improvedColors = new int[256];
-//    for (int m = 0; m < 256; m++) { //apply histogram modification
-//        improvedColors[m] = Gmin - 1.0/alpha *
-//                                   log(1.0 - (1.0/(original.width()*original.height())) * histogram.combinedCumulative[m]);
-//        improvedColors[m] = normalized(improvedColors[m]);
-//    }
-//
-//    for (int x = 0; x < original.width(); x++) { //apply to image
-//        for (int y = 0; y < original.height(); y++) {
-//            for (int c = 0; c < original.spectrum(); c++) {
-//                (*edited)(x, y, 0, c) = improvedColors[(original(x, y, 0, 0) + original(x, y, 0, 1) + original(x, y, 0, 2))/3];
-//            }
-//        }
-//    }
-//
-//    for (int x = 0; x < original.width(); x++) { //apply to image
-//        for (int y = 0; y < original.height(); y++) {
-//            double k = original(x, y, 0, 0) / ((*edited)(x, y, 0, 0) + 0.00001) ;
-//            for (int c = 0; c < original.spectrum(); c++) {
-//                (*edited)(x, y, 0, c) = normalized(original(x, y, 0, c)/k);
-//            }
-//        }
-//    }
-//
-//    return *edited;
-
+CImg<int>& applyExponentialPDFSeparately(CImg<int> &original, int Gmin, int Gmax, Histogram &histogram){
     CImg<int>* edited = new CImg<int>(original.width(), original.height(), 1, original.spectrum(), 0);
     CImg<int>* combined = new CImg<int>(original.width(), original.height(), 1, original.spectrum(), 0);
-
     for (int x = 0; x < original.width(); x++) { //apply to image
         for (int y = 0; y < original.height(); y++) {
             for (int c = 0; c < original.spectrum(); c++) {
-                (*combined)(x, y, 0, c) = (original(x, y, 0 , 0) + original(x, y, 0 , 1) + original(x, y, 0 , 2))/3;
+                (*combined)(x, y, c) = (original(x, y, 0 , 0) + original(x, y, 0 , 1) + original(x, y, 0 , 2))/3;
             }
         }
     }
 
     Histogram combinedHistogram = Histogram(*combined);
-    float alpha = 0.014; //set custom alpha, different than parameter
-    int* improvedColors = new int[256];
-    for (int m = 0; m < 256; m++) { //apply histogram modification
-        improvedColors[m] = Gmin - 1.0/alpha *
-                                   log(1.0 - (1.0/((*combined).width()*(*combined).height())) * combinedHistogram.cumulative[0][m]);
-        improvedColors[m] = normalized(improvedColors[m]);
-    }
+    *edited = applyExponentialPDF(*combined, Gmin, Gmax, combinedHistogram);
 
-    for (int x = 0; x < (*combined).width(); x++) { //apply to image
-        for (int y = 0; y < (*combined).height(); y++) {
-            for (int c = 0; c < (*combined).spectrum(); c++) {
-                (*edited)(x, y, 0, c) = improvedColors[(*combined)(x, y, 0, c)];
-            }
-        }
-    }
-    //*edited = applyExponentialPDF(*combined, Gmin, combinedHistogram);
 
-    for (int x = 0; x < (*edited).width(); x++) { //apply to image
-        for (int y = 0; y < (*edited).height(); y++) {
-            double k = original(x, y, 0, 0) / ((*edited)(x, y, 0, 0) + 0.00001);
-            for (int c = 0; c < (*edited).spectrum(); c++) {
-                (*edited)(x, y, 0, c) = normalized(original(x, y, 0, c)/k);
+    for (int x = 0; x < original.width(); x++) { //apply to image
+        for (int y = 0; y < original.height(); y++) {
+            double k = original(x, y, 0, 0) / ((*edited)(x, y, 0, 0)+0.00000001) ;
+            for (int c = 0; c < original.spectrum(); c++) {
+                (*edited)(x, y, c) = normalized(original(x, y, c)/k);
             }
         }
     }
@@ -144,7 +99,7 @@ CImg<int>& applyLaplacianFilter(CImg<int> &original, int maskNumber, Histogram &
                     }
                     q++;
                 }
-                (*edited)(x, y, 0, c) = normalized(pixelValue);
+                (*edited)(x, y, c) = normalized(pixelValue);
             }
         }
     }
@@ -164,9 +119,9 @@ CImg<int>& applyLaplacianFilterOptimised(CImg<int> &original, Histogram &histogr
                 {
                     pixelValue += -original(i, y - 1, 0, c) -original(i, y, 0, c) -original(i, y + 1, 0, c);
                 }
-                pixelValue += 9*original(x, y, 0, c);
+                pixelValue += 9*original(x, y, c);
 
-                (*edited)(x, y, 0, c) = normalized(pixelValue);
+                (*edited)(x, y, c) = normalized(pixelValue);
             }
         }
     }
@@ -181,7 +136,7 @@ CImg<int>& applyRobertsOperatorFilter(CImg<int> &original, Histogram &histogram)
         {
             for (int c = 0; c < original.spectrum(); c++)
             {
-               (*edited)(x, y, 0, c) = normalized(abs(original(x, y, 0, c) - original(x + 1, y + 1, 0, c)) + abs(original(x, y + 1, 0, c) - original(x + 1, y, 0, c)));
+               (*edited)(x, y, c) = normalized(abs(original(x, y, c) - original(x + 1, y + 1, 0, c)) + abs(original(x, y + 1, 0, c) - original(x + 1, y, 0, c)));
             }
         }
     }
@@ -196,71 +151,13 @@ CImg<int>& applySobelOperatorFilter(CImg<int> &original, Histogram &histogram){
         {
             for (int c = 0; c < original.spectrum(); c++)
             {
-                //(*edited)(x, y, 0, c) = abs(original(x, y, 0, c) - original(x + 1, y + 1, 0, c)) + abs(original(x, y + 1, 0, c) - original(x + 1, y, 0, c));
-
                 float xx = original(x + 1, y - 1, 0, c) + 2*original(x + 1, y, 0, c) + original(x + 1, y + 1, 0, c) - original(x - 1, y - 1, 0, c) - 2*original(x - 1, y, 0, c) - original(x - 1, y + 1, 0, c);
                 float yy = original(x - 1, y - 1, 0, c) + 2*original(x, y - 1, 0, c) + original(x + 1, y - 1, 0, c) - original(x - 1, y + 1, 0, c) - 2*original(x, y + 1, 0, c) - original(x + 1, y + 1, 0, c);
                 xx *= xx;
                 yy *= yy;
-                (*edited)(x, y, 0, c) = normalized(sqrt(xx + yy));
+                (*edited)(x, y, c) = normalized(sqrt(xx + yy));
             }
         }
     }
     return *edited;
 }
-
-
-
-
-//    CImg<int>* edited = new CImg<int>(original.width(), original.height(), 1, original.spectrum(), 0);
-//    //for (int c = 0; c < original.spectrum(); c++) {
-//
-//    float alpha = 0.014; //set custom alpha, different than parameter
-//
-//    int* improvedColors = new int[256];
-//    for (int m = 0; m < 256; m++) { //apply histogram modification
-//        improvedColors[m] = Gmin - 1.0/alpha *
-//                log(1.0 - (1.0/(original.width()*original.height())) * histogram.combinedCumulative[0][m]);
-//        improvedColors[m] = normalized(improvedColors[m]);
-//    }
-//
-//
-//
-//        int k[256];
-//        for (int i = 0; i < 256; i++){
-//            k[i] = histogram.combined[i] / improvedColors[i];
-//        }
-//
-////        for (int i = 0; i < 256; i++){
-////            cout << " " << c << "    " << k[i] << endl;
-////        }
-//
-//        for (int x = 0; x < original.width(); x++) { //apply to image
-//            for (int y = 0; y < original.height(); y++) {
-//                for (int c = 0; c < original.height(); c++) {
-////                    cout << x << " " << y << " " << c << "    " << k[original(x, y, 0, c)] << endl;
-////                    cout.flush();
-//                //if (k[original(x, y, 0, c)] != 0){
-////                    (*edited)(x, y, 0, 0) = histogram.combined[normalized(original(x, y, 0, 0)/k[original(x, y, 0, 0)])];
-//                (*edited)(x, y, 0, c) = improvedColors[original(x, y, 0, c)];
-//
-////                    (*edited)(x, y, 0, c) = improvedColors[original(x, y, 0, c)];
-//                //}
-//                //else (*edited)(x, y, 0, c) = 255;
-//                }
-//            }
-//        }
-//
-////        for (int x = 0; x < original.width(); x++) { //apply to image
-////            for (int y = 0; y < original.height(); y++) {
-////                (*edited)(x, y, 0, c) = improvedColors[original(x, y, 0, c)];
-////            }
-////        }
-////    }
-//
-////    Histogram newHistogram = Histogram((*edited));
-////    //newHistogram.displayUniformValues(0);
-////    ((*histogram.getUniformHistogramGraph(0, true)).append(*newHistogram.getUniformHistogramGraph(0, true), 'x', 1)).display("HISTOGRAM", false); //show difference in histogram
-////    histogram.getUniformHistogramGraph(0, false)->save("original_histogram.bmp");
-////    newHistogram.getUniformHistogramGraph(0, false)->save("edited_histogram.bmp");
-//
