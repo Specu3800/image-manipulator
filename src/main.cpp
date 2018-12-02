@@ -46,7 +46,7 @@ int main(int argc, char* argv[]) {
     Histogram image1Histogram;
 
 
-    if (argc < 2 || argc > 5) {cout << "Wrong number of parameters.\nType --help to view the list of the available commands." << endl;}
+    if (argc < 2 || argc > 6) {cout << "Wrong number of parameters.\nType --help to view the list of the available commands." << endl;}
 
     else if (argv[1] == string("--help")) displayHelp();
 
@@ -87,7 +87,7 @@ int main(int argc, char* argv[]) {
         else if (argv[1] == string("--morphopii")) image2 = applyMorphologicalOperationII(image1);
         else if (argv[1] == string("--morphopiii")) image2 = applyMorphologicalOperationIII(image1);
 
-        else if (argv[1] == string("--segmentation")) image2 = applySegmentation(image1);
+        else if (argv[1] == string("--segmentation")) image2 = applySegmentation(image1, atoi(argv[2]), atoi(argv[3]));
 
         else if (argv[1] == string("--labs")){
             image2 = applyExponentialPDF(image1, atoi(argv[2]), image1Histogram);
