@@ -82,52 +82,68 @@ MorphMask getHMTMask(int number){
             mask.hit.emplace_back(Point(-1, 1));
             mask.hit.emplace_back(Point(-1, 0));
             mask.hit.emplace_back(Point(-1, -1));
-            mask.miss.emplace_back(Point(0, 1));
-            mask.miss.emplace_back(Point(0, -1));
-            mask.miss.emplace_back(Point(1, 1));
-            mask.miss.emplace_back(Point(1, 0));
-            mask.miss.emplace_back(Point(1, -1));break;
+            mask.miss.emplace_back(Point(0, 0));
+//            mask.miss.emplace_back(Point(0, 1));
+//            mask.miss.emplace_back(Point(0, -1));
+//            mask.miss.emplace_back(Point(1, 1));
+//            mask.miss.emplace_back(Point(1, 0));
+//            mask.miss.emplace_back(Point(1, -1));
+            break;
         case 2:
             mask.hit.emplace_back(Point(-1, -1));
             mask.hit.emplace_back(Point(0, -1));
             mask.hit.emplace_back(Point(1, -1));
-            mask.miss.emplace_back(Point(-1, 0));
-            mask.miss.emplace_back(Point(1, 0));
-            mask.miss.emplace_back(Point(-1, 1));
-            mask.miss.emplace_back(Point(0, 1));
-            mask.miss.emplace_back(Point(1, 1));break;
+            mask.miss.emplace_back(Point(0, 0));
+//            mask.miss.emplace_back(Point(-1, 0));
+//            mask.miss.emplace_back(Point(1, 0));
+//            mask.miss.emplace_back(Point(-1, 1));
+//            mask.miss.emplace_back(Point(0, 1));
+//            mask.miss.emplace_back(Point(1, 1));
+            break;
         case 3:
             mask.hit.emplace_back(Point(1, 1));
             mask.hit.emplace_back(Point(1, 0));
             mask.hit.emplace_back(Point(1, -1));
-            mask.miss.emplace_back(Point(0, 1));
-            mask.miss.emplace_back(Point(0, -1));
-            mask.miss.emplace_back(Point(-1, 1));
-            mask.miss.emplace_back(Point(-1, 0));
-            mask.miss.emplace_back(Point(-1, -1));break;
+            mask.miss.emplace_back(Point(0, 0));
+//            mask.miss.emplace_back(Point(0, 1));
+//            mask.miss.emplace_back(Point(0, -1));
+//            mask.miss.emplace_back(Point(-1, 1));
+//            mask.miss.emplace_back(Point(-1, 0));
+//            mask.miss.emplace_back(Point(-1, -1));
+            break;
         case 4:
             mask.hit.emplace_back(Point(-1, 1));
             mask.hit.emplace_back(Point(0, 1));
             mask.hit.emplace_back(Point(1, 1));
-            mask.miss.emplace_back(Point(-1, 0));
-            mask.miss.emplace_back(Point(1, 0));
-            mask.miss.emplace_back(Point(-1, -1));
-            mask.miss.emplace_back(Point(0, -1));
-            mask.miss.emplace_back(Point(1, -1));break;
+            mask.miss.emplace_back(Point(0, 0));
+//            mask.miss.emplace_back(Point(-1, 0));
+//            mask.miss.emplace_back(Point(1, 0));
+//            mask.miss.emplace_back(Point(-1, -1));
+//            mask.miss.emplace_back(Point(0, -1));
+//            mask.miss.emplace_back(Point(1, -1));
+            break;
         case 5:
             mask.hit.emplace_back(Point(0, 0));
             mask.hit.emplace_back(Point(1, 1));
             mask.hit.emplace_back(Point(0, 1));
             mask.hit.emplace_back(Point(-1, 1));
-            mask.miss.emplace_back(Point(-1, 0));
-            mask.miss.emplace_back(Point(1, 0));break;
+            mask.miss.emplace_back(Point(-1, -1));
+            mask.miss.emplace_back(Point(0, -1));
+            mask.miss.emplace_back(Point(1, -1));
+//            mask.miss.emplace_back(Point(-1, 0));
+//            mask.miss.emplace_back(Point(1, 0));
+            break;
         default: //mask 5
             mask.hit.emplace_back(Point(0, 0));
             mask.hit.emplace_back(Point(1, 1));
             mask.hit.emplace_back(Point(0, 1));
             mask.hit.emplace_back(Point(-1, 1));
-            mask.miss.emplace_back(Point(-1, 0));
-            mask.miss.emplace_back(Point(1, 0)); break;
+            mask.miss.emplace_back(Point(-1, -1));
+            mask.miss.emplace_back(Point(0, -1));
+            mask.miss.emplace_back(Point(1, -1));
+//            mask.miss.emplace_back(Point(-1, 0));
+//            mask.miss.emplace_back(Point(1, 0));
+            break;
     }
     return mask;
 }
@@ -137,16 +153,17 @@ CImg<int>& applyUnion(CImg<int> &image1, CImg<int> &image2){
         CImg<int>* edited = new CImg<int>(image1.width(), image1.height(), 1, image1.spectrum(), 0);
         for (int x = 0; x < image1.width(); x++) {
             for (int y = 0; y < image1.height(); y++) {
-                for (int c = 0; c < image1.spectrum(); c++) {
-                    if (image1(x, y, 0, c) == 255 || image2(x, y, 0, c) == 255)
-                        (*edited)(x, y, 0, c) = 255;
+                if (image1(x, y, 0, 0) == 255 || image2(x, y, 0, 0) == 255){
+                    (*edited)(x, y, 0, 0) = 255;
+                    (*edited)(x, y, 0, 1) = 255;
+                    (*edited)(x, y, 0, 2) = 255;
                 }
             }
         }
         return *edited;
     } else {
         cout << "Works only for same size images!" << endl;
-        return image1;
+        exit(0);
     }
 }
 
@@ -155,16 +172,17 @@ CImg<int>& applyIntersection(CImg<int> &image1, CImg<int> &image2){
         CImg<int>* edited = new CImg<int>(image1.width(), image1.height(), 1, image1.spectrum(), 0);
         for (int x = 0; x < image1.width(); x++) {
             for (int y = 0; y < image1.height(); y++) {
-                for (int c = 0; c < image1.spectrum(); c++) {
-                    if (image1(x, y, 0, c) == 255 && image2(x, y, 0, c) == 255)
-                        (*edited)(x, y, 0, c) = 255;
+                if (image1(x, y, 0, 0) == 255 && image2(x, y, 0, 0) == 255) {
+                    (*edited)(x, y, 0, 0) = 255;
+                    (*edited)(x, y, 0, 1) = 255;
+                    (*edited)(x, y, 0, 2) = 255;
                 }
             }
         }
         return *edited;
     } else {
         cout << "Works only for same size images!" << endl;
-        return image1;
+        exit(0);
     }
 }
 
@@ -173,35 +191,40 @@ CImg<int>& applyDifference(CImg<int> &image1, CImg<int> &image2){
         CImg<int>* edited = new CImg<int>(image1.width(), image1.height(), 1, image1.spectrum(), 0);
         for (int x = 0; x < image1.width(); x++) {
             for (int y = 0; y < image1.height(); y++) {
-                for (int c = 0; c < image1.spectrum(); c++) {
-                    if (image1(x, y, 0, c) == 255 && image2(x, y, 0, c) == 0)
-                        (*edited)(x, y, 0, c) = 255;
+                if (image1(x, y, 0, 0) == 255 && image2(x, y, 0, 0) == 0){
+                    (*edited)(x, y, 0, 0) = 255;
+                    (*edited)(x, y, 0, 1) = 255;
+                    (*edited)(x, y, 0, 2) = 255;
                 }
             }
         }
         return *edited;
     } else {
         cout << "Works only for same size images!" << endl;
-        return image1;
+        exit(0);
     }
 }
 
-CImg<int>& applyErosion(CImg<int> &original, MorphMask mask){ //delete 0,0 if whole mask cannot fit
+CImg<int>& applyErosion(CImg<int> &original, MorphMask mask){ //0,0 is 1 if whole mask cannot fit
     CImg<int>* edited = new CImg<int>(original.width(), original.height(), 1, original.spectrum(), 0);
     for (int x = 0; x < original.width(); x++) {
         for (int y = 0; y < original.height(); y++) {
-            for (int c = 0; c < original.spectrum(); c++) {
-                bool fits = true;
-                for (int i = 0; i < mask.hit.size(); i++) {
-                    if (x+mask.hit[i].x >= 0 && x+mask.hit[i].x < original.width() && y+mask.hit[i].y >= 0 && y+mask.hit[i].y < original.height()) {
-                        if (original(x + mask.hit[i].x, y + mask.hit[i].y, 0, c) == 0) {
-                            fits = false;
-                            break;
-                        }
+            bool fits = true;
+            for (int i = 0; i < mask.hit.size(); i++) {
+                if (x+mask.hit[i].x >= 0 && x+mask.hit[i].x < original.width() && y+mask.hit[i].y >= 0 && y+mask.hit[i].y < original.height()) {
+                    if (original(x + mask.hit[i].x, y + mask.hit[i].y, 0, 0) == 0) {
+                        fits = false;
+                        break;
                     }
+                } else {
+                    fits = false;
+                    break;
                 }
-                if(fits) (*edited)(x, y, 0, c) = 255;
-                else (*edited)(x, y, 0, c) = 0;
+            }
+            if(fits) {
+                (*edited)(x, y, 0, 0) = 255;
+                (*edited)(x, y, 0, 1) = 255;
+                (*edited)(x, y, 0, 2) = 255;
             }
         }
     }
@@ -212,18 +235,19 @@ CImg<int>& applyDilation(CImg<int> &original, MorphMask mask){ //add 0,0 if it h
     CImg<int>* edited = new CImg<int>(original.width(), original.height(), 1, original.spectrum(), 0);
     for (int x = 0; x < original.width(); x++) {
         for (int y = 0; y < original.height(); y++) {
-            for (int c = 0; c < original.spectrum(); c++) {
-                bool hasCommonPoint = false;
-                for (int i = 0; i < mask.hit.size(); i++) {
-                    if (x+mask.hit[i].x >= 0 && x+mask.hit[i].x < original.width() && y+mask.hit[i].y >= 0 && y+mask.hit[i].y < original.height()){
-                        if(original(x+mask.hit[i].x, y+mask.hit[i].y, 0, c) == 255) {
-                            hasCommonPoint = true;
-                            break;
-                        }
+            bool hasCommonPoint = false;
+            for (int i = 0; i < mask.hit.size(); i++) {
+                if (x+mask.hit[i].x >= 0 && x+mask.hit[i].x < original.width() && y+mask.hit[i].y >= 0 && y+mask.hit[i].y < original.height()){
+                    if(original(x+mask.hit[i].x, y+mask.hit[i].y, 0, 0) == 255) {
+                        hasCommonPoint = true;
+                        break;
                     }
                 }
-                if(hasCommonPoint) (*edited)(x, y, 0, c) = 255;
-                else (*edited)(x, y, 0, c) = 0;
+            }
+            if(hasCommonPoint) {
+                (*edited)(x, y, 0, 0) = 255;
+                (*edited)(x, y, 0, 1) = 255;
+                (*edited)(x, y, 0, 2) = 255;
             }
         }
     }
@@ -248,22 +272,25 @@ CImg<int>& applyHMT(CImg<int> &original, MorphMask mask){ //hit points must fit,
     CImg<int>* edited = new CImg<int>(original.width(), original.height(), 1, original.spectrum(), 0);
     for (int x = 0; x < original.width(); x++) {
         for (int y = 0; y < original.height(); y++) {
-            for (int c = 0; c < original.spectrum(); c++) {
-                bool maskFits = true;
-                for (int i = 0; i < mask.hit.size(); i++) {
-                    if (!maskFits) break;
-                    if (x+mask.hit[i].x >= 0 && x+mask.hit[i].x < original.width() && y+mask.hit[i].y >= 0 && y+mask.hit[i].y < original.height()){
-                        if(original(x+mask.hit[i].x, y+mask.hit[i].y, 0, c) == 0) maskFits = false;
-                    } else maskFits = false;
-                }
-                for (int i = 0; i < mask.miss.size(); i++) {
-                    if (!maskFits) break;
-                    if (x+mask.miss[i].x >= 0 && x+mask.miss[i].x < original.width() && y+mask.miss[i].y >= 0 && y+mask.miss[i].y < original.height()){
-                        if(original(x+mask.miss[i].x, y+mask.miss[i].y, 0, c) == 255) maskFits = false;
-                    } else maskFits = false;
-                }
-                if(maskFits) (*edited)(x, y, 0, c) = 255;
-                else (*edited)(x, y, 0, c) = 0;
+            bool maskFits = true;
+            for (int i = 0; i < mask.hit.size(); i++) {
+                if (!maskFits) break;
+                if (x + mask.hit[i].x >= 0 && x + mask.hit[i].x < original.width() && y + mask.hit[i].y >= 0 &&
+                    y + mask.hit[i].y < original.height()) {
+                    if (original(x + mask.hit[i].x, y + mask.hit[i].y, 0, 0) == 0) maskFits = false;
+                } else maskFits = false;
+            }
+            for (int i = 0; i < mask.miss.size(); i++) {
+                if (!maskFits) break;
+                if (x + mask.miss[i].x >= 0 && x + mask.miss[i].x < original.width() && y + mask.miss[i].y >= 0 &&
+                    y + mask.miss[i].y < original.height()) {
+                    if (original(x + mask.miss[i].x, y + mask.miss[i].y, 0, 0) == 255) maskFits = false;
+                } else maskFits = false;
+            }
+            if(maskFits) {
+                (*edited)(x, y, 0, 0) = 255;
+                (*edited)(x, y, 0, 1) = 255;
+                (*edited)(x, y, 0, 2) = 255;
             }
         }
     }
