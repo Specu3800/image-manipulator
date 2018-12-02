@@ -46,7 +46,7 @@ int main(int argc, char* argv[]) {
     Histogram image1Histogram;
 
 
-    if (argc < 2 || argc > 6) {cout << "Wrong number of parameters.\nType --help to view the list of the available commands." << endl;}
+    if (argc < 2 || argc > 7) {cout << "Wrong number of parameters.\nType --help to view the list of the available commands." << endl;}
 
     else if (argv[1] == string("--help")) displayHelp();
 

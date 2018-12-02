@@ -8,24 +8,12 @@ using namespace std;
 using namespace cimg_library;
 
 
-
-struct Pixel
+Pixel::Pixel(){};
+Pixel::Pixel(int x, int y)
 {
-    Pixel(){};
-    Pixel(int x, int y)
-    {
-        this -> x = x;
-        this -> y = y;
-    }
-    int x;
-    int y;
-};
-struct Region
-{
-
-    Pixel seed;
-    vector<Pixel> pixels;
-};
+    this -> x = x;
+    this -> y = y;
+}
 
 CImg<int>& applySegmentation(CImg<int> &original, int intensity, int threshold){
     CImg<int>* edited = new CImg<int>(original.width(), original.height(), 1, original.spectrum(), 0);
@@ -34,14 +22,14 @@ CImg<int>& applySegmentation(CImg<int> &original, int intensity, int threshold){
         for (int y = 1; y < original.height(); y++)
             alreadyInRegion[x][y] = false;
 
-    vector<Region> regions;
+    vector<SegmentRegion> regions;
     for(int x = 1; x < original.width() - 1; x++)
         for(int y = 1; y < original.height() - 1; y++)
         {
             int meanIntensity = (original(x, y, 0, 0) + original(x, y, 0, 1) + original(x, y, 0, 2))/3;
             if ( abs(intensity - meanIntensity) < threshold && !alreadyInRegion[x][y] )
             {
-                Region* newRegion = new Region();
+                SegmentRegion* newRegion = new SegmentRegion();
                 newRegion -> seed = Pixel(x, y);
                 newRegion -> pixels.push_back(newRegion -> seed);
                 cout <<"Znalazlo seed: " << newRegion -> seed.x << " " << newRegion -> seed.y << endl;
@@ -56,7 +44,7 @@ CImg<int>& applySegmentation(CImg<int> &original, int intensity, int threshold){
 
     return *edited;
 }
-void segmentationRecursive(CImg<int> &original, CImg<int> &edited, int x, int y, int threshold, int N, int M, bool alreadyInRegion[][512], Pixel seed, Region* region){
+void segmentationRecursive(CImg<int> &original, CImg<int> &edited, int x, int y, int threshold, int N, int M, bool alreadyInRegion[][512], Pixel seed, SegmentRegion* region){
 
     if (x < 1 || x > original.width() || y < 1 || y > original.height()) return;
     if (alreadyInRegion[x][y]) return;
