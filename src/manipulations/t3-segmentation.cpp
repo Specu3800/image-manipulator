@@ -46,7 +46,6 @@ CImg<int>& applySegmentation(CImg<int> &original, int x, int y, int threshold){
     return *edited;
 }
 void segmentationRecursive(CImg<int> &original, CImg<int> &edited, int x, int y, int threshold, bool** alreadyInRegion, Pixel seed){
-//    cout << x << " " << y << endl;
     if (x < 0 || x > original.width() - 1 || y < 0 || y > original.height() - 1) return;
     if (alreadyInRegion[x][y]) return;
 
@@ -62,9 +61,6 @@ void segmentationRecursive(CImg<int> &original, CImg<int> &edited, int x, int y,
     segmentationRecursive(original, edited, x - 1, y, threshold, alreadyInRegion, seed);
     segmentationRecursive(original, edited, x, y + 1, threshold, alreadyInRegion, seed);
     segmentationRecursive(original, edited, x, y - 1, threshold, alreadyInRegion, seed);
-
-
-    return;
 }
 
 bool linearThreshold(CImg<int> &original, int threshold, int x1, int y1, int x2, int y2)
@@ -72,12 +68,14 @@ bool linearThreshold(CImg<int> &original, int threshold, int x1, int y1, int x2,
     int intensity1 = (original(x1, y1, 0, 0) + original(x1, y1, 0, 1) + original(x1, y1, 0, 2) ) / 3;
     int intensity2 = (original(x2, y2, 0, 0) + original(x2, y2, 0, 1) + original(x2, y2, 0, 2) ) / 3;
 
-    if (abs(intensity1 - intensity2 < threshold)) return true;
-    return false;
+    return abs(intensity1 - intensity2 < threshold) != 0;
 }
 bool euclideanThreshold(CImg<int> &original, int threshold, int x1, int y1, int x2, int y2)
 {
-    int distance = sqrt(  (original(x2, y2, 0, 0) - original(x1, y1, 0, 0)) * (original(x2, y2, 0, 0) - original(x1, y1, 0, 0)) + (original(x2, y2, 0, 1) - original(x1, y1, 0, 1)) * (original(x2, y2, 0, 1) - original(x1, y1, 0, 1)) + (original(x2, y2, 0, 2) - original(x1, y1, 0, 2)) * (original(x2, y2, 0, 2) - original(x1, y1, 0, 2)) );
-    if (distance < threshold) return true;
-    return false;
+    int distance = sqrt(
+            (original(x2, y2, 0, 0) - original(x1, y1, 0, 0)) * (original(x2, y2, 0, 0) - original(x1, y1, 0, 0)) +
+            (original(x2, y2, 0, 1) - original(x1, y1, 0, 1)) * (original(x2, y2, 0, 1) - original(x1, y1, 0, 1)) +
+            (original(x2, y2, 0, 2) - original(x1, y1, 0, 2)) * (original(x2, y2, 0, 2) - original(x1, y1, 0, 2))
+            );
+    return distance < threshold;
 }
