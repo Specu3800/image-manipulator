@@ -101,7 +101,7 @@ int main(int argc, char* argv[]) {
         else if (argv[1] == string("--opening")) image2 = applyOpening(image1, getNormalMask(atoi(argv[2])));
         else if (argv[1] == string("--closing")) image2 = applyClosing(image1, getNormalMask(atoi(argv[2])));
         else if (argv[1] == string("--hmt")) image2 = applyHMT(image1, getHMTMask(atoi(argv[2])));
-        else if (argv[1] == string("--segmentation")) image2 = applySegmentation(image1, atoi(argv[2]), atoi(argv[3]));
+        else if (argv[1] == string("--segmentation")) image2 = applySegmentation(image1, atoi(argv[2]), atoi(argv[3]), atoi(argv[4]));
         else if (argv[1] == string("--oborder")) image2 = applyOuterBorder(image1, atoi(argv[2]));
         else if (argv[1] == string("--iborder")) image2 = applyInnerBorder(image1, atoi(argv[2]));
         else if (argv[1] == string("--ioborder")) image2 = applyInnerOuterBorder(image1, atoi(argv[2]));
