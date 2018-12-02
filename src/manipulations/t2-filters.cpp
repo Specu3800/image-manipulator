@@ -108,26 +108,22 @@ CImg<int>& applyLaplacianFilter(CImg<int> &original, int maskNumber, Histogram &
 
 CImg<int>& applyLaplacianFilterOptimised(CImg<int> &original, Histogram &histogram){
 
-
-    //optimise using caching mechanism, no idea how, no idea why....
-
-
+    int* tabFor1 = new int[256];
+    int* tabFor8 = new int[256];
+    for(int i = 0; i < 256; i++){
+        tabFor1[i] = -i;
+        tabFor8[i] = 8*i;
+    }
 
     CImg<int>* edited = new CImg<int>(original.width(), original.height(), 1, original.spectrum(), 0);
-    for (int x = 1; x < original.width() - 1; x++)
-    {
-        for (int y = 1; y < original.height() - 1; y++)
-        {
-            for (int c = 0; c < original.spectrum(); c++)
-            {
-                int pixelValue = 0;
-                for (int i = x - 1; i < x + 2; i++)
-                {
-                    pixelValue += -original(i, y - 1, 0, c) -original(i, y, 0, c) -original(i, y + 1, 0, c);
-                }
-                pixelValue += 9*original(x, y, c);
-
-                (*edited)(x, y, c) = normalized(pixelValue);
+    for (int x = 1; x < original.width() - 1; x++) {
+        for (int y = 1; y < original.height() - 1; y++) {
+            for (int c = 0; c < original.spectrum(); c++) {
+                (*edited)(x, y, c) = normalized(
+                        tabFor1[original(x - 1, y - 1, 0, c)] + tabFor1[original(x, y - 1, 0, c)] + tabFor1[original(x + 1, y - 1, 0, c)]+
+                        tabFor1[original(x - 1, y, 0, c)] + tabFor8[original(x, y, 0, c)] + tabFor1[original(x + 1, y, 0, c)]+
+                        tabFor1[original(x - 1, y + 1, 0, c)] + tabFor1[original(x, y + 1, 0, c)] + tabFor1[original(x + 1, y + 1, 0, c)]
+                        );
             }
         }
     }

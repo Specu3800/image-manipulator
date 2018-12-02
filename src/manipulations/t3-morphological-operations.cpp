@@ -34,41 +34,50 @@ MorphMask getNormalMask(int number){
             mask.hit.emplace_back(Point(1, 1));
             mask.hit.emplace_back(Point(-1, -1));
             mask.hit.emplace_back(Point(1, -1));
-            mask.hit.emplace_back(Point(-1, 1)); break;
+            mask.hit.emplace_back(Point(-1, 1));
+            break;
         case 4:
             mask.hit.emplace_back(Point(0, 0));
             mask.hit.emplace_back(Point(-1, 0));
             mask.hit.emplace_back(Point(0, -1));
             mask.hit.emplace_back(Point(1, 0));
-            mask.hit.emplace_back(Point(0, 1)); break;
+            mask.hit.emplace_back(Point(0, 1));
+            break;
         case 5:
             mask.hit.emplace_back(Point(0, 0));
             mask.hit.emplace_back(Point(1, 0));
-            mask.hit.emplace_back(Point(0, -1)); break;
+            mask.hit.emplace_back(Point(0, -1));
+            break;
         case 6:
             mask.hit.emplace_back(Point(1, 0));
-            mask.hit.emplace_back(Point(0, -1)); break;
+            mask.hit.emplace_back(Point(0, -1));
+            break;
         case 7:
             mask.hit.emplace_back(Point(0, 0));
             mask.hit.emplace_back(Point(-1, 0));
-            mask.hit.emplace_back(Point(1, 0)); break;
+            mask.hit.emplace_back(Point(1, 0));
+            break;
         case 8:
             mask.hit.emplace_back(Point(-1, 0));
-            mask.hit.emplace_back(Point(1, 0)); break;
+            mask.hit.emplace_back(Point(1, 0));
+            break;
         case 9:
             mask.hit.emplace_back(Point(0, 0));
             mask.hit.emplace_back(Point(-1, 0));
-            mask.hit.emplace_back(Point(-1, -1)); break;
+            mask.hit.emplace_back(Point(-1, -1));
+            break;
         case 10:
             mask.hit.emplace_back(Point(0, 0));
             mask.hit.emplace_back(Point(0, 1));
-            mask.hit.emplace_back(Point(1, 1)); break;
+            mask.hit.emplace_back(Point(1, 1));
+            break;
         default: //mask 4
             mask.hit.emplace_back(Point(0, 0));
             mask.hit.emplace_back(Point(-1, 0));
             mask.hit.emplace_back(Point(0, -1));
             mask.hit.emplace_back(Point(1, 0));
-            mask.hit.emplace_back(Point(0, 1)); break;
+            mask.hit.emplace_back(Point(0, 1));
+            break;
     }
     return mask;
 }
@@ -83,44 +92,24 @@ MorphMask getHMTMask(int number){
             mask.hit.emplace_back(Point(-1, 0));
             mask.hit.emplace_back(Point(-1, -1));
             mask.miss.emplace_back(Point(0, 0));
-//            mask.miss.emplace_back(Point(0, 1));
-//            mask.miss.emplace_back(Point(0, -1));
-//            mask.miss.emplace_back(Point(1, 1));
-//            mask.miss.emplace_back(Point(1, 0));
-//            mask.miss.emplace_back(Point(1, -1));
             break;
         case 2:
             mask.hit.emplace_back(Point(-1, -1));
             mask.hit.emplace_back(Point(0, -1));
             mask.hit.emplace_back(Point(1, -1));
             mask.miss.emplace_back(Point(0, 0));
-//            mask.miss.emplace_back(Point(-1, 0));
-//            mask.miss.emplace_back(Point(1, 0));
-//            mask.miss.emplace_back(Point(-1, 1));
-//            mask.miss.emplace_back(Point(0, 1));
-//            mask.miss.emplace_back(Point(1, 1));
             break;
         case 3:
             mask.hit.emplace_back(Point(1, 1));
             mask.hit.emplace_back(Point(1, 0));
             mask.hit.emplace_back(Point(1, -1));
             mask.miss.emplace_back(Point(0, 0));
-//            mask.miss.emplace_back(Point(0, 1));
-//            mask.miss.emplace_back(Point(0, -1));
-//            mask.miss.emplace_back(Point(-1, 1));
-//            mask.miss.emplace_back(Point(-1, 0));
-//            mask.miss.emplace_back(Point(-1, -1));
             break;
         case 4:
             mask.hit.emplace_back(Point(-1, 1));
             mask.hit.emplace_back(Point(0, 1));
             mask.hit.emplace_back(Point(1, 1));
             mask.miss.emplace_back(Point(0, 0));
-//            mask.miss.emplace_back(Point(-1, 0));
-//            mask.miss.emplace_back(Point(1, 0));
-//            mask.miss.emplace_back(Point(-1, -1));
-//            mask.miss.emplace_back(Point(0, -1));
-//            mask.miss.emplace_back(Point(1, -1));
             break;
         case 5:
             mask.hit.emplace_back(Point(0, 0));
@@ -130,8 +119,6 @@ MorphMask getHMTMask(int number){
             mask.miss.emplace_back(Point(-1, -1));
             mask.miss.emplace_back(Point(0, -1));
             mask.miss.emplace_back(Point(1, -1));
-//            mask.miss.emplace_back(Point(-1, 0));
-//            mask.miss.emplace_back(Point(1, 0));
             break;
         default: //mask 5
             mask.hit.emplace_back(Point(0, 0));
@@ -141,8 +128,6 @@ MorphMask getHMTMask(int number){
             mask.miss.emplace_back(Point(-1, -1));
             mask.miss.emplace_back(Point(0, -1));
             mask.miss.emplace_back(Point(1, -1));
-//            mask.miss.emplace_back(Point(-1, 0));
-//            mask.miss.emplace_back(Point(1, 0));
             break;
     }
     return mask;

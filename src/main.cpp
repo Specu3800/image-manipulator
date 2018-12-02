@@ -7,6 +7,7 @@
 #include <vector>
 #include <algorithm>
 #include <time.h>
+#include <chrono>
 
 #include "../lib/CImg.templ"
 
@@ -23,6 +24,7 @@
 
 using namespace std;
 using namespace cimg_library;
+using namespace std::chrono;
 
 int main(int argc, char* argv[]) {
 
@@ -75,8 +77,18 @@ int main(int argc, char* argv[]) {
 
         else if (argv[1] == string("--hexponent")) image2 = applyExponentialPDF(image1, atoi(argv[2]), atoi(argv[3]), image1Histogram);
         else if (argv[1] == string("--hexponentseg")) image2 = applyExponentialPDFSeparately(image1, atoi(argv[2]), atoi(argv[3]), image1Histogram);
-        else if (argv[1] == string("--slaplace")) image2 = applyLaplacianFilter(image1, atoi(argv[2]), image1Histogram);
-        else if (argv[1] == string("--slaplaceopt")) image2 = applyLaplacianFilterOptimised(image1, image1Histogram);
+        else if (argv[1] == string("--slaplace")) {
+            high_resolution_clock::time_point t1 = high_resolution_clock::now();
+            image2 = applyLaplacianFilter(image1, atoi(argv[2]), image1Histogram);
+            high_resolution_clock::time_point t2 = high_resolution_clock::now();
+            cout << "Execution time: " << duration_cast<microseconds>( t2 - t1 ).count() << endl;
+        }
+        else if (argv[1] == string("--slaplaceopt")) {
+            high_resolution_clock::time_point t1 = high_resolution_clock::now();
+            image2 = applyLaplacianFilterOptimised(image1, image1Histogram);
+            high_resolution_clock::time_point t2 = high_resolution_clock::now();
+            cout << "Execution time: " << duration_cast<microseconds>( t2 - t1 ).count() << endl;
+        }
         else if (argv[1] == string("--orobertsii")) image2 = applyRobertsOperatorFilter(image1, image1Histogram);
         else if (argv[1] == string("--osobel")) image2 = applySobelOperatorFilter(image1, image1Histogram);
 
