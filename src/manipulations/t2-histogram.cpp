@@ -124,7 +124,7 @@ CImg<int> *Histogram::getScaleHistogramGraph(int channel, int** values) {
 
     while(valuesCopy[index] > 256){
         for (int i = 0; i < 256; i++) {
-            valuesCopy[i] /= 2;
+            valuesCopy[i] = (valuesCopy[i]+1) / 2;
         }
     }
 

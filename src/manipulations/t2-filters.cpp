@@ -14,7 +14,7 @@ CImg<int>& applyExponentialPDF(CImg<int> &original, int Gmin, int Gmax, Histogra
     CImg<int>* edited = new CImg<int>(original.width(), original.height(), 1, original.spectrum(), 0);
     for (int c = 0; c < original.spectrum(); c++) {
 
-        double alpha = (log(1) + log(1.0/(original.width()*original.height()))) / (Gmin - Gmax);
+        double alpha = (log(1 ) + log(1.0/(original.width()*original.height()))) / (Gmin - Gmax);
 
         int* improvedColors = new int[256];
         for (int m = 0; m < 256; m++) { //apply histogram modification
@@ -31,10 +31,10 @@ CImg<int>& applyExponentialPDF(CImg<int> &original, int Gmin, int Gmax, Histogra
     }
 //TO DISPLAY AND SAVE HISTOGRAM
 //    Histogram newHistogram = Histogram(*edited);
-//    newHistogram.displayUniformValues(0);
-//    ((*histogram.getUniformHistogramGraph(0, false)).append(*newHistogram.getUniformHistogramGraph(0, false), 'x', 1)).display("HISTOGRAM", false); //show difference in histogram
-//    histogram.getUniformHistogramGraph(0, false)->save("original_histogram.bmp");
-//    newHistogram.getUniformHistogramGraph(0, false)->save("edited_histogram.bmp");
+    //newHistogram.displayUniformValues(0);
+//    ((*histogram.getUniformHistogramGraph(0, true)).append(*newHistogram.getUniformHistogramGraph(0, true), 'x', 1)).display("HISTOGRAM", false); //show difference in histogram
+//    histogram.getUniformHistogramGraph(0, true)->save("original_histogram.png");
+//    newHistogram.getUniformHistogramGraph(0, true)->save("edited_histogram.png");
 
     return *edited;
 }
