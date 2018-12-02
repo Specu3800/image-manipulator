@@ -15,7 +15,7 @@ CImg<int>& changeBrightness(CImg<int> &original, int value) {
         displayProgress(x, original.width()-1);
         for (int y = 0; y < original.height(); y++) {
             for (int c = 0; c < original.spectrum(); c++) {
-                (*edited)(x, y, 0, c) = normalized(original(x, y, 0, c) + value);
+                (*edited)(x, y, c) = normalized(original(x, y, c) + value);
             }
         }
     }
@@ -30,7 +30,7 @@ CImg<int>& changeContrast(CImg<int> &original, float factor) {
         displayProgress(x, original.width()-1);
         for (int y = 0; y < original.height(); y++) {
             for (int c = 0; c < original.spectrum(); c++) {
-                (*edited)(x, y, 0, c) = normalized((original(x, y, 0, c) - 128)*factor + 128);
+                (*edited)(x, y, c) = normalized((original(x, y, c) - 128)*factor + 128);
             }
         }
     }
@@ -44,7 +44,7 @@ CImg<int>& changeContrast2(CImg<int> &original, float factor) {
         displayProgress(x, original.width()-1);
         for (int y = 0; y < original.height(); y++) {
             for (int c = 0; c < original.spectrum(); c++) {
-                (*edited)(x, y, 0, c) = normalized(255 * pow((original(x, y, 0, c)) / 255.0, factor));
+                (*edited)(x, y, c) = normalized(255 * pow((original(x, y, c)) / 255.0, factor));
             }
         }
     }
@@ -58,7 +58,7 @@ CImg<int>& changeToNegative(CImg<int> &original) {
         displayProgress(x, original.width()-1);
         for (int y = 0; y < original.height(); y++) {
             for (int c = 0; c < original.spectrum(); c++) {
-                (*edited)(x, y, 0, c) = 255 - original(x, y, 0, c);
+                (*edited)(x, y, c) = 255 - original(x, y, c);
             }
         }
     }

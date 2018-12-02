@@ -29,7 +29,7 @@ void Histogram::calculateHistogram() {
     for (int x = 0; x < this->sourceImage->width(); x++){
         for (int y = 0; y < this->sourceImage->height(); y++) {
             for (int c = 0; c < this->sourceImage->spectrum(); c++) {
-                this->uniform[c][(*this->sourceImage)(x, y, 0, c)]++;
+                this->uniform[c][(*this->sourceImage)(x, y, c)]++;
             }
         }
     }
@@ -100,7 +100,7 @@ CImg<int> *Histogram::getHistogramGraph(int channel, int** values) {
     for (int x = 1; x < 257 ; x++) {
         for (int y = graph->height() - 1; y > graph->height() - values[channel][x-1] - 1; y--) {
             for (int c = 0; c < 3; c++) {
-                (*graph)(x, y, 0, c) = 0;
+                (*graph)(x, y, c) = 0;
             }
         }
     }
@@ -133,7 +133,7 @@ CImg<int> *Histogram::getScaleHistogramGraph(int channel, int** values) {
     for (int x = 0; x < 256; x += 2) {
         for (int y = graph->height() - 1; y > graph->height() - valuesCopy[x] - 1; y--) {
             for (int c = 0; c < 3; c++) {
-                (*graph)(x, y, 0, c) = 0;
+                (*graph)(x, y, c) = 0;
                 (*graph)(x+1, y, 0, c) = 0;
             }
         }
