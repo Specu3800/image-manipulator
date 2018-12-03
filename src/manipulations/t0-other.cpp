@@ -174,8 +174,8 @@ void displayHelp() {
         "        which should enhance image quality and flatter its histogram\n"
         "        parameters - denotes gmin and gmax respectively\n"
         "\n"
-        "    --hexponentseg parameter1 parameter2 src dest \n"
-        "        applies exponential final probability density function on an image\n"
+        "    --hexponentsep parameter1 parameter2 src dest \n"
+        "        applies exponential final probability density function on an image separately for each channel\n"
         "        which should enhance image quality and flatter its histogram\n"
         "        parameters - denotes gmin and gmax respectively\n"
         "\n"
@@ -240,8 +240,9 @@ void displayHelp() {
         "        parameter: 1 - 10 - mask variant\n"
         "\n"
         << (char)27 << "[1m" << "  SEGMENTATION:" << (char)27 << "[0m---------------------------------------------------------------\n"
-        "    --????? ????\n"
-        "        ???????????????????\n"
+        "    --segmentation x y threshold src dest\n"
+        "        outputs region that grows from seed at (x, y) and accepts to the region\n"
+        "        pixels within given threshold\n"
         "\n";
 }
 

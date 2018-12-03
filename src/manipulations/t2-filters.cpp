@@ -39,7 +39,7 @@ CImg<int>& applyExponentialPDF(CImg<int> &original, int Gmin, int Gmax, Histogra
     return *edited;
 }
 
-CImg<int>& applyExponentialPDFSeparately(CImg<int> &original, int Gmin, int Gmax, Histogram &histogram){
+CImg<int>& applyExponentialPDFSeparately(CImg<int> &original, int Gmin, int Gmax){
     CImg<int>* edited = new CImg<int>(original.width(), original.height(), 1, original.spectrum(), 0);
     CImg<int>* combined = new CImg<int>(original.width(), original.height(), 1, original.spectrum(), 0);
     for (int x = 0; x < original.width(); x++) { //apply to image
@@ -66,7 +66,7 @@ CImg<int>& applyExponentialPDFSeparately(CImg<int> &original, int Gmin, int Gmax
     return *edited;
 }
 
-CImg<int>& applyLaplacianFilter(CImg<int> &original, int maskNumber, Histogram &histogram){
+CImg<int>& applyLaplacianFilter(CImg<int> &original, int maskNumber){
     CImg<int>* edited = new CImg<int>(original.width(), original.height(), 1, original.spectrum(), 0);
 
     int filterMask1[3][3] = {-1, -1, -1, -1, 8, -1, -1, -1, -1};
@@ -106,7 +106,7 @@ CImg<int>& applyLaplacianFilter(CImg<int> &original, int maskNumber, Histogram &
     return *edited;
 }
 
-CImg<int>& applyLaplacianFilterOptimised(CImg<int> &original, Histogram &histogram){
+CImg<int>& applyLaplacianFilterOptimised(CImg<int> &original){
 
     int* tabFor1 = new int[256];
     int* tabFor8 = new int[256];
@@ -130,7 +130,7 @@ CImg<int>& applyLaplacianFilterOptimised(CImg<int> &original, Histogram &histogr
     return *edited;
 }
 
-CImg<int>& applyRobertsOperatorFilter(CImg<int> &original, Histogram &histogram){
+CImg<int>& applyRobertsOperatorFilter(CImg<int> &original){
     CImg<int>* edited = new CImg<int>(original.width(), original.height(), 1, original.spectrum(), 0);
     for (int x = 1; x < original.width() - 1; x++)
     {
@@ -145,7 +145,7 @@ CImg<int>& applyRobertsOperatorFilter(CImg<int> &original, Histogram &histogram)
     return *edited;
 }
 
-CImg<int>& applySobelOperatorFilter(CImg<int> &original, Histogram &histogram){
+CImg<int>& applySobelOperatorFilter(CImg<int> &original){
     CImg<int>* edited = new CImg<int>(original.width(), original.height(), 1, original.spectrum(), 0);
     for (int x = 1; x < original.width() - 1; x++)
     {

@@ -31,7 +31,7 @@ int main(int argc, char* argv[]) {
     vector<string> variant1 = {"--brightness", "--contrast", "--contrast2", "--negative",
                                "--hflip", "--vflip", "--dflip", "--shrink", "--enlarge",
                                "--adaptive", "--median", "--min", "--max",
-                               "--hexponent", "--hexponentseg", "--slaplace", "--slaplaceopt", "--orobertsii", "--osobel",
+                               "--hexponent", "--hexponentsep", "--slaplace", "--slaplaceopt", "--orobertsii", "--osobel",
                                "--erosion", "--dilation", "--opening", "--closing", "--hmt",
                                "--oborder", "--iborder", "--ioborder",
                                "--segmentation"};
@@ -76,21 +76,21 @@ int main(int argc, char* argv[]) {
         else if (argv[1] == string("--max")) image2 = applyMaximumFilter(image1, atoi(argv[2]));
 
         else if (argv[1] == string("--hexponent")) image2 = applyExponentialPDF(image1, atoi(argv[2]), atoi(argv[3]), image1Histogram);
-        else if (argv[1] == string("--hexponentseg")) image2 = applyExponentialPDFSeparately(image1, atoi(argv[2]), atoi(argv[3]), image1Histogram);
+        else if (argv[1] == string("--hexponentsep")) image2 = applyExponentialPDFSeparately(image1, atoi(argv[2]), atoi(argv[3]));
         else if (argv[1] == string("--slaplace")) {
             high_resolution_clock::time_point t1 = high_resolution_clock::now();
-            image2 = applyLaplacianFilter(image1, atoi(argv[2]), image1Histogram);
+            image2 = applyLaplacianFilter(image1, atoi(argv[2]));
             high_resolution_clock::time_point t2 = high_resolution_clock::now();
             cout << "Execution time: " << duration_cast<microseconds>( t2 - t1 ).count() << endl;
         }
         else if (argv[1] == string("--slaplaceopt")) {
             high_resolution_clock::time_point t1 = high_resolution_clock::now();
-            image2 = applyLaplacianFilterOptimised(image1, image1Histogram);
+            image2 = applyLaplacianFilterOptimised(image1);
             high_resolution_clock::time_point t2 = high_resolution_clock::now();
             cout << "Execution time: " << duration_cast<microseconds>( t2 - t1 ).count() << endl;
         }
-        else if (argv[1] == string("--orobertsii")) image2 = applyRobertsOperatorFilter(image1, image1Histogram);
-        else if (argv[1] == string("--osobel")) image2 = applySobelOperatorFilter(image1, image1Histogram);
+        else if (argv[1] == string("--orobertsii")) image2 = applyRobertsOperatorFilter(image1);
+        else if (argv[1] == string("--osobel")) image2 = applySobelOperatorFilter(image1);
 
         else if (argv[1] == string("--union")) image2 = applyUnion(image1, image2);
         else if (argv[1] == string("--intersection")) image2 = applyIntersection(image1, image2);
