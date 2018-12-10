@@ -4,6 +4,7 @@
 #include "../../lib/CImg.templ"
 #include "t0-other.h"
 #include "t3-morphological-operations.h"
+#include "t1-basic.h"
 
 using namespace std;
 using namespace cimg_library;
@@ -120,6 +121,17 @@ MorphMask getHMTMask(int number){
             mask.miss.emplace_back(Point(0, -1));
             mask.miss.emplace_back(Point(1, -1));
             break;
+        case 100://labs
+            mask.hit.emplace_back(Point(-1, -1));
+            mask.hit.emplace_back(Point(-1, 0));
+            mask.hit.emplace_back(Point(-1, 1));
+            mask.miss.emplace_back(Point(0, -1));
+            mask.miss.emplace_back(Point(0, 0));
+            mask.miss.emplace_back(Point(0, 1));
+            mask.miss.emplace_back(Point(1, -1));
+            mask.miss.emplace_back(Point(1, 0));
+            mask.miss.emplace_back(Point(1, 1));
+            break;
         default: //mask 5
             mask.hit.emplace_back(Point(0, 0));
             mask.hit.emplace_back(Point(1, 1));
@@ -142,6 +154,10 @@ CImg<int>& applyUnion(CImg<int> &image1, CImg<int> &image2){
                     (*edited)(x, y, 0, 0) = 255;
                     (*edited)(x, y, 0, 1) = 255;
                     (*edited)(x, y, 0, 2) = 255;
+                } else {
+                    (*edited)(x, y, 0, 0) = 0;
+                    (*edited)(x, y, 0, 1) = 0;
+                    (*edited)(x, y, 0, 2) = 0;
                 }
             }
         }
@@ -161,6 +177,10 @@ CImg<int>& applyIntersection(CImg<int> &image1, CImg<int> &image2){
                     (*edited)(x, y, 0, 0) = 255;
                     (*edited)(x, y, 0, 1) = 255;
                     (*edited)(x, y, 0, 2) = 255;
+                } else {
+                    (*edited)(x, y, 0, 0) = 0;
+                    (*edited)(x, y, 0, 1) = 0;
+                    (*edited)(x, y, 0, 2) = 0;
                 }
             }
         }
@@ -180,6 +200,10 @@ CImg<int>& applyDifference(CImg<int> &image1, CImg<int> &image2){
                     (*edited)(x, y, 0, 0) = 255;
                     (*edited)(x, y, 0, 1) = 255;
                     (*edited)(x, y, 0, 2) = 255;
+                } else {
+                    (*edited)(x, y, 0, 0) = 0;
+                    (*edited)(x, y, 0, 1) = 0;
+                    (*edited)(x, y, 0, 2) = 0;
                 }
             }
         }
@@ -188,6 +212,25 @@ CImg<int>& applyDifference(CImg<int> &image1, CImg<int> &image2){
         cout << "Works only for same size images!" << endl;
         exit(0);
     }
+}
+
+
+CImg<int>& applyComplement(CImg<int> &image1){
+    CImg<int>* edited = new CImg<int>(image1.width(), image1.height(), 1, image1.spectrum(), 0);
+    for (int x = 0; x < image1.width(); x++) {
+        for (int y = 0; y < image1.height(); y++) {
+            if (image1(x, y, 0, 0) == 255 ) {
+                (*edited)(x, y, 0, 0) = 0;
+                (*edited)(x, y, 0, 1) = 0;
+                (*edited)(x, y, 0, 2) = 0;
+            } else {
+                (*edited)(x, y, 0, 0) = 255;
+                (*edited)(x, y, 0, 1) = 255;
+                (*edited)(x, y, 0, 2) = 255;
+            }
+        }
+    }
+    return *edited;
 }
 
 CImg<int>& applyErosion(CImg<int> &original, MorphMask mask){ //0,0 is 1 if whole mask cannot fit
@@ -315,4 +358,61 @@ CImg<int>& applyInnerOuterBorder(CImg<int> &original, int maskNumber){
     *edited = applyDifference(applyDilation(original, mask), applyErosion(original, mask));
 
     return *edited;
+}
+
+bool checkIfTheSame(CImg<int> &image1, CImg<int> &image2){
+    for (int x = 0; x < image1.width(); x++) {
+        for (int y = 0; y < image1.height(); y++) {
+            for (int c = 0; c < image1.spectrum(); c++) {
+                if (image1(x, y, c) != image2(x, y, c)) return false;
+            }
+        }
+    }
+    return true;
+}
+
+CImg<int>& applyFilling(CImg<int> &original, int x, int y, int maskNumber){
+
+    CImg<int>* edited = new CImg<int>(original.width(), original.height(), 1, original.spectrum(), 0);
+    (*edited)(x, y) = 255;
+    CImg<int>* oldEdited;
+
+    CImg<int>* output = new CImg<int>(*edited);
+    CImg<int>* oldOutput;
+
+    MorphMask mask = getNormalMask(maskNumber);
+
+   do{
+        oldEdited = new CImg<int>(*edited);
+        *edited = applyIntersection(applyDilation(*oldEdited, mask), applyComplement(original)), original;
+
+        oldOutput = new CImg<int>(*output);
+        output = &applyUnion(*edited, original);
+
+    } while (!checkIfTheSame(*oldOutput, *output));
+
+    return *output;
+}
+
+CImg<int>& applyRemoving(CImg<int> &original, int x, int y, int maskNumber){
+
+    CImg<int>* edited = new CImg<int>(original.width(), original.height(), 1, original.spectrum(), 0);
+    (*edited)(x, y) = 255;
+    CImg<int>* oldEdited;
+
+    CImg<int>* output = new CImg<int>(*edited);
+    CImg<int>* oldOutput;
+
+    MorphMask mask = getNormalMask(maskNumber);
+
+   do{
+        oldEdited = new CImg<int>(*edited);
+        *edited = applyIntersection(applyDilation(*oldEdited, mask), original), original;
+
+        oldOutput = new CImg<int>(*output);
+        output = new CImg<int>(*edited);
+
+    } while (!checkIfTheSame(*oldOutput, *output));
+
+    return *output;
 }

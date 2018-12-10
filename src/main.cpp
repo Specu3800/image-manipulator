@@ -33,11 +33,12 @@ int main(int argc, char* argv[]) {
                                "--adaptive", "--median", "--min", "--max",
                                "--hexponent", "--hexponentsep", "--slaplace", "--slaplaceopt", "--orobertsii", "--osobel",
                                "--erosion", "--dilation", "--opening", "--closing", "--hmt",
-                               "--oborder", "--iborder", "--ioborder",
+                               "--oborder", "--iborder", "--ioborder", "--filling", "--removing",
                                "--segmentation"};
     vector<string> variant2 = {"--union", "--intersection", "--difference"};
     vector<string> variant3 = {"--mse", "--pmse", "--snr", "--psnr", "--md"};
     vector<string> variant4 = {"--cmean", "--cvariance", "--cstdev", "--cvarcoi", "--cvarcoii", "--casyco", "--cflaco", "--centropy"};
+    vector<string> variant5 = {"--labs"};
 
     CImg<int> image1;
     CImg<int> image2;
@@ -102,10 +103,11 @@ int main(int argc, char* argv[]) {
         else if (argv[1] == string("--closing")) image2 = applyClosing(image1, getNormalMask(atoi(argv[2])));
         else if (argv[1] == string("--hmt")) image2 = applyHMT(image1, getHMTMask(atoi(argv[2])));
         else if (argv[1] == string("--segmentation")) image2 = applySegmentation(image1, atoi(argv[2]), atoi(argv[3]), atoi(argv[4]));
-        else if (argv[1] == string("--oborder")) image2 = applyOuterBorder(image1, atoi(argv[2]));
-        else if (argv[1] == string("--iborder")) image2 = applyInnerBorder(image1, atoi(argv[2]));
-        else if (argv[1] == string("--ioborder")) image2 = applyInnerOuterBorder(image1, atoi(argv[2]));
-
+        else if (argv[1] == string("--oborder")) image2 = applyOuterBorder(image1, atoi(argv[2])); //M1
+        else if (argv[1] == string("--iborder")) image2 = applyInnerBorder(image1, atoi(argv[2])); //M1
+        else if (argv[1] == string("--ioborder")) image2 = applyInnerOuterBorder(image1, atoi(argv[2])); //M1
+        else if (argv[1] == string("--filling")) image2 = applyFilling(image1, atoi(argv[2]), atoi(argv[3]), 4); //M2
+        else if (argv[1] == string("--removing")) image2 = applyRemoving(image1, atoi(argv[2]), atoi(argv[3]), 3); //M3
 
         image1.save("original.bmp");
         image2.save("edited.bmp");
@@ -164,6 +166,18 @@ int main(int argc, char* argv[]) {
         else if (argv[1] == string("--centropy")) analysis = getInformationSourceEntropy(image1Histogram);
 
         if (analysis != -1) cout << "Analysis result for this image equils: " << analysis << endl;
+
+    } else if (find(variant5.begin(), variant5.end(), argv[1]) != variant5.end()) {
+
+        if (fileExists(argv[argc - 1])) image1 = CImg<int>(argv[argc - 2]);
+
+        if (argv[1] == string("--labs")) {
+
+            image2 = applyRemoving(image1, atoi(argv[2]), atoi(argv[3]), 4);
+            image1.append(image2, 'x').display("COMPARATION", false); //display
+
+        }
+
 
     } else {
         cout << "No maching command. \nType --help to view the list of the available commands.";
