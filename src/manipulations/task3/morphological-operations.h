@@ -2,7 +2,7 @@
 #define MORPHOLOGICAL_OPERATIONS
 
 #include <vector>
-#include "../../lib/CImg.templ"
+#include "lib/CImg.templ"
 
 
 using namespace std;

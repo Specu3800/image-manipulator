@@ -1,9 +1,9 @@
 #include <iostream>
 #include <cmath>
 #include <memory>
-#include "../../lib/CImg.templ"
-#include "t1-basic.h"
-#include "t0-other.h"
+#include "lib/CImg.templ"
+#include "basic.h"
+#include "helpers.h"
 
 using namespace std;
 using namespace cimg_library;

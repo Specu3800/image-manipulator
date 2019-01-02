@@ -1,7 +1,7 @@
 #ifndef SEGMENTATION
 #define SEGMENTATION
 
-#include "../../lib/CImg.templ"
+#include "lib/CImg.templ"
 #include <vector>
 
 using namespace std;

@@ -1,8 +1,8 @@
 #include <iostream>
 #include <algorithm>
-#include "../../lib/CImg.templ"
-#include "t1-noise-removal-operations.h"
-#include "t0-other.h"
+#include "lib/CImg.templ"
+#include "noise-removal-operations.h"
+#include "helpers.h"
 
 using namespace std;
 using namespace cimg_library;

@@ -11,16 +11,16 @@
 
 #include "../lib/CImg.templ"
 
-#include "manipulations/t0-other.h"
-#include "manipulations/t1-basic.h"
-#include "manipulations/t1-geometric.h"
-#include "manipulations/t1-noise-removal-operations.h"
-#include "manipulations/t1-analysis.h"
-#include "manipulations/t2-histogram.h"
-#include "manipulations/t2-characteristics.h"
-#include "manipulations/t2-filters.h"
-#include "manipulations/t3-morphological-operations.h"
-#include "manipulations/t3-segmentation.h"
+#include "manipulations/helpers.h"
+#include "src/manipulations/task1/basic.h"
+#include "src/manipulations/task1/geometric.h"
+#include "src/manipulations/task1/noise-removal-operations.h"
+#include "src/manipulations/task1/analysis.h"
+#include "src/manipulations/task2/histogram.h"
+#include "src/manipulations/task2/characteristics.h"
+#include "src/manipulations/task2/filters.h"
+#include "src/manipulations/task3/morphological-operations.h"
+#include "src/manipulations/task3/segmentation.h"
 
 using namespace std;
 using namespace cimg_library;

@@ -1,6 +1,6 @@
 #include <iostream>
-#include "../../lib/CImg.templ"
-#include "t2-characteristics.h"
+#include "lib/CImg.templ"
+#include "characteristics.h"
 
 using namespace std;
 using namespace cimg_library;
