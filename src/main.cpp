@@ -39,7 +39,7 @@ int main(int argc, char* argv[]) {
     vector<string> variant2 = {"--union", "--intersection", "--difference"};
     vector<string> variant3 = {"--mse", "--pmse", "--snr", "--psnr", "--md"};
     vector<string> variant4 = {"--cmean", "--cvariance", "--cstdev", "--cvarcoi", "--cvarcoii", "--casyco", "--cflaco", "--centropy"};
-    vector<string> variant5 = {"--labs"};
+    vector<string> variant5 = {"--labs", "--lowpass", "--highpass", "--bandpass", "--"};
 
     CImg<int> image1;
     CImg<int> image2;
