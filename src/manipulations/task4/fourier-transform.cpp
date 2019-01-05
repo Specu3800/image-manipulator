@@ -11,7 +11,7 @@
 using namespace std;
 using namespace cimg_library;
 
-vector<vector<complex<double>>>& applyDFT(CImg<int> &original){
+vector<vector<complex<double>>>& applyDFT(){
 
     auto* output = new vector<vector<complex<double>>>;
     vector<vector<complex<double>>> temp;
