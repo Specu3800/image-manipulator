@@ -1,10 +1,10 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
-#include "../../lib/CImg.templ"
-#include "t0-other.h"
-#include "t2-filters.h"
-#include "t2-histogram.h"
+#include "lib/CImg.templ"
+#include "helpers.h"
+#include "filters.h"
+#include "histogram.h"
 
 using namespace std;
 using namespace cimg_library;

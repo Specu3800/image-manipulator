@@ -1,10 +1,10 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
-#include "../../lib/CImg.templ"
-#include "t0-other.h"
-#include "t3-morphological-operations.h"
-#include "t1-basic.h"
+#include "lib/CImg.templ"
+#include "helpers.h"
+#include "morphological-operations.h"
+#include "src/manipulations/task1/basic.h"
 
 using namespace std;
 using namespace cimg_library;

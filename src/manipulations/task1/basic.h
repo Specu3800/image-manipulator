@@ -1,7 +1,7 @@
 #ifndef BASIC
 #define BASIC
 
-#include "../../lib/CImg.templ"
+#include "lib/CImg.templ"
 
 using namespace std;
 using namespace cimg_library;

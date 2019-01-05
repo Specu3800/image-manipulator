@@ -1,7 +1,7 @@
 #ifndef NOISE_REMOVAL_OPERATIONS
 #define NOISE_REMOVAL_OPERATIONS
 
-#include "../../lib/CImg.templ"
+#include "lib/CImg.templ"
 
 using namespace std;
 using namespace cimg_library;

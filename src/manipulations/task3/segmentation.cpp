@@ -1,8 +1,9 @@
-#include "../../lib/CImg.templ"
-#include "t3-segmentation.h"
 #include <cmath>
 #include <vector>
 #include <iostream>
+
+#include "lib/CImg.templ"
+#include "segmentation.h"
 
 using namespace std;
 using namespace cimg_library;

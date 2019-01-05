@@ -1,9 +1,9 @@
 #include <iostream>
 #include <cmath>
-#include "../../lib/CImg.templ"
-#include "t1-geometric.h"
-#include "t0-other.h"
-#include "t1-noise-removal-operations.h"
+#include "lib/CImg.templ"
+#include "geometric.h"
+#include "helpers.h"
+#include "noise-removal-operations.h"
 
 using namespace std;
 using namespace cimg_library;

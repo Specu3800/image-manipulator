@@ -1,7 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include "../../lib/CImg.templ"
-#include "t0-other.h"
+#include "helpers.h"
 
 using namespace std;
 using namespace cimg_library;

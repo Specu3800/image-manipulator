@@ -1,7 +1,7 @@
 #include <iostream>
 #include <cmath>
-#include "t2-histogram.h"
-#include "t0-other.h"
+#include "histogram.h"
+#include "helpers.h"
 
 
 using namespace std;

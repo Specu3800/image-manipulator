@@ -1,8 +1,8 @@
 #ifndef CHARACTERISTICS
 #define CHARACTERISTICS
 
-#include "../../lib/CImg.templ"
-#include "../manipulations/t2-histogram.h"
+#include "lib/CImg.templ"
+#include "histogram.h"
 
 using namespace std;
 using namespace cimg_library;

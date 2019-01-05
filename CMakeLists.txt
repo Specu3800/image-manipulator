@@ -122,24 +122,24 @@ include_directories(lib)
 
 add_executable(image-manipulator
         src/main.cpp
-        src/manipulations/t1-basic.h
-        src/manipulations/t1-basic.cpp
-        src/manipulations/t1-geometric.h
-        src/manipulations/t1-geometric.cpp
-        src/manipulations/t1-noise-removal-operations.h
-        src/manipulations/t1-noise-removal-operations.cpp
-        src/manipulations/t1-analysis.h
-        src/manipulations/t1-analysis.cpp
-        src/manipulations/t0-other.cpp
-        src/manipulations/t0-other.h
-        src/manipulations/t2-histogram.cpp
-        src/manipulations/t2-histogram.h
-        src/manipulations/t2-characteristics.cpp
-        src/manipulations/t2-characteristics.h
-        src/manipulations/t2-filters.cpp
-        src/manipulations/t2-filters.h
-        src/manipulations/t3-morphological-operations.cpp
-        src/manipulations/t3-morphological-operations.h src/manipulations/t3-segmentation.cpp src/manipulations/t3-segmentation.h)
+        src/manipulations/task1/basic.h
+        src/manipulations/task1/basic.cpp
+        src/manipulations/task1/geometric.h
+        src/manipulations/task1/geometric.cpp
+        src/manipulations/task1/noise-removal-operations.h
+        src/manipulations/task1/noise-removal-operations.cpp
+        src/manipulations/task1/analysis.h
+        src/manipulations/task1/analysis.cpp
+        src/manipulations/helpers.cpp
+        src/manipulations/helpers.h
+        src/manipulations/task2/histogram.cpp
+        src/manipulations/task2/histogram.h
+        src/manipulations/task2/characteristics.cpp
+        src/manipulations/task2/characteristics.h
+        src/manipulations/task2/filters.cpp
+        src/manipulations/task2/filters.h
+        src/manipulations/task3/morphological-operations.cpp
+        src/manipulations/task3/morphological-operations.h src/manipulations/task3/segmentation.cpp src/manipulations/task3/segmentation.h)
 
 target_link_libraries(image-manipulator ${SYSTEM_LIBS})
 

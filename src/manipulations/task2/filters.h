@@ -1,8 +1,8 @@
 #ifndef FILTERS
 #define FILTERS
 
-#include "../../lib/CImg.templ"
-#include "t2-histogram.h"
+#include "lib/CImg.templ"
+#include "histogram.h"
 
 using namespace std;
 using namespace cimg_library;
