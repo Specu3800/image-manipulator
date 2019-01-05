@@ -10,8 +10,16 @@
 using namespace std;
 using namespace cimg_library;
 
-vector<vector<complex<double>>>& applyLowpassFilter(vector<vector<complex<double>>> &original){
+vector<vector<complex<double>>>& applyLowpassFilter(vector<vector<complex<double>>> &original, int threshold){
     auto* edited = new vector<vector<complex<double>>>;
+
+    for (int x = 0; x < edited -> size(); x++)
+    {
+        for (int y = 0; y < edited[0].size(); y++)
+        {
+            double d = sqrt( pow(x - edited -> size() / 2 , 2)   ))
+        }
+    }
 
     return *edited;
 }

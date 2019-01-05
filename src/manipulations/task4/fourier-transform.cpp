@@ -43,10 +43,10 @@ vector<vector<complex<double>>>& applyDFT(CImg<int> &original){
         }
     }
 
-    getFourierImage(*output).display();
+    //getFourierImage(*output).display();
 
     vector<vector<complex<double>>> swaped = swapQuarters(*output);
-    getFourierImage(swaped).display();
+    //getFourierImage(swaped).display();
     //final.display();
 
     return *output;
