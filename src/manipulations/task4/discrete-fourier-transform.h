@@ -7,7 +7,7 @@
 using namespace std;
 using namespace cimg_library;
 
-CImg<int>& getFastFourierTransformInSpatialDomain(CImg<int> &original);
-CImg<int>& getInverseFastFourierTransformInSpatialDomain(CImg<int> &original);
+CImg<int>& getDiscreteFourierTransformInSpatialDomain(CImg<int> &original);
+//CImg<int>& getInverseFastFourierTransformInSpatialDomain(CImg<int> &original);
 
 #endif //SEGMENTATION
