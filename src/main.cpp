@@ -21,6 +21,7 @@
 #include "src/manipulations/task2/filters.h"
 #include "src/manipulations/task3/morphological-operations.h"
 #include "src/manipulations/task3/segmentation.h"
+#include "src/manipulations/task4/discrete-fourier-transform.h"
 
 using namespace std;
 using namespace cimg_library;
@@ -173,8 +174,7 @@ int main(int argc, char* argv[]) {
 
         if (argv[1] == string("--labs")) {
 
-            image2 = applyRemoving(image1, atoi(argv[2]), atoi(argv[3]), 4);
-            image1.append(image2, 'x').display("COMPARATION", false); //display
+            getDFT(image1);
 
         }
 
