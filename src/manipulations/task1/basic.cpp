@@ -13,7 +13,7 @@ CImg<int>& changeBrightness(CImg<int> &original, int value) {
     for (int x = 0; x < original.width(); x++) {
         for (int y = 0; y < original.height(); y++) {
             for (int c = 0; c < original.spectrum(); c++) {
-                (*edited)(x, y, c) = normalized(original(x, y, c) + value);
+                (*edited)(x, y, c) = normalize(original(x, y, c) + value);
             }
         }
     }
@@ -26,7 +26,7 @@ CImg<int>& changeContrast(CImg<int> &original, float factor) {
     for (int x = 0; x < original.width(); x++) {
         for (int y = 0; y < original.height(); y++) {
             for (int c = 0; c < original.spectrum(); c++) {
-                (*edited)(x, y, c) = normalized((original(x, y, c) - 128)*factor + 128);
+                (*edited)(x, y, c) = normalize((original(x, y, c) - 128) * factor + 128);
             }
         }
     }
@@ -38,7 +38,7 @@ CImg<int>& changeContrast2(CImg<int> &original, float factor) {
     for (int x = 0; x < original.width(); x++) {
         for (int y = 0; y < original.height(); y++) {
             for (int c = 0; c < original.spectrum(); c++) {
-                (*edited)(x, y, c) = normalized(255 * pow((original(x, y, c)) / 255.0, factor));
+                (*edited)(x, y, c) = normalize(255 * pow((original(x, y, c)) / 255.0, factor));
             }
         }
     }

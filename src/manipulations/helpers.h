@@ -12,7 +12,7 @@ void displayProgress(int x, int max);
 
 bool fileExists(char* name);
 
-int normalized(int value);
+int normalize(int value);
 
 void displayHelp();
 void displayVersion();

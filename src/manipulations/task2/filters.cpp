@@ -20,7 +20,7 @@ CImg<int>& applyExponentialPDF(CImg<int> &original, int Gmin, int Gmax, Histogra
         for (int m = 0; m < 256; m++) { //apply histogram modification
             improvedColors[m] = Gmin - 1.0/alpha *
                     log(1.0 - (1.0/(original.width()*original.height())) * histogram.cumulative[c][m]);
-            improvedColors[m] = normalized(improvedColors[m]);
+            improvedColors[m] = normalize(improvedColors[m]);
         }
 
         for (int x = 0; x < original.width(); x++) { //apply to image
@@ -58,7 +58,7 @@ CImg<int>& applyExponentialPDFSeparately(CImg<int> &original, int Gmin, int Gmax
         for (int y = 0; y < original.height(); y++) {
             double k = original(x, y, 0, 0) / ((*edited)(x, y, 0, 0)+0.00000001) ;
             for (int c = 0; c < original.spectrum(); c++) {
-                (*edited)(x, y, c) = normalized(original(x, y, c)/k);
+                (*edited)(x, y, c) = normalize(original(x, y, c) / k);
             }
         }
     }
@@ -99,7 +99,7 @@ CImg<int>& applyLaplacianFilter(CImg<int> &original, int maskNumber){
                     }
                     q++;
                 }
-                (*edited)(x, y, c) = normalized(pixelValue);
+                (*edited)(x, y, c) = normalize(pixelValue);
             }
         }
     }
@@ -119,11 +119,14 @@ CImg<int>& applyLaplacianFilterOptimised(CImg<int> &original){
     for (int x = 1; x < original.width() - 1; x++) {
         for (int y = 1; y < original.height() - 1; y++) {
             for (int c = 0; c < original.spectrum(); c++) {
-                (*edited)(x, y, c) = normalized(
-                        tabFor1[original(x - 1, y - 1, 0, c)] + tabFor1[original(x, y - 1, 0, c)] + tabFor1[original(x + 1, y - 1, 0, c)]+
-                        tabFor1[original(x - 1, y, 0, c)] + tabFor8[original(x, y, 0, c)] + tabFor1[original(x + 1, y, 0, c)]+
-                        tabFor1[original(x - 1, y + 1, 0, c)] + tabFor1[original(x, y + 1, 0, c)] + tabFor1[original(x + 1, y + 1, 0, c)]
-                        );
+                (*edited)(x, y, c) = normalize(
+                        tabFor1[original(x - 1, y - 1, 0, c)] + tabFor1[original(x, y - 1, 0, c)] +
+                        tabFor1[original(x + 1, y - 1, 0, c)] +
+                        tabFor1[original(x - 1, y, 0, c)] + tabFor8[original(x, y, 0, c)] +
+                        tabFor1[original(x + 1, y, 0, c)] +
+                        tabFor1[original(x - 1, y + 1, 0, c)] + tabFor1[original(x, y + 1, 0, c)] +
+                        tabFor1[original(x + 1, y + 1, 0, c)]
+                );
             }
         }
     }
@@ -138,7 +141,8 @@ CImg<int>& applyRobertsOperatorFilter(CImg<int> &original){
         {
             for (int c = 0; c < original.spectrum(); c++)
             {
-               (*edited)(x, y, c) = normalized(abs(original(x, y, c) - original(x + 1, y + 1, 0, c)) + abs(original(x, y + 1, 0, c) - original(x + 1, y, 0, c)));
+               (*edited)(x, y, c) = normalize(abs(original(x, y, c) - original(x + 1, y + 1, 0, c)) +
+                                              abs(original(x, y + 1, 0, c) - original(x + 1, y, 0, c)));
             }
         }
     }
@@ -157,7 +161,7 @@ CImg<int>& applySobelOperatorFilter(CImg<int> &original){
                 float yy = original(x - 1, y - 1, 0, c) + 2*original(x, y - 1, 0, c) + original(x + 1, y - 1, 0, c) - original(x - 1, y + 1, 0, c) - 2*original(x, y + 1, 0, c) - original(x + 1, y + 1, 0, c);
                 xx *= xx;
                 yy *= yy;
-                (*edited)(x, y, c) = normalized(sqrt(xx + yy));
+                (*edited)(x, y, c) = normalize(sqrt(xx + yy));
             }
         }
     }
