@@ -10,9 +10,9 @@ using namespace std;
 using namespace cimg_library;
 
 vector<vector<complex<double>>>& applyDFT(CImg<int> &original);
-vector<vector<complex<double>>>& applyFFT(CImg<int> &original);
-
 CImg<int>& applyIDFT(vector<vector<complex<double>>> &original);
+
+vector<vector<complex<double>>>& applyFFT(CImg<int> &original);
 CImg<int>& applyIFFT(vector<vector<complex<double>>> &original);
 
 vector<vector<complex<double>>>& swapQuarters(vector<vector<complex<double>>> &original);

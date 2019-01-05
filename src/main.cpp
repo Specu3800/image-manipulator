@@ -174,8 +174,14 @@ int main(int argc, char* argv[]) {
 
         if (argv[1] == string("--labs")) {
 
-            applyDFT(image1);
+            vector<vector<complex<double>>> a = applyDFT(image1);
+            getFourierImage(a).display();
+            a = swapQuarters(a);
+            getFourierImage(a).display();
 
+            a = swapQuarters(a);
+            image2 = applyIDFT(a);
+            image2.display();
         }
 
 
