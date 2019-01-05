@@ -4,13 +4,13 @@
 #include <cmath>
 #include <iostream>
 
-#include "discrete-fourier-transform.h"
+#include "fourier-transform.h"
 #include "lib/CImg.templ"
 
 using namespace std;
 using namespace cimg_library;
 
-void getDFT(CImg<int> &original){
+vector<vector<complex<double>>>& applyDFT(CImg<int> &original){
 
     auto* output = new vector<vector<complex<double>>>;
     vector<vector<complex<double>>> temp;
@@ -51,6 +51,10 @@ void getDFT(CImg<int> &original){
         for (int j = original.height() / 2; b < original.height(); j++){
             for (int k = 0; k < original.spectrum(); k++){
                 final(i, j, 0, k) = log(abs((*output)[b][a])) * 15.;
+                // auto max = max_element(std::begin(*output), std::end(*output));
+                //                auto min = min_element(std::begin(*output), std::end(*output));
+                //                cout << max))
+                //                final(i, j, 0, k) = (255)*(abs((*output)[b][a]) - min) / (max - min)
             }
             if (i == original.width() - 1) i = 0;
             if (j == original.height() - 1) j = 0;
@@ -61,7 +65,7 @@ void getDFT(CImg<int> &original){
     }
     final.display();
 
-//    return *output;
+    return *output;
 }
 
 //vector<complex<double>>& getOneDimensionalDFT(CImg<int> &original){

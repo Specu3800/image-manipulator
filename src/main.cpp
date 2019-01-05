@@ -21,7 +21,7 @@
 #include "src/manipulations/task2/filters.h"
 #include "src/manipulations/task3/morphological-operations.h"
 #include "src/manipulations/task3/segmentation.h"
-#include "src/manipulations/task4/discrete-fourier-transform.h"
+#include "src/manipulations/task4/fourier-transform.h"
 
 using namespace std;
 using namespace cimg_library;

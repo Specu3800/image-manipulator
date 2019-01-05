@@ -141,7 +141,7 @@ add_executable(image-manipulator
         src/manipulations/task3/morphological-operations.cpp
         src/manipulations/task3/morphological-operations.h
         src/manipulations/task3/segmentation.cpp
-        src/manipulations/task3/segmentation.h src/manipulations/task4/discrete-fourier-transform.cpp src/manipulations/task4/discrete-fourier-transform.h)
+        src/manipulations/task3/segmentation.h src/manipulations/task4/fourier-transform.cpp src/manipulations/task4/fourier-transform.h src/manipulations/task4/fourier-filters.cpp src/manipulations/task4/fourier-filters.h)
 
 target_link_libraries(image-manipulator ${SYSTEM_LIBS})
 
