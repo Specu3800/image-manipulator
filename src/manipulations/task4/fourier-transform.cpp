@@ -62,6 +62,7 @@ vector<vector<complex<double>>>& applyFFT(CImg<int> &original){
 CImg<int>& applyIDFT(vector<vector<complex<double>>> &original){
     CImg<int>* output = new CImg<int>(original[0].size(), original.size(), 1, 1, 0);
 
+
     return *output;
 }
 
@@ -75,14 +76,13 @@ CImg<int>& applyIFFT(vector<vector<complex<double>>> &original){
 vector<vector<complex<double>>>& swapQuarters(vector<vector<complex<double>>> &original){
     auto* output = new vector<vector<complex<double>>>;
 
-    cout << "duap0" << endl; cout.flush();
-
     for (int x = 0; x < original.size(); x++){
-        for (int y = 0; y < original[0].size(); y++) {
-            (*output)[x][y] = original[x][y];
+        vector<complex<double>> column;
+        for (int y = 0; y < original.size(); y++) {
+            column.push_back(original[x][y]);
         }
+        (*output).push_back(column); column.clear();
     }
-    cout << "duap1" << endl; cout.flush();
 
     for (int x = 0; x < original.size()/2; x++){
         for (int y = 0; y < original[0].size()/2; y++) {
@@ -91,37 +91,19 @@ vector<vector<complex<double>>>& swapQuarters(vector<vector<complex<double>>> &o
         }
     }
 
-    cout << "duap2" << endl; cout.flush();
     return *output;
 }
 
 CImg<int>& getFourierImage(vector<vector<complex<double>>> &original){
 
     CImg<int>* output = new CImg<int>(original[0].size(), original.size(), 1, 3, 0);
-    for (int x = 1; x < original[0].size() - 1; x++) {
-        for (int y = 1; y < original.size() - 1; y++) {
+    for (int x = 0; x < original[0].size(); x++) {
+        for (int y = 0; y < original.size(); y++) {
             for (int c = 0; c < 3; c++) {
                 (*output)(x, y, c) = normalize(log(abs((original)[y][x])) * 15.);
             }
         }
     }
-//    int a = 0;
-//    int b = 0;
-//    for (int i = original[0].size() / 2; a < original[0].size(); i++){
-//        for (int j = original.size() / 2; b < original.size(); j++){
-//            for (int k = 0; k < 3; k++){
-//                (*output)(i, j, 0, k) = log(abs((original)[b][a])) * 15.;
-//                // auto max = max_element(std::begin(*output), std::end(*output));
-//                //                auto min = min_element(std::begin(*output), std::end(*output));
-//                //                cout << max))
-//                //                final(i, j, 0, k) = (255)*(abs((*output)[b][a]) - min) / (max - min)
-//            }
-//            if (i == original[0].size() - 1) i = 0;
-//            if (j == original.size() - 1) j = 0;
-//            b++;
-//        }
-//        b = 0;
-//        a++;
-//    }
+
     return *output;
 }
