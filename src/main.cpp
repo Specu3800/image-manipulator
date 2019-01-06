@@ -189,7 +189,7 @@ int main(int argc, char* argv[]) {
 
     } else if (find(variant6.begin(), variant6.end(), argv[1]) != variant6.end()) {
 
-        if (fileExists(argv[argc - 1])) image1 = CImg<int>(argv[argc - 2]);
+        if (fileExists(argv[argc - 2])) image1 = CImg<int>(argv[argc - 2]);
         vector<vector<complex<double>>> fourier = applyFFT(image1);
         fourier = swapQuarters(fourier);
 
