@@ -22,6 +22,7 @@
 #include "src/manipulations/task3/morphological-operations.h"
 #include "src/manipulations/task3/segmentation.h"
 #include "src/manipulations/task4/fourier-transform.h"
+#include "src/manipulations/task4/fourier-filters.h"
 
 using namespace std;
 using namespace cimg_library;
@@ -39,7 +40,7 @@ int main(int argc, char* argv[]) {
     vector<string> variant2 = {"--union", "--intersection", "--difference"};
     vector<string> variant3 = {"--mse", "--pmse", "--snr", "--psnr", "--md"};
     vector<string> variant4 = {"--cmean", "--cvariance", "--cstdev", "--cvarcoi", "--cvarcoii", "--casyco", "--cflaco", "--centropy"};
-    vector<string> variant5 = {"--labs", "--lowpass", "--highpass", "--bandpass", "--"};
+    vector<string> variant5 = {"--labs", "--lowpass", "--highpass", "--bandpass", "--bandcut", "--hpedge", "--pmod"};
 
     CImg<int> image1;
     CImg<int> image2;
@@ -182,7 +183,61 @@ int main(int argc, char* argv[]) {
 //            image2 = applyIDFT(a);
 //            image2.display();
         }
-
+        else if (argv[1] == string("--lowpass")) {
+            vector<vector<complex<double>>> a = applyDFT(image1);
+            a = swapQuarters(a);
+            a = applyLowpassFilter(a, atoi(argv[2]));
+            getFourierImage(a).display();
+            a = swapQuarters(a);
+            image2 = applyIDFT(a);
+            image2.display();
+        }
+        else if (argv[1] == string("--highpass")) {
+            vector<vector<complex<double>>> a = applyDFT(image1);
+            a = swapQuarters(a);
+            a = applyHighpassFilter(a, atoi(argv[2]));
+            a = swapQuarters(a);
+            getFourierImage(a).display();
+            image2 = applyIDFT(a);
+            image2.display();
+        }
+        else if (argv[1] == string("--bandpass")) {
+            vector<vector<complex<double>>> a = applyDFT(image1);
+            a = swapQuarters(a);
+            a = applyBandpassFilter(a, atoi(argv[2]), atoi(argv[3]));
+            getFourierImage(a).display();
+            a = swapQuarters(a);
+            image2 = applyIDFT(a);
+            image2.display();
+        }
+        else if (argv[1] == string("--bandcut")) {
+            vector<vector<complex<double>>> a = applyDFT(image1);
+            a = swapQuarters(a);
+            a = applyBandcutFilter(a, atoi(argv[2]), atoi(argv[3]));
+            getFourierImage(a).display();
+            a = swapQuarters(a);
+            image2 = applyIDFT(a);
+            image2.display();
+        }
+        else if (argv[1] == string("--hpedge")) {
+            vector<vector<complex<double>>> a = applyDFT(image1);
+            a = swapQuarters(a);
+            CImg<int> *mask = new CImg<int>(argv[2]);
+            a = applyHighpassFilterWithEdgeDirection(a, *mask);
+            getFourierImage(a).display();
+            a = swapQuarters(a);
+            image2 = applyIDFT(a);
+            image2.display();
+        }
+        else if (argv[1] == string("--pmod")) {
+            vector<vector<complex<double>>> a = applyDFT(image1);
+            a = swapQuarters(a);
+            a = applyPhaseModifyingFilter(a, atoi(argv[2]), atoi(argv[3]), atoi(argv[4]));
+            getFourierImage(a).display();
+            a = swapQuarters(a);
+            image2 = applyIDFT(a);
+            image2.display();
+        }
 
     } else {
         cout << "No maching command. \nType --help to view the list of the available commands.";
