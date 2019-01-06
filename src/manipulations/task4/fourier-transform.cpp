@@ -136,10 +136,9 @@ CImg<int>& applyIFFT(vector<vector<complex<double>>> &original){
             complex<double> sum1 = (0., 0.);
             complex<double> sum2 = (0., 0.);
             for (int yy = 0; yy < (*output).height() / 2; yy++){
-                complex<double> comp1(cos(2 * M_PI * yy * y / ((*output).height() / 2)), sin(2 * M_PI * yy * y / ((*output).height() / 2)));
-                complex<double> comp2(cos(2 * M_PI * yy * y / ((*output).height() / 2)), sin(2 * M_PI * yy * y / ((*output).height() / 2)));
-                sum1 += original[2 * yy][x] * comp1;
-                sum2 += original[2 * yy + 1][x] * comp2;
+                complex<double> comp(cos(2 * M_PI * yy * y / ((*output).height() / 2)), sin(2 * M_PI * yy * y / ((*output).height() / 2)));
+                sum1 += original[2 * yy][x] * comp;
+                sum2 += original[2 * yy + 1][x] * comp;
             }
             complex<double> W(cos(2 * M_PI * y / (*output).width()), sin(2 * M_PI * y / (*output).width()));
 
@@ -153,10 +152,9 @@ CImg<int>& applyIFFT(vector<vector<complex<double>>> &original){
             complex<double> sum1 = (0., 0.);
             complex<double> sum2 = (0., 0.);
             for (int xx = 0; xx < (*output).width() / 2; xx++){
-                complex<double> comp1(cos(2 * M_PI * xx * x / ((*output).width() / 2)), sin(2 * M_PI * xx * x / ((*output).width() / 2)));
-                complex<double> comp2(cos(2 * M_PI * xx * x / ((*output).width() / 2)), sin(2 * M_PI * xx * x / ((*output).width() / 2)));
-                sum1 += temp[y][2 * xx] * comp1;
-                sum2 += temp[y][2 * xx + 1] * comp2;
+                complex<double> comp(cos(2 * M_PI * xx * x / ((*output).width() / 2)), sin(2 * M_PI * xx * x / ((*output).width() / 2)));
+                sum1 += temp[y][2 * xx] * comp;
+                sum2 += temp[y][2 * xx + 1] * comp;
             }
             complex<double> W(cos(2 * M_PI * x / (*output).width()), sin(2 * M_PI * x / (*output).width()));
             for (int c = 0; c < (*output).spectrum(); c++){
