@@ -173,7 +173,7 @@ int main(int argc, char* argv[]) {
 
     } else if (find(variant5.begin(), variant5.end(), argv[1]) != variant5.end()) {
 
-        if (fileExists(argv[argc - 1])) image1 = CImg<int>(argv[argc - 2]);
+        if (fileExists(argv[argc - 2])) image1 = CImg<int>(argv[argc - 2]);
         vector<vector<complex<double>>> fourier;
 
         if (argv[1] == string("--dft")) fourier = applyDFT(image1);
