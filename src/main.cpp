@@ -176,8 +176,8 @@ int main(int argc, char* argv[]) {
         if (argv[1] == string("--labs")) {
             vector<vector<complex<double>>> b = applyDFT(image1);
             b = swapQuarters(b);
-            getFourierImage(b).save("a.png");
-//            getFourierImage(a).display();
+//            getFourierImage(b).save("a.png");
+            getFourierImage(b).display();
 //
 //            a = swapQuarters(a);
 //            image2 = applyIDFT(a);
@@ -196,8 +196,8 @@ int main(int argc, char* argv[]) {
             vector<vector<complex<double>>> a = applyDFT(image1);
             a = swapQuarters(a);
             a = applyHighpassFilter(a, atoi(argv[2]));
-            a = swapQuarters(a);
             getFourierImage(a).display();
+            a = swapQuarters(a);
             image2 = applyIDFT(a);
             image2.display();
         }
