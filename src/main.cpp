@@ -173,15 +173,14 @@ int main(int argc, char* argv[]) {
         if (fileExists(argv[argc - 1])) image1 = CImg<int>(argv[argc - 2]);
 
         if (argv[1] == string("--labs")) {
-
-            vector<vector<complex<double>>> a = applyDFT(image1);
-            getFourierImage(a).display();
-            a = swapQuarters(a);
-            getFourierImage(a).display();
-
-            a = swapQuarters(a);
-            image2 = applyIDFT(a);
-            image2.display();
+            vector<vector<complex<double>>> b = applyDFT(image1);
+            b = swapQuarters(b);
+            getFourierImage(b).save("a.png");
+//            getFourierImage(a).display();
+//
+//            a = swapQuarters(a);
+//            image2 = applyIDFT(a);
+//            image2.display();
         }
 
 

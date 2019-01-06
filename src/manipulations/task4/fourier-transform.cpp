@@ -3,6 +3,7 @@
 #include <complex>
 #include <cmath>
 #include <iostream>
+#include <algorithm>
 
 #include "fourier-transform.h"
 #include "helpers.h"
@@ -88,7 +89,7 @@ vector<vector<complex<double>>>& applyFFT(CImg<int> &original){
         for (int x = 0; x < original.width() / 2; x++){
             complex<double> sum1 = (0., 0.);
             complex<double> sum2 = (0., 0.);
-            for (int xx = 0; xx < original.width() / 2; xx++){ //same as before, but we split numbers for odd and even
+            for (int xx = 0; xx < original.width() / 2; xx++){
                 complex<double> comp1(cos(2 * M_PI * xx * x / (original.width() / 2)), -sin(2 * M_PI * xx * x / (original.width() / 2)));
                 complex<double> comp2(cos(2 * M_PI * xx * x / (original.width() / 2)), -sin(2 * M_PI * xx * x / (original.width() / 2)));
                 sum1 += (double)original(2 * xx, y) * comp1;
@@ -194,11 +195,26 @@ vector<vector<complex<double>>>& swapQuarters(vector<vector<complex<double>>> &o
 
 CImg<int>& getFourierImage(vector<vector<complex<double>>> &original){
     CImg<int>* output = new CImg<int>(original[0].size(), original.size(), 1, 3, 0);
+    vector<double> magnitude;
+
+    for (int x = 0; x < original.size(); x++) {
+        for (int y = 0; y < original.size(); y++) {
+            magnitude.push_back(log(abs((original)[y][x])));
+            cout << log(abs((original)[y][x])) << endl;
+        }
+    }
+    double max = *max_element(begin(magnitude), end(magnitude));
+    double min = *min_element(begin(magnitude), end(magnitude));
+
+    cout << min << endl;
+
+    cout << max << endl;
 
     for (int x = 0; x < original[0].size(); x++) {
         for (int y = 0; y < original.size(); y++) {
             for (int c = 0; c < 3; c++) {
-                (*output)(x, y, c) = normalize(log(abs((original)[y][x])) * 15.);
+                (*output)(x, y, c) = normalize(((255 * (log(abs(original[y][x])) * min)) / (max - min))*2);
+//                cout << normalize(log((255 * (abs(original[y][x]) * min)) / (max - min))) << endl;
             }
         }
     }
