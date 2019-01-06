@@ -203,7 +203,7 @@ int main(int argc, char* argv[]) {
         getFourierImage(fourier).display();
 
         fourier = swapQuarters(fourier);
-        image2 = applyIDFT(fourier);
+        image2 = applyIFFT(fourier);
 
         image1.save("original.bmp");
         image2.save("edited.bmp");

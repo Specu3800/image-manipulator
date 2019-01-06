@@ -71,7 +71,7 @@ CImg<int>& applyIDFT(vector<vector<complex<double>>> &original){
                 sum += temp[xx][y] * comp;
             }
             for(int c = 0; c < 3; c++){
-                (*output)(y, x, c) = abs(sum)/original.size();
+                (*output)(y, x, c) = normalize(abs(sum)/original.size());
             }
         }
     }
@@ -158,8 +158,8 @@ CImg<int>& applyIFFT(vector<vector<complex<double>>> &original){
             }
             complex<double> W(cos(2 * M_PI * x / (*output).width()), sin(2 * M_PI * x / (*output).width()));
             for (int c = 0; c < (*output).spectrum(); c++){
-                (*output)(y, x, c) = abs(sum1 + (sum2 * W)) / (*output).width();
-                (*output)(y, (*output).width()/2 + x, c) = abs(sum1 - (sum2 * W)) / (*output).width();
+                (*output)(y, x, c) = normalize(abs(sum1 + (sum2 * W)) / (*output).width());
+                (*output)(y, (*output).width()/2 + x, c) = normalize(abs(sum1 - (sum2 * W)) / (*output).width());
             }
         }
     }
