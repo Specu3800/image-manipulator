@@ -90,10 +90,9 @@ vector<vector<complex<double>>>& applyFFT(CImg<int> &original){
             complex<double> sum1 = (0., 0.);
             complex<double> sum2 = (0., 0.);
             for (int xx = 0; xx < original.width() / 2; xx++){
-                complex<double> comp1(cos(2 * M_PI * xx * x / (original.width() / 2)), -sin(2 * M_PI * xx * x / (original.width() / 2)));
-                complex<double> comp2(cos(2 * M_PI * xx * x / (original.width() / 2)), -sin(2 * M_PI * xx * x / (original.width() / 2)));
-                sum1 += (double)original(2 * xx, y) * comp1;
-                sum2 += (double)original(2 * xx + 1, y) * comp2;
+                complex<double> comp(cos(2 * M_PI * xx * x / (original.width() / 2)), -sin(2 * M_PI * xx * x / (original.width() / 2)));
+                sum1 += (double)original(2 * xx, y) * comp;
+                sum2 += (double)original(2 * xx + 1, y) * comp;
             }
             complex<double> W(cos(2 * M_PI * x / original.width()), -sin(2 * M_PI * x / original.width()));
             temp[y][x] = sum1 + (sum2 * W);
@@ -108,10 +107,9 @@ vector<vector<complex<double>>>& applyFFT(CImg<int> &original){
             complex<double> sum1 = (0., 0.);
             complex<double> sum2 = (0., 0.);
             for (int yy = 0; yy < original.height() / 2; yy++){
-                complex<double> comp1(cos(2 * M_PI * yy * y / (original.height() / 2)), -sin(2 * M_PI * yy * y / (original.height() / 2)));
-                complex<double> comp2(cos(2 * M_PI * yy * y / (original.height() / 2)), -sin(2 * M_PI * yy * y / (original.height() / 2)));
-                sum1 += temp[2 * yy][x] * comp1;
-                sum2 += temp[2 * yy + 1][x] * comp2;
+                complex<double> comp(cos(2 * M_PI * yy * y / (original.height() / 2)), -sin(2 * M_PI * yy * y / (original.height() / 2)));
+                sum1 += temp[2 * yy][x] * comp;
+                sum2 += temp[2 * yy + 1][x] * comp;
             }
             complex<double> W(cos(2 * M_PI * y / original.width()), -sin(2 * M_PI * y / original.width()));
             (*output)[x][y] = sum1 + (sum2 * W);

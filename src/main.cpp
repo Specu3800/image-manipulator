@@ -40,7 +40,9 @@ int main(int argc, char* argv[]) {
     vector<string> variant2 = {"--union", "--intersection", "--difference"};
     vector<string> variant3 = {"--mse", "--pmse", "--snr", "--psnr", "--md"};
     vector<string> variant4 = {"--cmean", "--cvariance", "--cstdev", "--cvarcoi", "--cvarcoii", "--casyco", "--cflaco", "--centropy"};
-    vector<string> variant5 = {"--labs", "--lowpass", "--highpass", "--bandpass", "--bandcut", "--hpedge", "--pmod"};
+    vector<string> variant5 = {"--dft", "--idft", "--fft", "--ifft"};
+    vector<string> variant6 = {"--lowpass", "--highpass", "--bandpass", "--bandcut", "--hpedge", "--pmod"};
+    vector<string> variant7 = {"--labs"};
 
     CImg<int> image1;
     CImg<int> image2;
@@ -171,84 +173,52 @@ int main(int argc, char* argv[]) {
 
     } else if (find(variant5.begin(), variant5.end(), argv[1]) != variant5.end()) {
 
+        if (fileExists(argv[argc - 1])) image1 = CImg<int>(argv[argc - 1]);
+        vector<vector<complex<double>>> fourier;
+
+        if (argv[1] == string("--dft")) fourier = applyDFT(image1);
+        else if (argv[1] == string("--fft")) fourier = applyFFT(image1);
+
+        fourier = swapQuarters(fourier);
+        image2 = getFourierImage(fourier);
+
+        image1.save("original.bmp");
+        image2.save("edited.bmp");
+        image2.save(argv[argc - 1]); //save edited img in destination
+        image1.append(image2, 'x').append(image3, 'x').display("COMPARATION", false); //display
+
+    } else if (find(variant6.begin(), variant6.end(), argv[1]) != variant6.end()) {
+
         if (fileExists(argv[argc - 1])) image1 = CImg<int>(argv[argc - 2]);
+        vector<vector<complex<double>>> fourier = applyFFT(image1);
+        fourier = swapQuarters(fourier);
 
+        if (argv[1] == string("--lowpass")) fourier = applyLowpassFilter(fourier, atoi(argv[2]));
+        else if (argv[1] == string("--highpass")) fourier = applyHighpassFilter(fourier, atoi(argv[2]));
+        else if (argv[1] == string("--bandpass")) fourier = applyBandpassFilter(fourier, atoi(argv[2]), atoi(argv[3]));
+        else if (argv[1] == string("--bandcut")) fourier = applyBandcutFilter(fourier, atoi(argv[2]), atoi(argv[3]));
+        else if (argv[1] == string("--hpedge")) fourier = applyHighpassFilterWithEdgeDirection(fourier, *(new CImg<int>(argv[2])));
+        else if (argv[1] == string("--pmod")) fourier = applyPhaseModifyingFilter(fourier, atoi(argv[2]), atoi(argv[3]), atoi(argv[4]));
+
+        getFourierImage(fourier).display();
+
+        fourier = swapQuarters(fourier);
+        image2 = applyIDFT(fourier);
+
+        image1.save("original.bmp");
+        image2.save("edited.bmp");
+        image2.save(argv[argc - 1]); //save edited img in destination
+        image1.append(image2, 'x').append(image3, 'x').display("COMPARATION", false); //display
+
+    } else if (find(variant7.begin(), variant7.end(), argv[1]) != variant7.end()) {
         if (argv[1] == string("--labs")) {
-            vector<vector<complex<double>>> b = applyDFT(image1);
-            b = swapQuarters(b);
-//            getFourierImage(b).save("a.png");
-            getFourierImage(b).display();
-//
-//            a = swapQuarters(a);
-//            image2 = applyIDFT(a);
-//            image2.display();
+            /// HERE WE CAN WORK ON LABS
         }
-        else if (argv[1] == string("--lowpass")) {
-            vector<vector<complex<double>>> a = applyDFT(image1);
-            a = swapQuarters(a);
-            a = applyLowpassFilter(a, atoi(argv[2]));
-            getFourierImage(a).display();
-            a = swapQuarters(a);
-            image2 = applyIDFT(a);
-            image2.display();
-        }
-        else if (argv[1] == string("--highpass")) {
-            vector<vector<complex<double>>> a = applyDFT(image1);
-            a = swapQuarters(a);
-            a = applyHighpassFilter(a, atoi(argv[2]));
-            getFourierImage(a).display();
-            a = swapQuarters(a);
-            image2 = applyIDFT(a);
-            image2.display();
-        }
-        else if (argv[1] == string("--bandpass")) {
-            vector<vector<complex<double>>> a = applyDFT(image1);
-            a = swapQuarters(a);
-            a = applyBandpassFilter(a, atoi(argv[2]), atoi(argv[3]));
-            getFourierImage(a).display();
-            a = swapQuarters(a);
-            image2 = applyIDFT(a);
-            image2.display();
-        }
-        else if (argv[1] == string("--bandcut")) {
-            vector<vector<complex<double>>> a = applyDFT(image1);
-            a = swapQuarters(a);
-            a = applyBandcutFilter(a, atoi(argv[2]), atoi(argv[3]));
-            getFourierImage(a).display();
-            a = swapQuarters(a);
-            image2 = applyIDFT(a);
-            image2.display();
-        }
-        else if (argv[1] == string("--hpedge")) {
-            vector<vector<complex<double>>> a = applyDFT(image1);
-            a = swapQuarters(a);
-            CImg<int> *mask = new CImg<int>(argv[2]);
-            a = applyHighpassFilterWithEdgeDirection(a, *mask);
-            getFourierImage(a).display();
-            a = swapQuarters(a);
-            image2 = applyIDFT(a);
-            image2.display();
-        }
-        else if (argv[1] == string("--pmod")) {
-            vector<vector<complex<double>>> a = applyDFT(image1);
-            a = swapQuarters(a);
-            a = applyPhaseModifyingFilter(a, atoi(argv[2]), atoi(argv[3]), atoi(argv[4]));
-            getFourierImage(a).display();
-            a = swapQuarters(a);
-            image2 = applyIDFT(a);
-            image2.display();
-        }
-
     } else {
         cout << "No maching command. \nType --help to view the list of the available commands.";
     }
 
     return 0;
 }
-
-
-
-
-
 
 
