@@ -13,6 +13,8 @@ using namespace std;
 using namespace cimg_library;
 
 vector<vector<complex<double>>>& applyDFT(CImg<int> &original){
+
+
     auto* output = new vector<vector<complex<double>>>;
     vector<vector<complex<double>>> temp;
 
@@ -41,6 +43,7 @@ vector<vector<complex<double>>>& applyDFT(CImg<int> &original){
             (*output)[x].push_back(sum);
         }
     }
+
     return *output;
 }
 
@@ -116,7 +119,6 @@ vector<vector<complex<double>>>& applyFFT(CImg<int> &original){
             (*output)[x][original.height() / 2 + y] = sum1 - (sum2 * W);
         }
     }
-
     return *output;
 }
 

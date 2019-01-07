@@ -36,7 +36,7 @@ int main(int argc, char* argv[]) {
                                "--hexponent", "--hexponentsep", "--slaplace", "--slaplaceopt", "--orobertsii", "--osobel",
                                "--erosion", "--dilation", "--opening", "--closing", "--hmt",
                                "--oborder", "--iborder", "--ioborder", "--filling", "--removing",
-                               "--segmentation"};
+                               "--segmentation", "--segmentationI"};
     vector<string> variant2 = {"--union", "--intersection", "--difference"};
     vector<string> variant3 = {"--mse", "--pmse", "--snr", "--psnr", "--md"};
     vector<string> variant4 = {"--cmean", "--cvariance", "--cstdev", "--cvarcoi", "--cvarcoii", "--casyco", "--cflaco", "--centropy"};
@@ -107,6 +107,7 @@ int main(int argc, char* argv[]) {
         else if (argv[1] == string("--closing")) image2 = applyClosing(image1, getNormalMask(atoi(argv[2])));
         else if (argv[1] == string("--hmt")) image2 = applyHMT(image1, getHMTMask(atoi(argv[2])));
         else if (argv[1] == string("--segmentation")) image2 = applySegmentation(image1, atoi(argv[2]), atoi(argv[3]), atoi(argv[4]));
+        else if (argv[1] == string("--segmentationI")) image2 = applySegmentationIterative(image1, atoi(argv[2]), atoi(argv[3]), atoi(argv[4]));
         else if (argv[1] == string("--oborder")) image2 = applyOuterBorder(image1, atoi(argv[2])); //M1
         else if (argv[1] == string("--iborder")) image2 = applyInnerBorder(image1, atoi(argv[2])); //M1
         else if (argv[1] == string("--ioborder")) image2 = applyInnerOuterBorder(image1, atoi(argv[2])); //M1
@@ -216,6 +217,8 @@ int main(int argc, char* argv[]) {
     } else if (find(variant7.begin(), variant7.end(), argv[1]) != variant7.end()) {
         if (argv[1] == string("--labs")) {
             /// HERE WE CAN WORK ON LABS
+            if (fileExists(argv[argc - 2])) image1 = CImg<int>(argv[argc - 2]);
+            applyFFT(image1);
         }
     } else {
         cout << "No maching command. \nType --help to view the list of the available commands.";
