@@ -92,7 +92,7 @@ vector<vector<complex<double>>>& applyHighpassFilterWithEdgeDirection(vector<vec
     {
         for (int y = 0; y < original[0].size(); y++)
         {
-            if ( mask(x, y) == 0)
+            if ( mask(x, original[0].size() - 1 - y) == 0)
             {
                 edited -> at(y).at(x) = (0.0, 0.0);
             }
