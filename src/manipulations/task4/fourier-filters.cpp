@@ -12,7 +12,7 @@ using namespace cimg_library;
 
 vector<vector<complex<double>>>& applyLowpassFilter(vector<vector<complex<double>>> &original, int threshold){
     auto* edited = new vector<vector<complex<double>>>;
-    *edited = original;
+    for (const auto &i : original) (*edited).push_back(i);
 
     for (int x = 1; x < original.size(); x++)
     {
@@ -31,7 +31,8 @@ vector<vector<complex<double>>>& applyLowpassFilter(vector<vector<complex<double
 
 vector<vector<complex<double>>>& applyHighpassFilter(vector<vector<complex<double>>> &original, int threshold){
     auto* edited = new vector<vector<complex<double>>>;
-    *edited = original;
+    for (const auto &i : original) (*edited).push_back(i);
+
     for (int x = 0; x < original.size(); x++)
     {
         for (int y = 0; y < original[1].size(); y++)
@@ -48,7 +49,8 @@ vector<vector<complex<double>>>& applyHighpassFilter(vector<vector<complex<doubl
 
 vector<vector<complex<double>>>& applyBandpassFilter(vector<vector<complex<double>>> &original, int threshold, int width){
     auto* edited = new vector<vector<complex<double>>>;
-    *edited = original;
+    for (const auto &i : original) (*edited).push_back(i);
+
     for (int x = 0; x < original.size(); x++)
     {
         for (int y = 0; y < original[0].size(); y++)
@@ -65,7 +67,8 @@ vector<vector<complex<double>>>& applyBandpassFilter(vector<vector<complex<doubl
 
 vector<vector<complex<double>>>& applyBandcutFilter(vector<vector<complex<double>>> &original, int threshold, int width){
     auto* edited = new vector<vector<complex<double>>>;
-    *edited = original;
+    for (const auto &i : original) (*edited).push_back(i);
+
     for (int x = 0; x < original.size(); x++)
     {
         for (int y = 0; y < original[0].size(); y++)
@@ -83,14 +86,15 @@ vector<vector<complex<double>>>& applyBandcutFilter(vector<vector<complex<double
 
 vector<vector<complex<double>>>& applyHighpassFilterWithEdgeDirection(vector<vector<complex<double>>> &original, CImg<int> &mask){
     auto* edited = new vector<vector<complex<double>>>;
-    *edited = original;
+    for (const auto &i : original) (*edited).push_back(i);
+
     for (int x = 0; x < original.size(); x++)
     {
         for (int y = 0; y < original[0].size(); y++)
         {
-            if ( mask(y, x) == 0)
+            if ( mask(x, y) == 0)
             {
-                edited -> at(y).at(x) = (0.0, 0.0);
+                edited -> at(y).at(y) = (0.0, 0.0);
             }
         }
     }
@@ -100,17 +104,16 @@ vector<vector<complex<double>>>& applyHighpassFilterWithEdgeDirection(vector<vec
 
 vector<vector<complex<double>>>& applyPhaseModifyingFilter(vector<vector<complex<double>>> &original, int l, int k, double j){
     auto* edited = new vector<vector<complex<double>>>;
-    *edited = original;
+    for (const auto &i : original) (*edited).push_back(i);
+
     for (int x = 0; x < original.size(); x++)
     {
         for (int y = 0; y < original[0].size(); y++)
         {
-
             double re = cos( j * ((x * k * -2.0 * M_PI) / original.size() + (y*l*-2.0*M_PI)/original[0].size() + (k+l)*M_PI ));
             double im = sin( j * ((x * k * -2.0 * M_PI) / original.size() + (y*l*-2.0*M_PI)/original[0].size() + (k+l)*M_PI ));
             complex<double> p(re, im);
             (*edited).at(y).at(x) = original.at(y).at(x) * p;
-            //cout <<"x: " <<  x << " y: " << y << " newVal: " << (*edited).at(y).at(x) << " oldVal: " << original.at(y).at(x) << " re: " << re << " im: " << im << " p: " << p  << endl;
         }
     }
 

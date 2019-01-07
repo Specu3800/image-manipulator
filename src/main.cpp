@@ -202,7 +202,7 @@ int main(int argc, char* argv[]) {
 
 
         image2 = getFourierImage(fourier);
-        image2.save("raport/editedF.bmp");
+        image2.save("editedF.bmp");
         getFourierImage(fourier).display();
 
         fourier = swapQuarters(fourier);
