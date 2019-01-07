@@ -94,7 +94,7 @@ vector<vector<complex<double>>>& applyHighpassFilterWithEdgeDirection(vector<vec
         {
             if ( mask(x, y) == 0)
             {
-                edited -> at(y).at(y) = (0.0, 0.0);
+                edited -> at(y).at(x) = (0.0, 0.0);
             }
         }
     }
