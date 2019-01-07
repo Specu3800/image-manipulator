@@ -105,9 +105,12 @@ vector<vector<complex<double>>>& applyPhaseModifyingFilter(vector<vector<complex
     {
         for (int y = 0; y < original[0].size(); y++)
         {
-            complex<double> p;
-            p = (cos( j * ((-x * k * 2 * M_PI) / original.size() + (-y*l*2*M_PI)/original[0].size() + (k+l)*M_PI )), sin(j*( (-x*k*2*M_PI)/original.size() + (-y*l*2*M_PI)/original[0].size() + (k+l)*M_PI)));
-            edited -> at(y).at(x) = edited -> at(y).at(x) * p;
+
+            double re = cos( j * ((x * k * -2.0 * M_PI) / original.size() + (y*l*-2.0*M_PI)/original[0].size() + (k+l)*M_PI ));
+            double im = sin( j * ((x * k * -2.0 * M_PI) / original.size() + (y*l*-2.0*M_PI)/original[0].size() + (k+l)*M_PI ));
+            complex<double> p(re, im);
+            (*edited).at(y).at(x) = original.at(y).at(x) * p;
+            //cout <<"x: " <<  x << " y: " << y << " newVal: " << (*edited).at(y).at(x) << " oldVal: " << original.at(y).at(x) << " re: " << re << " im: " << im << " p: " << p  << endl;
         }
     }
 

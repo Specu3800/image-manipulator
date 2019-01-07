@@ -200,6 +200,9 @@ int main(int argc, char* argv[]) {
         else if (argv[1] == string("--hpedge")) fourier = applyHighpassFilterWithEdgeDirection(fourier, *(new CImg<int>(argv[2])));
         else if (argv[1] == string("--pmod")) fourier = applyPhaseModifyingFilter(fourier, atoi(argv[2]), atoi(argv[3]), atoi(argv[4]));
 
+
+        image2 = getFourierImage(fourier);
+        image2.save("raport/editedF.bmp");
         getFourierImage(fourier).display();
 
         fourier = swapQuarters(fourier);
