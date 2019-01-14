@@ -90,8 +90,8 @@ vector<vector<complex<double>>>& applyFFT(CImg<int> &original){
         vector<complex<double>> row(original.width());
         temp.push_back(row);
         for (int x = 0; x < original.width() / 2; x++){
-            complex<double> sum1 = (0., 0.);
-            complex<double> sum2 = (0., 0.);
+            complex<double> sum1 = (0.0, 0.0);
+            complex<double> sum2 = (0.0, 0.0);
             for (int xx = 0; xx < original.width() / 2; xx++){
                 complex<double> comp(cos(2 * M_PI * xx * x / (original.width() / 2)), -sin(2 * M_PI * xx * x / (original.width() / 2)));
                 sum1 += (double)original(2 * xx, y) * comp;
@@ -107,8 +107,8 @@ vector<vector<complex<double>>>& applyFFT(CImg<int> &original){
         vector<complex<double>> row(original.height());
         (*output).push_back(row);
         for (int y = 0; y < original.height() / 2; y++){
-            complex<double> sum1 = (0., 0.);
-            complex<double> sum2 = (0., 0.);
+            complex<double> sum1 = (0.0, 0.0);
+            complex<double> sum2 = (0.0, 0.0);
             for (int yy = 0; yy < original.height() / 2; yy++){
                 complex<double> comp(cos(2 * M_PI * yy * y / (original.height() / 2)), -sin(2 * M_PI * yy * y / (original.height() / 2)));
                 sum1 += temp[2 * yy][x] * comp;
@@ -135,8 +135,8 @@ CImg<int>& applyIFFT(vector<vector<complex<double>>> &original){
     for (int x = 0; x < (*output).width(); x++){
 
         for (int y = 0; y < (*output).height() / 2; y++){
-            complex<double> sum1 = (0., 0.);
-            complex<double> sum2 = (0., 0.);
+            complex<double> sum1 = (0.0, 0.0);
+            complex<double> sum2 = (0.0, 0.0);
             for (int yy = 0; yy < (*output).height() / 2; yy++){
                 complex<double> comp(cos(2 * M_PI * yy * y / ((*output).height() / 2)), sin(2 * M_PI * yy * y / ((*output).height() / 2)));
                 sum1 += original[2 * yy][x] * comp;
@@ -151,8 +151,8 @@ CImg<int>& applyIFFT(vector<vector<complex<double>>> &original){
 
     for (int y = 0; y < (*output).height(); y++){
         for (int x = 0; x < (*output).width() / 2; x++){
-            complex<double> sum1 = (0., 0.);
-            complex<double> sum2 = (0., 0.);
+            complex<double> sum1 = (0.0, 0.0);
+            complex<double> sum2 = (0.0, 0.0);
             for (int xx = 0; xx < (*output).width() / 2; xx++){
                 complex<double> comp(cos(2 * M_PI * xx * x / ((*output).width() / 2)), sin(2 * M_PI * xx * x / ((*output).width() / 2)));
                 sum1 += temp[y][2 * xx] * comp;
