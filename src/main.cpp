@@ -218,7 +218,19 @@ int main(int argc, char* argv[]) {
         if (argv[1] == string("--labs")) {
             /// HERE WE CAN WORK ON LABS
             if (fileExists(argv[argc - 2])) image1 = CImg<int>(argv[argc - 2]);
-            applyFFT(image1);
+
+            vector<vector<complex<double>>> fourier = applyFFT(image1);
+            fourier = swapQuarters(fourier);
+            getFourierImage(fourier).display();
+
+//            fourier = applyLowpassFilter(fourier, atoi(argv[2]));
+//            image2 = getFourierImage(fourier);
+//            getFourierImage(fourier).display();
+
+            fourier = swapQuarters(fourier);
+            image2 = applyIFFT(fourier);
+            image2.display();
+
         }
     } else {
         cout << "No maching command. \nType --help to view the list of the available commands.";

@@ -100,6 +100,40 @@ vector<vector<complex<double>>>& applyHighpassFilterWithEdgeDirection(vector<vec
     }
 
     return *edited;
+
+    /*    KOD JĘDRKA
+CImg<double> highpassedgedetmask(char *name, float a, float b, float r)
+{
+    CImg<double> image(name);
+    float alpha = (-a)/(180.0/3.141592653589793238463);
+    float beta = (-b)/(180.0/3.141592653589793238463);
+
+    for (int i = 0; i < image.width(); i++)
+    {
+        for (int j = 0; j < image.height(); j++)
+        {
+            float temp = ((float)(j - image.height()/2)/(float)(i - image.width()/2));
+            if (((temp < tan(alpha+beta)) || (temp > tan(alpha-beta))) || sqrt(pow(i - image.width()/2, 2) + pow(j - image.height()/2, 2)) < r)
+            {
+                second[j][image.width() - i - 1] = (0., 0.);
+            }
+        }
+    }
+	    for (int i = 0; i < image.width(); i++)
+    {
+        for (int j = 0; j < image.height(); j++)
+        {
+            for(int k=0;k<image.spectrum();k++)
+            {
+                image(i, j, 0, k) = log(abs(second[j][image.width() - i - 1]))*15.;
+            }
+        }
+    }
+
+    image.display();
+    return image;
+}
+     */
 }
 
 vector<vector<complex<double>>>& applyPhaseModifyingFilter(vector<vector<complex<double>>> &original, int l, int k, double j){
