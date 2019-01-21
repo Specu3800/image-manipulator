@@ -198,7 +198,7 @@ int main(int argc, char* argv[]) {
         else if (argv[1] == string("--highpass")) fourier = applyHighpassFilter(fourier, atoi(argv[2]));
         else if (argv[1] == string("--bandpass")) fourier = applyBandpassFilter(fourier, atoi(argv[2]), atoi(argv[3]));
         else if (argv[1] == string("--bandcut")) fourier = applyBandcutFilter(fourier, atoi(argv[2]), atoi(argv[3]));
-        else if (argv[1] == string("--hpedge")) fourier = applyHighpassFilterWithEdgeDirection(fourier, *(new CImg<int>(argv[2])));
+        else if (argv[1] == string("--hpedge")) fourier = applyHighpassFilterWithEdgeDirection(fourier, stod(argv[2]), stod(argv[3]), stod(argv[4]));
         else if (argv[1] == string("--pmod")) fourier = applyPhaseModifyingFilter(fourier, atoi(argv[2]), atoi(argv[3]), atoi(argv[4]));
 
 

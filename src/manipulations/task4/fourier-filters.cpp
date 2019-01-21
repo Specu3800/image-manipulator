@@ -84,15 +84,21 @@ vector<vector<complex<double>>>& applyBandcutFilter(vector<vector<complex<double
     return *edited;
 }
 
-vector<vector<complex<double>>>& applyHighpassFilterWithEdgeDirection(vector<vector<complex<double>>> &original, CImg<int> &mask){
+vector<vector<complex<double>>>& applyHighpassFilterWithEdgeDirection(vector<vector<complex<double>>> &original, double alpha, double beta, double radius){
     auto* edited = new vector<vector<complex<double>>>;
     for (const auto &i : original) (*edited).push_back(i);
 
+    alpha = (-alpha)/(180.0/M_PI);
+    beta = (-beta)/(180.0/M_PI);
+    int xcentr = original.size()/2;
+    int ycentr = original[0].size()/2;
+    cout << alpha << " " << beta << endl;
     for (int x = 0; x < original.size(); x++)
     {
         for (int y = 0; y < original[0].size(); y++)
         {
-            if ( mask(x, original[0].size() - 1 - y) == 0)
+
+            if (((((double)(x - xcentr)/(double)(y - ycentr)) < tan(alpha+beta)) || (((double)(x - xcentr)/(double)(y - ycentr)) > tan(alpha-beta))) || sqrt(pow(x - xcentr, 2) + pow(y - ycentr, 2)) < radius)
             {
                 edited -> at(y).at(x) = (0.0, 0.0);
             }
