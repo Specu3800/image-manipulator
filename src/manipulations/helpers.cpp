@@ -259,7 +259,7 @@ void displayHelp() {
         "        applies  bandpass filter\n"
         "    --bandcut threshold width src dest\n"
         "        applies  bandpass filter\n"
-        "    --hpedge maskPath src dest\n"
+        "    --hpedge alpha beta radius src dest\n"
         "        applies  highpass filter with edge direction\n"
         "    --pmod l k j src dest\n"
         "        applies phase modifying filter\n"
