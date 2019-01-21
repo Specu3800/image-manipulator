@@ -144,7 +144,7 @@ vector<complex<double>>& applyIFFT1D(vector<complex<double>> &original) {
     for (int i = 0; i < original.size()/2; i++){
         complex<double> comp(cos(2 * M_PI * i / (double)original.size()), sin(2 * M_PI * i / (double)original.size()));
         (*output)[i] = even[i] + comp*odd[i];
-        (*output)[i+original.size()/2] = (even[i] - comp*odd[i]);
+        (*output)[i+original.size()/2] = even[i] - comp*odd[i];
     }
     return (*output);
 }
