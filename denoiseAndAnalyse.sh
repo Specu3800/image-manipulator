@@ -5,7 +5,7 @@
 # HOW TO USE !!!!!!
 #
 # just run:
-#./denoiseAndAnalyse.sh --midian 1 img/noise-color/lena-impulse3.bmp img/color/lena.bmp 
+#./denoiseAndAnalyse.sh --median 2 img/noise-color/lena-impulse3.bmp img/color/lena.bmp 
 #
 #
 ######
