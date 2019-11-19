@@ -6,7 +6,7 @@ Application for simple image editing. Image Processing (2018) </br>
 * Task 4 - Filtration in frequency domain.
 
 ## Getting Started
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. 
 
 ### Prerequisites
 In order to properly build application one might need following dependences:
